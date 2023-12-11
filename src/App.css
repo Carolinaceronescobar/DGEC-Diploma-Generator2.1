@@ -1,0 +1,20 @@
+/* Agrega el enlace a Google Fonts en tu HTML o utiliza otra fuente */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #fffefe;
+}
+
+.container {
+  /* background-color: #008452; */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+
+h1 {
+  color: #000000;
+}
