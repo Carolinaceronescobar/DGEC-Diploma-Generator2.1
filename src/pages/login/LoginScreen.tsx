@@ -25,6 +25,7 @@ const LoginScreen = () => {
       window.location.href = loginUrl;
     }
   };
+  
   return (
     <Box component="main">
       <Grid
