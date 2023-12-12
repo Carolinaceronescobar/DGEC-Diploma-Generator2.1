@@ -69,7 +69,6 @@ const LoginScreen = () => {
               sx={{
                 maxWidth: 550,
                 px: 3,
-                py: "100px",
                 width: "100%",
                 placeItems: "center",
               }}
