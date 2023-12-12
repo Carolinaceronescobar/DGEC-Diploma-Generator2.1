@@ -1,20 +1,19 @@
 // TODO Eliminar código comentado
 import { useEffect, useState } from 'react';
-// import TopBar from './components/TopBar.tsx';
-// import HorizontalLinearStepper from './components/HorizontalLinearStepper.tsx';
-// import Footer from './components/Footer.tsx';
-
-// import AppRoutes from './Routes';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '../src/pages/login/AuthContext';
-import LoginScreen from './pages/login/LoginScreen.tsx';
-//import { PrivateRoute } from './auth/PrivateRoute';
 import SideBar from './components/SideBar.tsx';
+import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
+import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
+
+// import LoginScreen from './pages/login/LoginScreen.tsx';
+// import TopBar from './components/TopBar.tsx';
+// import Footer from './components/Footer.tsx';
+
+// import { PrivateRoute } from './auth/PrivateRoute';
 // import UsoInternoFinanzas from './pages/usointfinanzas/UsointernoFinanzasForm';
 // import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
 // import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
-import Formulario from './components/Form.tsx';
-import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,7 +39,7 @@ function App() {
         <Routes>
           {/* FIXME Cambiar nomber de componente */}
           <Route path="/" element={<SideBar />} />
-          <Route path="/formulario" element={<Formulario />} />
+          <Route path="/formulario" element={<ProgramRequestForm />} />
 
           {/* TODO Corregir rutas faltantes */}
           {/* 

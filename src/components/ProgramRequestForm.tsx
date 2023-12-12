@@ -3,7 +3,6 @@ import TopBar from './TopBar';
 import HorizontalLinearStepper from './HorizontalLinearStepper';
 import Footer from './Footer'; // Importa el componente Footer
 //import { PrivateRoute } from './pages/login/PrivateRoute';
-import { BrowserRouter as Router } from 'react-router-dom';
 //import { AuthProvider } from '../pages/login/AuthContext';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla';
 
@@ -43,8 +42,7 @@ function obtenerSolicitudes(): Solicitud[] {
 }
 
 // FIXME Cambiar nombre de este archivo y de todas importaciones
-// FIXME Cambiar a un nombre más apropiado en inglés. Sugerido: RequestProgramForm
-const SolicitudForm: React.FC = () => {
+const ProgramRequestForm: React.FC = () => {
   const solicitudesData = obtenerSolicitudes(); // Por ejemplo, una función para obtener las solicitudes
 
   return (
@@ -60,10 +58,8 @@ const SolicitudForm: React.FC = () => {
   );
 };
 
-// TODO Evitar exportar por defecto.
-// Es mejor utilizar exportación por funciones ya que eslint pilla mejor los errores
-// export { RequestProgramForm }
-export default SolicitudForm;
+export { ProgramRequestForm };
+// export default SolicitudForm;
 
 // TODO Eliminar código comentado
 // const App = () => {
