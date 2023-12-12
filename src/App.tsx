@@ -38,16 +38,17 @@ function App() {
       {isAuthenticated && <SideBar />}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginScreen />} />
-          <Route path="/home" element={<SideBar />} />
+          {/* FIXME Cambiar nomber de componente */}
+          <Route path="/" element={<SideBar />} />
           <Route path="/formulario" element={<Formulario />} />
 
           {/* TODO Corregir rutas faltantes */}
-          {/* A JSX comment 
+          {/* 
+              <Route path="/" element={<LoginScreen />} />
               <Route path="/finanzas" element={<UsoInternoFinanzas />} />
               <Route path="/Dgec" element={<UsoInternoDGEC />} />
               <Route path="/DireccionEstudios" element={<UsointernoDireccionEstudios/>} /> 
-              */}
+          */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>

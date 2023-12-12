@@ -48,17 +48,15 @@ const SolicitudForm: React.FC = () => {
   const solicitudesData = obtenerSolicitudes(); // Por ejemplo, una función para obtener las solicitudes
 
   return (
-    <Router>
-      <div>
-        <TopBar />
-        <div className="container">
-          <h1>Solicitud Creación de Programa</h1>
-          <HorizontalLinearStepper />
-          <SolicitudesTabla solicitudes={solicitudesData} />
-        </div>
-        <Footer />
+    <div>
+      <TopBar />
+      <div className="container">
+        <h1>Solicitud Creación de Programa</h1>
+        <HorizontalLinearStepper />
+        <SolicitudesTabla solicitudes={solicitudesData} />
       </div>
-    </Router>
+      <Footer />
+    </div>
   );
 };
 
