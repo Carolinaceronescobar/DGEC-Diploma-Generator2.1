@@ -1,7 +1,9 @@
-//DGEC-DIPLOMA-GENERATOR2/ui/components/SideBar.tsx
+//DGEC-DIPLOMA-GENERATOR2/ui/components/Dashboard.tsx
 import React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 import {
   Box,
   Toolbar,
@@ -14,7 +16,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemButton ,
+  ListItemButton,
   Divider,
 } from '@mui/material';
 import {
@@ -22,7 +24,7 @@ import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
@@ -30,11 +32,21 @@ import { Link } from 'react-router-dom';
 //import Table from './Table.tsx';
 //import RoutesData from '../RoutesData.tsx';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla.tsx';
-import { mainListItems, secondaryListItems } from '../pages/resumen/listItems.ts';
+import {
+  mainListItems,
+  secondaryListItems,
+} from '../pages/resumen/listItems.ts';
+
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" to="https://mui.com/">
         Creación Programa
@@ -69,31 +81,31 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: 'border-box',
+    ...(!open && {
+      overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+      width: theme.spacing(7),
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -131,24 +143,20 @@ const Dashboard: React.FC = () => {
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
-              edge="start"
+            {/* Reemplaza NotificationsIcon con AccountCircleIcon o el icono de perfil que prefieras */}
+
+            <Typography
+              component="h1"
+              variant="h6"
               color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
+              noWrap
+              sx={{ flexGrow: 1 }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               DGEC
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+                <AccountCircleIcon />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -170,11 +178,11 @@ const Dashboard: React.FC = () => {
 
           <List component="nav">
             {mainListItems.map((item) => (
-              <ListItem  key={item.id}  button component={Link} to={item.route}>
+              <ListItem key={item.id} button component={Link} to={item.route}>
                 {/* Tu contenido individual del elemento de la lista */}
                 <ListItemText primary={item.text} />
                 {/* ... otros componentes de elementos de lista según sea necesario */}
-              </ListItem >
+              </ListItem>
             ))}
           </List>
 
@@ -194,7 +202,9 @@ const Dashboard: React.FC = () => {
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
@@ -202,16 +212,35 @@ const Dashboard: React.FC = () => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-             
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <Grid
+                container
+                direction="row-reverse"
+                justifyContent="flex-start"
+                spacing={2}
+              >
+                <Grid item>
+                  <Paper className="p-2">
+                    <Link to="/formulario" style={{ textDecoration: 'none' }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<AddIcon />}
+                      >
+                        Nuevo formulario
+                      </Button>
+                    </Link>
+                  </Paper>
+                </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                {/* primer  row */}
+                <Grid item xs={12} style={{ marginTop: '3vh' }}>
                   {/* Integra SolicitudesTabla con los datos */}
                   <SolicitudesTabla solicitudes={solicitudesData} />
-                </Paper>
+                </Grid>
               </Grid>
-            </Grid>
+            </Paper>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

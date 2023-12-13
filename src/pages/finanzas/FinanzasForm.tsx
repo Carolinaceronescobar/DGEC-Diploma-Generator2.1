@@ -32,44 +32,45 @@ type FinValordescprog = {
 // Definición del componente principal FinanzasForm
 const FinanzasForm: React.FC = () => {
   // Estado para controlar si el formulario principal está completo
-  const [formularioPrincipalCompleto, setFormularioPrincipalCompleto] = useState<boolean>(false);
+  const [formularioPrincipalCompleto, setFormularioPrincipalCompleto] =
+    useState<boolean>(false);
 
   // Estado para almacenar los datos del formulario
   const [formData, setFormData] = useState({
-  // Utilizar el tipo definido para fin_valordescprog
-      fin_valordescprog: {
-        fin_valordescprog_asd: { checked: false, porcentaje: 0 },
-        fin_valordescprog_2: { checked: false, porcentaje: 0 },
-        fin_valordescprog_3: { checked: false, porcentaje: 0 },
-        fin_valordescprog_4: { checked: false, porcentaje: 0 },
-        fin_valordescprog_5: { checked: false, porcentaje: 0 },
-        fin_valordescprog_6: { checked: false, porcentaje: 0 },
-      } as FinValordescprog,
-      fin_valordescprog_otro: '', // Campo para descuentos "Otro"
-      fin_modpagoprog: '', // Modalidad de Pago del programa
-      fin_modpagocuotas: '', // Cuotas de pago
-      fin_modpagootros: '', // Otros detalles de la modalidad de pago
-      fin_modpagomedios: [] as string[], // Medios de pago seleccionados
-      
-  // Campos adicionales para descuentos específicos
-  exAlumnosUSM: false,
-  exAlumnosUSMText: '',
-  mujeres: false,
-  funcionariosUSM: false,
-  funcionariosServiciosPublicos: false,
-  matriculaAnticipada: false,
-  otros: false,
-  otrosText: '',
-});
+    // Utilizar el tipo definido para fin_valordescprog
+    fin_valordescprog: {
+      fin_valordescprog_asd: { checked: false, porcentaje: 0 },
+      fin_valordescprog_2: { checked: false, porcentaje: 0 },
+      fin_valordescprog_3: { checked: false, porcentaje: 0 },
+      fin_valordescprog_4: { checked: false, porcentaje: 0 },
+      fin_valordescprog_5: { checked: false, porcentaje: 0 },
+      fin_valordescprog_6: { checked: false, porcentaje: 0 },
+    } as FinValordescprog,
+    fin_valordescprog_otro: '', // Campo para descuentos "Otro"
+    fin_modpagoprog: '', // Modalidad de Pago del programa
+    fin_modpagocuotas: '', // Cuotas de pago
+    fin_modpagootros: '', // Otros detalles de la modalidad de pago
+    fin_modpagomedios: [] as string[], // Medios de pago seleccionados
+
+    // Campos adicionales para descuentos específicos
+    exAlumnosUSM: false,
+    exAlumnosUSMText: '',
+    mujeres: false,
+    funcionariosUSM: false,
+    funcionariosServiciosPublicos: false,
+    matriculaAnticipada: false,
+    otros: false,
+    otrosText: '',
+  });
 
   // Manejador para cambios en los campos de entrada
-const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = event.target;
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    [name]: value,
-  }));
-};
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   // Funciones para guardar y enviar datos
   const handleGuardarFinanzas = (): void => {
@@ -94,7 +95,9 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   };
 
   // Manejador para cambios en porcentaje
-  const handlePorcentajeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePorcentajeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = event.target;
 
     // Asegúrate de que name sea una de las claves válidas de fin_valordescprog
@@ -110,7 +113,9 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   };
 
   // Manejador para cambios en checkboxes de medios de pago
-  const handleCheckboxMediosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxMediosChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, checked } = event.target;
 
     // Actualiza el estado formData con los nuevos medios de pago seleccionados
@@ -152,7 +157,7 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           handleSubmit,
         }),
       });
-   
+
       // Verifica si la solicitud fue exitosa y muestra mensajes en la consola.
       if (response.ok) {
         console.log('Formulario guardado exitosamente');
@@ -163,16 +168,26 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       console.error('Error al enviar la solicitud:', error);
     }
   };
-  
+
   // Renderizado del componente
   return (
     <Container>
-      <Typography variant="h4" className="display-4 text-center mt-4 mb-5" sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}>
+      <Typography
+        variant="h5"
+        className="display-4 text-center mt-4 mb-5"
+        sx={{ marginTop: 5, marginBottom: 2, fontWeight: 'bold' }}
+      >
         Información relevante para Finanzas
       </Typography>
 
       <Box>
-      <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}> Valorización</Typography>
+        <Typography
+          variant="h6"
+          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+        >
+          {' '}
+          Valorización
+        </Typography>
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={5}>
@@ -199,126 +214,231 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           </FormControl>
         </Grid>
       </Grid>
-      
-        {/* Nuevo bloque de campos */}
-        <div className="form-group  col-md-6"  >
-          <label htmlFor="fin_valordescprog" className="form-label"  >
-            Descuentos que ofrece el programa (tipo y porcentaje asociado)
-          </label>
-          <div className="form-row">
-        </div>
-          {/* Checkbox y campo de texto para Ex alumnos USM */}
-          <div className="form-check col-md-4">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={formData.exAlumnosUSM}
-                  onChange={handleCheckboxChange}
-                  name="exAlumnosUSM"
-                />
-              }
-          label="Ex alumnos USM"
-         />
-        </div>
 
-  {/* Checkbox y campo de texto para Mujeres */}
-  <div className="form-check col-md-4">
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={formData.mujeres}
-          onChange={handleCheckboxChange}
-          name="mujeres"
-        />
-      }
-      label="Mujeres"
-    />
-  </div>
+      {/* Nuevo bloque de campos */}
+      <div
+        className="form-group  col-md-6"
+        style={{ margin: '25px 0', fontWeight: 'bold' }}
+      >
+        <label htmlFor="fin_valordescprog" className="form-label">
+          Descuentos que ofrece el programa (tipo y porcentaje asociado)
+        </label>
 
-  {/* Checkbox y campo de texto para Funcionarios USM */}
-  <div className="form-check col-md-4">
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={formData.funcionariosUSM}
-          onChange={handleCheckboxChange}
-          name="funcionariosUSM"
-        />
-      }
-      label="Funcionarios USM"
-    />
-  </div>
+        <div className="form-row"></div>
+        {/* Checkbox y campo de texto para Ex alumnos USM */}
+        <Grid container spacing={2}>
+          {/* primera row */}
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.exAlumnosUSM}
+                    onChange={handleCheckboxChange}
+                    name="exAlumnosUSM"
+                  />
+                }
+                label="Ex alumnos USM"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {formData.exAlumnosUSM ? (
+              <TextField
+                type="number"
+                className="form-control"
+                name="exAlumnosUSM"
+                id="exAlumnosUSM"
+                label="Porcentaje"
+                InputProps={{ inputProps: { min: 0, max: 100 } }}
+                onChange={handlePorcentajeChange}
+              />
+            ) : (
+              <>&nbsp;</>
+            )}
+          </Grid>
+          {/* sgundo row */}
+          <Grid item md={6} style={{ paddingTop: '10px' }}>
+            {/* Checkbox y campo de texto para Mujeres */}
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.mujeres}
+                    onChange={handleCheckboxChange}
+                    name="mujeres"
+                  />
+                }
+                label="Mujeres"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {formData.mujeres ? (
+              <TextField
+                type="number"
+                className="form-control"
+                name="mujeres"
+                id="mujeres"
+                label="Porcentaje"
+                InputProps={{ inputProps: { min: 0, max: 100 } }}
+                onChange={handlePorcentajeChange}
+              />
+            ) : (
+              <>&nbsp;</>
+            )}
+          </Grid>
 
-  {/* Checkbox y campo de texto para Funcionarios de servicios públicos */}
-  <div className="form-check col-md-4">
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={formData.funcionariosServiciosPublicos}
-          onChange={handleCheckboxChange}
-          name="funcionariosServiciosPublicos"
-        />
-      }
-      label="Funcionarios Servicios Publicos"
-    />
-  </div>
+          {/* Tercer row */}
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {/* Checkbox y campo de texto para Funcionarios USM */}
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.funcionariosUSM}
+                    onChange={handleCheckboxChange}
+                    name="funcionariosUSM"
+                  />
+                }
+                label="Funcionarios USM"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {formData.funcionariosUSM ? (
+              <TextField
+                type="number"
+                className="form-control"
+                name="funcionariosUSM"
+                id="funcionariosUSM"
+                label="Porcentaje"
+                InputProps={{ inputProps: { min: 0, max: 100 } }}
+                onChange={handlePorcentajeChange}
+              />
+            ) : (
+              <>&nbsp;</>
+            )}
+          </Grid>
 
-  {/* Checkbox y campo de texto para Matrícula anticipada */}
-  <div className="form-check col-md-4">
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={formData.matriculaAnticipada}
-          onChange={handleCheckboxChange}
-          name="matriculaAnticipada"
-        />
-      }
-      label="Matricula anticipada"
-    />
-  </div>
+          {/* cuarto row */}
 
-  {/* Checkbox y campo de texto para Otro */}
-  <div className="form-check col-md-4">
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={formData.otros}
-          onChange={handleCheckboxChange}
-          name="otros"
-        />
-      }
-      label="Otro"
-    />
-    {formData.otros && (
-      <div className="form-row">
-        <div className="form-group col-md-6">
-          <TextField
-            type="text"
-            className="form-control"
-            name="otrosText"
-            id="otrosText"
-            label="Otro descuento"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <TextField
-            type="number"
-            className="form-control"
-            name="otrosPorcentaje"
-            id="otrosPorcentaje"
-            label="Porcentaje"
-            InputProps={{ inputProps: { min: 0, max: 100 } }}
-            onChange={handlePorcentajeChange}
-          />
-        </div>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {/* Checkbox y campo de texto para Funcionarios de servicios públicos */}
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.funcionariosServiciosPublicos}
+                    onChange={handleCheckboxChange}
+                    name="funcionariosServiciosPublicos"
+                  />
+                }
+                label="Funcionarios Servicios Publicos"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {formData.funcionariosServiciosPublicos ? (
+              <TextField
+                type="number"
+                className="form-control"
+                name="funcionariosServiciosPublicos"
+                id="funcionariosServiciosPublicos"
+                label="Porcentaje"
+                InputProps={{ inputProps: { min: 0, max: 100 } }}
+                onChange={handlePorcentajeChange}
+              />
+            ) : (
+              <>&nbsp;</>
+            )}
+          </Grid>
+
+          {/* quinto row */}
+
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {/* Checkbox y campo de texto para Matrícula anticipada */}
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.matriculaAnticipada}
+                    onChange={handleCheckboxChange}
+                    name="matriculaAnticipada"
+                  />
+                }
+                label="Matricula anticipada"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px', maxHeight: '5px' }}>
+            {formData.matriculaAnticipada ? (
+              <TextField
+                style={{ maxHeight: '5px' }}
+                type="number"
+                className="form-control"
+                name="matriculaAnticipada"
+                id="matriculaAnticipada"
+                label="Porcentaje"
+                InputProps={{ inputProps: { min: 0, max: 100 } }}
+                onChange={handlePorcentajeChange}
+              />
+            ) : (
+              <>&nbsp;</>
+            )}
+          </Grid>
+
+          {/* Sexto row */}
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {/* Checkbox y campo de texto para Otro */}
+            <div className="form-check col-md-4">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.otros}
+                    onChange={handleCheckboxChange}
+                    name="otros"
+                  />
+                }
+                label="Otro"
+              />
+            </div>
+          </Grid>
+          <Grid item md={6} style={{ marginTop: '10px' }}>
+            {formData.otros && (
+              <Grid container spacing={2}>
+                <Grid item md={6}>
+                  <TextField
+                    type="text"
+                    className="form-control"
+                    name="otrosText"
+                    id="otrosText"
+                    label="Otro descuento"
+                    onChange={handleChange}
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    type="number"
+                    className="form-control"
+                    name="otrosPorcentaje"
+                    id="otrosPorcentaje"
+                    label="Porcentaje"
+                    InputProps={{ inputProps: { min: 0, max: 100 } }}
+                    onChange={handlePorcentajeChange}
+                  />
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+
+          <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
+          <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
+        </Grid>
       </div>
-    )}
-    </div>
-  </div>
-    
+
       {/* Botón para guardar sin enviar */}
-      <div className="row mb-10">
+      {/* <div className="row mb-10">
         <div className="col-12">
           <Button
             variant="outlined"
@@ -329,9 +449,8 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             Guardar sin enviar
           </Button>
         </div>
-      </div>
+      </div> */}
       {/* Campos adicionales fuera del bloque anterior */}
-      
 
       {/* Uso interno Finanzas */}
       {/* <Typography variant="h4" align="center" mt={4} mb={5}  >

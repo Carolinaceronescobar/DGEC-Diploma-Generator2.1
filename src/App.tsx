@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '../src/pages/login/AuthContext';
-import SideBar from './components/SideBar.tsx';
+import SideBar from './components/Dashboard.tsx';
 import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 

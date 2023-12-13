@@ -1,12 +1,21 @@
 // SolicitudesForm.tsx
 
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 // import DGECForm from './Form/DGECForm';
 // import RegistroCurricularForm from './Form/RegistroCurricularForm';
 // import AdmisionForm from './Form/AdmisionForm';
 // import FinanzasForm from './Form/FinanzasForm';
 import Checkbox from '@mui/material/Checkbox';
+import { get_form } from '../../utils/formulario';
 
 // Define el tipo de datos para las solicitudes
 type Solicitud = {
@@ -24,6 +33,7 @@ type Solicitud = {
 type SolicitudesTablaProps = {
   solicitudes: Solicitud[];
 };
+let algo = await get_form();
 
 const solicitudesData = [
   {
@@ -37,12 +47,12 @@ const solicitudesData = [
     revisionDIREST: false,
     revisionFINANZAS: false,
   },
+
   // Agrega más datos según sea necesario
 ];
 
 const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
-
-  return (  
+  return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
@@ -60,26 +70,24 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {solicitudes.map((solicitud) => (
+          {algo.map((solicitud) => (
             <TableRow key={solicitud.id}>
               <TableCell>{solicitud.id}</TableCell>
-              <TableCell>{solicitud.fecha}</TableCell>
-              <TableCell>{solicitud.programa}</TableCell>
+              <TableCell>{solicitud.value}</TableCell>
+              <TableCell>{solicitud.nombrePrograma}</TableCell>
               <TableCell>{solicitud.departamento}</TableCell>
-              <TableCell>{solicitud.campus}</TableCell>
+              <TableCell>{solicitud.sede}</TableCell>
               <TableCell>{solicitud.estado}</TableCell>
               <TableCell>
-              <Checkbox checked={solicitud.revisionDGEC} disabled />
+                <Checkbox checked={solicitud.revisionDGEC} disabled />
               </TableCell>
               <TableCell>
-              <Checkbox checked={solicitud.revisionDIREST} disabled />
+                <Checkbox checked={solicitud.revisionDIREST} disabled />
               </TableCell>
               <TableCell>
-              <Checkbox checked={solicitud.revisionFINANZAS} disabled />
+                <Checkbox checked={solicitud.revisionFINANZAS} disabled />
               </TableCell>
-              <TableCell>
-
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+//import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { obtenerInformacionUsuario } from '../utils/api'; //importa la función desde api.tsx
+import { Typography } from '@mui/material';
 
 const TopBar: React.FC = () => {
   //Estado para gestionar el menú desplegable
@@ -58,48 +59,54 @@ const TopBar: React.FC = () => {
     console.log('Cerrando sesión...');
   };
 
+  const isLoggedIn = !!usuario;
+
   return (
     <AppBar position="static" style={{ backgroundColor: '#004B85' }}>
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {/*Logotipo de la Universidad */}
-          <Avatar
+          <img
             alt="logo"
-            src="./src/assets/version horizontal.png"
-            sx={{
-              width: 350,
-              height: 150,
-              marginRight: 50,
+            src="./src/assets/logo-usm_blanco-min.png"
+            style={{
+              width: 250,
+              height: 50,
+              marginTop: 30,
+              marginLeft: 30,
             }}
           />
 
-          {/*Mostrar información del usuario si esta disponible */}
-          {usuario && (
-            <div style={{ marginLeft: 20, color: 'white' }}>
-              {/* Botón para mostrar el nombre de usuario */}
-              <Button
-                color="inherit"
-                onClick={handleClick}
-                style={{ fontFamily: 'Roboto Condensed' }}
-              >
-                {usuario.nombre}
-              </Button>
-              {/*Se puede añadir otras propiedades al usuario*/}
-
-              {/* Menú desplegable */}
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Perfil</MenuItem>
-                <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
-              </Menu>
-            </div>
-          )}
+          {/* Texto "progra" al lado del logotipo */}
+          <Typography variant="h6" style={{ marginLeft: 10, color: 'white' }}>
+            Creacion de Programa
+          </Typography>
         </div>
+        {/*Mostrar información del usuario si esta disponible */}
+        {usuario && (
+          <div style={{ marginLeft: 20, color: 'white' }}>
+            {/* Botón para mostrar el nombre de usuario */}
+            <Button
+              color="inherit"
+              onClick={handleClick}
+              style={{ fontFamily: 'Roboto Condensed' }}
+            >
+              {usuario.nombre}
+            </Button>
+            {/*Se puede añadir otras propiedades al usuario*/}
 
+            {/* Menú desplegable */}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Perfil</MenuItem>
+              <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
+            </Menu>
+          </div>
+        )}
         {/* Mostrar opciones según el perfil de usuario */}
         {usuario && (
           <Button

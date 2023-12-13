@@ -9,7 +9,7 @@ import FormularioDGEC from '../pages/dgec/DGECForm.tsx';
 import RegistroCurricularForm from '../pages/registrocurricular/RegistroCurricularForm.tsx';
 import AdmisionForm from '../pages/admision/AdmisionForm.tsx';
 import FinanzasForm from '../pages/finanzas/FinanzasForm.tsx';
-import Solicitudes from './SideBar.tsx';
+import Solicitudes from './Dashboard.tsx';
 
 const HorizontalLinearStepper: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -58,6 +58,10 @@ const HorizontalLinearStepper: React.FC = () => {
     <Solicitudes />,
   ]);
 
+  const save_form = () => {
+    console.log('¡Hola desde la función en el componente padre!');
+  };
+
   //Funcion para manejar el cambio de datos en el formulario
   const handleFormChange = (data: any) => {
     setFormData((prevData) => ({ ...prevData, ...data }));
@@ -104,7 +108,13 @@ const HorizontalLinearStepper: React.FC = () => {
     }
   };
 
-  const steps: string[] = ['Paso 1', 'Paso 2', 'Paso 3', 'Paso 4', 'Paso 5'];
+  const steps: string[] = [
+    'Autorizacion',
+    'Registro Curricular',
+    'Informacion del Programa',
+    'Finanzas',
+    'Inicio',
+  ];
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -26,8 +26,8 @@ export const login = async (
   return response.json();
 };
 //Establece la URL base de la API
-const baseURL = 'http://localhost:5000/api'; // se ajusta URL según la configuración del servidor
-
+// const baseURL = 'http://localhost:5000/api'; // se ajusta URL según la configuración del servidor
+const baseURL = 'http://127.0.0.1:8000/api/formulario/';
 //se crea una instancia de axios con la URL base
 const api = axios.create({
   baseURL,
