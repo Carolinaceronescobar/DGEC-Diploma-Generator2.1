@@ -43,15 +43,12 @@ function obtenerSolicitudes(): Solicitud[] {
 
 // FIXME Cambiar nombre de este archivo y de todas importaciones
 const ProgramRequestForm: React.FC = () => {
-  const solicitudesData = obtenerSolicitudes(); // Por ejemplo, una función para obtener las solicitudes
-
   return (
     <div>
       <TopBar />
       <div className="container">
         <h1>Solicitud Creación de Programa</h1>
         <HorizontalLinearStepper />
-        <SolicitudesTabla solicitudes={solicitudesData} />
       </div>
       <Footer />
     </div>

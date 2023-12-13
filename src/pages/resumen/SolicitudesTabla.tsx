@@ -38,12 +38,12 @@ let algo = await get_form();
 const solicitudesData = [
   {
     id: 1,
-    fecha: '2023-01-01',
-    programa: 'Programa 1',
-    departamento: 'Departamento 1',
-    campus: 'Campus 1',
+    fecha: '2023-12-14',
+    programa: 'Curso de Gestión de Activos',
+    departamento: 'Departamento bbdd Nombre1',
+    campus: 'Sede Nombre2',
     estado: 'Pendiente',
-    revisionDGEC: false,
+    revisionDGEC: true,
     revisionDIREST: false,
     revisionFINANZAS: false,
   },

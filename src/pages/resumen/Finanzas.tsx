@@ -30,8 +30,6 @@ const SolicitudCreacionPrograma = () => {
     <div className="container">
       <h1>Solicitud Creación de Programa</h1>
       <HorizontalLinearStepper />
-      {/* Utiliza SolicitudesTabla y pasa los datos como propiedades */}
-      <SolicitudesTabla solicitudes={solicitudesData} />
     </div>
   );
 };
@@ -53,10 +51,6 @@ const App = () => {
         <div>
           <TopBar />
           {/* Define tus rutas usando Routes y Route */}
-          <Routes>
-            <Route path="/" element={<SolicitudCreacionPrograma />} />
-            {/* Agrega más rutas según sea necesario */}
-          </Routes>
           <Footer />
         </div>
       </AuthProvider>

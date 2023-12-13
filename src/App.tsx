@@ -6,7 +6,7 @@ import SideBar from './components/Dashboard.tsx';
 import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 
-// import LoginScreen from './pages/login/LoginScreen.tsx';
+import LoginScreen from './pages/login/LoginScreen.tsx';
 // import TopBar from './components/TopBar.tsx';
 // import Footer from './components/Footer.tsx';
 
@@ -40,10 +40,10 @@ function App() {
           {/* FIXME Cambiar nomber de componente */}
           <Route path="/" element={<SideBar />} />
           <Route path="/formulario" element={<ProgramRequestForm />} />
-
+          <Route path="/login" element={<LoginScreen />} />
           {/* TODO Corregir rutas faltantes */}
           {/* 
-              <Route path="/" element={<LoginScreen />} />
+              
               <Route path="/finanzas" element={<UsoInternoFinanzas />} />
               <Route path="/Dgec" element={<UsoInternoDGEC />} />
               <Route path="/DireccionEstudios" element={<UsointernoDireccionEstudios/>} /> 
