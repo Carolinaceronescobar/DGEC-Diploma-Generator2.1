@@ -4,16 +4,18 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+//import Typography from '@mui/material/Typography';
 import FormularioDGEC from '../pages/dgec/DGECForm.tsx';
 import RegistroCurricularForm from '../pages/registrocurricular/RegistroCurricularForm.tsx';
 import AdmisionForm from '../pages/admision/AdmisionForm.tsx';
 import FinanzasForm from '../pages/finanzas/FinanzasForm.tsx';
-import Solicitudes from './Dashboard.tsx';
+//import Solicitudes from './Dashboard.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const HorizontalLinearStepper: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const navigate = useNavigate(); //para navegar al dashboard
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -39,13 +41,11 @@ const HorizontalLinearStepper: React.FC = () => {
     registroCurricularData: any;
     admisionData: any;
     finanzasData: any;
-    solicitudesData: any;
   }>({
     dgecData: {},
     registroCurricularData: {},
     admisionData: {},
     finanzasData: {},
-    solicitudesData: {},
   });
 
   const [forms, setForms] = React.useState<React.ReactElement[]>([
@@ -55,7 +55,6 @@ const HorizontalLinearStepper: React.FC = () => {
     <RegistroCurricularForm />,
     <AdmisionForm />,
     <FinanzasForm />,
-    <Solicitudes />,
   ]);
 
   const save_form = () => {
@@ -105,6 +104,7 @@ const HorizontalLinearStepper: React.FC = () => {
     // Guardar en la base de datos cuando estés en el último paso
     if (activeStep === steps.length - 1) {
       saveToDatabase();
+      navigate('/');
     }
   };
 
@@ -113,7 +113,6 @@ const HorizontalLinearStepper: React.FC = () => {
     'Registro Curricular',
     'Informacion del Programa',
     'Finanzas',
-    'Inicio',
   ];
 
   return (

@@ -14,7 +14,7 @@ import {
   Select,
 } from '@mui/material';
 import UsoInternoFinanzas from '../usointfinanzas/UsointernoFinanzasForm';
-
+import { save_form } from '../../utils/formulario';
 // Definir un tipo para las claves posibles en fin_valordescprog
 type ValordescprogKey =
   | 'fin_valordescprog_asd'
@@ -142,21 +142,13 @@ const FinanzasForm: React.FC = () => {
   // Maneja el clic en el botón "Guardar sin enviar".
   const handleGuardarClick = async () => {
     try {
+      let formularioObjeto = {
+        arancel: arancel,
+        modalidad_pago: modalidadPago,
+        ...formData,
+      };
+      save_form(formularioObjeto);
       // Realiza una solicitud POST a un endpoint de tu servidor con los datos del formulario.
-      const response = await fetch('/api/guardarFormulario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          formData,
-          handleCheckboxChange,
-          handleEnviarFinanzas,
-          handleGuardarClick,
-          handlePorcentajeChange,
-          handleSubmit,
-        }),
-      });
 
       // Verifica si la solicitud fue exitosa y muestra mensajes en la consola.
       if (response.ok) {
@@ -167,6 +159,25 @@ const FinanzasForm: React.FC = () => {
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
     }
+  };
+  const opciones_pago_obj = [
+    { id: 1, name: 'Tarjeta de Crédito' },
+    { id: 2, name: 'Tarjeta de Débito' },
+    { id: 3, name: 'Transferencia' },
+  ];
+  const opciones_pago = [
+    'Tarjeta de Crédito',
+    'Tarjeta de Débito',
+    'Transferencia',
+  ];
+  const [modalidadPago, setModalidadPago] = useState([]);
+
+  const selectModalidadPagohandleChange = (event) => {
+    setModalidadPago(event.target.value);
+  };
+  const [arancel, setHandleArancelChange] = useState(''); // Estado local para el nombre del programa
+  const handlestaffArancelChange = (event) => {
+    setHandleArancelChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   // Renderizado del componente
@@ -196,20 +207,27 @@ const FinanzasForm: React.FC = () => {
             id="regcur_durprog"
             label="Valor de Arancel del programa *"
             variant="outlined"
+            value={arancel}
+            onChange={handlestaffArancelChange}
           />
         </Grid>
         <Grid item xs={5}>
-          <FormControl variant="outlined" fullWidth sx={{ mt: 0 }}>
+          <FormControl>
             <InputLabel id="modalidad-pago-label">Modalidad de Pago</InputLabel>
             <Select
               labelId="modalidad-pago-label"
               id="regcur_sedeprog"
               label="Modalidad de Pago"
+              multiple
+              value={modalidadPago}
+              onChange={selectModalidadPagohandleChange}
             >
               {/* Opciones de modalidad de pago */}
-              <MenuItem value="Pago 1">Tarjeta de Débito</MenuItem>
-              <MenuItem value="Pago 2">Tarjeta de Crédito</MenuItem>
-              <MenuItem value="Pago 3">Transferencia</MenuItem>
+              {opciones_pago.map((opcion) => (
+                <MenuItem key={opcion} value={opcion}>
+                  {opcion}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -466,7 +484,12 @@ const FinanzasForm: React.FC = () => {
 
       {/* Botón adicional para guardar sin enviar */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button variant="outlined" color="secondary" className="float-left">
+        <Button
+          variant="outlined"
+          color="secondary"
+          className="float-left"
+          onClick={handleGuardarClick}
+        >
           Guardar sin enviar
         </Button>
       </Box>

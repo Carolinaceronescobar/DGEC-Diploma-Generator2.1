@@ -1,6 +1,8 @@
 // Importa las dependencias necesarias de React y Material-UI
 import React, { useState } from 'react';
+
 import {
+  Autocomplete,
   Typography,
   Button,
   TextField,
@@ -9,12 +11,21 @@ import {
   FormGroup,
   FormControlLabel,
   Stack,
+  Grid,
 } from '@mui/material';
 import Box from '@mui/system/Box';
 import Input from '@mui/material/Input';
 import Container from '@mui/material/Container';
 import { guardarFormulario } from '../../utils/api';
-
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@mui/material';
+import { save_form } from '../../utils/formulario';
 // Definición del componente funcional AdmisionForm
 const AdmisionForm: React.FC = () => {
   // Estado local para almacenar el formulario y la foto adjunta
@@ -35,6 +46,57 @@ const AdmisionForm: React.FC = () => {
 
   // Estado local para almacenar la foto adjunta
   const [FotoAdjunta, setFotoAdjunta] = useState<File | null>(null);
+
+  const [descripcionPrograma, setdescripcionPrograma] = useState(''); // Estado local para el nombre del programa
+  const handleDescripcionProgramaChange = (event) => {
+    setdescripcionPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [objetivoPrograma, setobjetivoPrograma] = useState(''); // Estado local para el nombre del programa
+  const handleObjetivoProgramaChange = (event) => {
+    setobjetivoPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [reseniaPrograma, setReseniaProgramaChange] = useState(''); // Estado local para el nombre del programa
+  const handleReseniaProgramaChange = (event) => {
+    setReseniaProgramaChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [enlaceLinkedin, setEnlaceLinkedinChange] = useState(''); // Estado local para el nombre del programa
+  const handleEnlaceLinkedinChange = (event) => {
+    setEnlaceLinkedinChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [requisitosPostulante, setSelectedJornadaOptions] = useState({
+    cedula: false,
+    licenciaMedia: false,
+    curriculum: false,
+    otra: false,
+  });
+
+  const requisitosPostulanteHandleCheckboxChange = (event) => {
+    setSelectedJornadaOptions({
+      ...requisitosPostulante,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const [numeroEstudianteMaximo, setNumeroEstudianteMaximoChange] =
+    useState(''); // Estado local para el nombre del programa
+  const handleNumeroEstudianteMaximoChange = (event) => {
+    setNumeroEstudianteMaximoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [numeroEstudianteMinimo, setNumeroEstudianteMinimoChange] =
+    useState(''); // Estado local para el nombre del programa
+  const handleNumeroEstudianteMinimoChange = (event) => {
+    setNumeroEstudianteMinimoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [staffProfesores, sethandlestaffProfesoresChange] = useState(''); // Estado local para el nombre del programa
+  const handlestaffProfesoresChange = (event) => {
+    sethandlestaffProfesoresChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
 
   // Función para manejar cambios en los campos de texto
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,21 +138,78 @@ const AdmisionForm: React.FC = () => {
   };
 
   // Maneja el clic en el botón "Guardar sin enviar".
+  //Isra
   const handleGuardarClick = async () => {
-    try {
-      const response = await fetch('/api/guardarFormulario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          formData,
-          FotoAdjunta,
-        }),
-      });
-      console.log('Formulario guardado correctamente');
-    } catch (e) {
-      console.error('Error al guardar el formulario:', e);
+    let formularioObjeto = {
+      programa_descripcion: descripcionPrograma,
+      programa_objetivo: objetivoPrograma,
+      programa_resenia: reseniaPrograma,
+      linkedin: enlaceLinkedin,
+      ...requisitosPostulante,
+      cupo_maximo: numeroEstudianteMaximo,
+      cupo_minimo: numeroEstudianteMinimo,
+      modulos: tableData,
+      profesores: staffProfesores,
+    };
+    save_form(formularioObjeto);
+  };
+
+  // Lista Modulo programas
+  const [hours, setHours] = useState('');
+  const [tableData, setTableData] = useState([]);
+
+  const handleAdd = () => {
+    setTableData([...tableData, { module: inputModuleValue, hour: hours }]);
+    setHours('');
+  };
+
+  const handleEdit = (index) => {
+    agregarNuevoValor(tableData[index].module);
+    setHours(tableData[index].hour);
+    handleDelete(index);
+    // Aquí puedes implementar la lógica para editar la fila seleccionada
+  };
+  const handleDelete = (index) => {
+    // tableData[index].module);
+    tableData.splice(index, 1);
+    setTableData([...tableData]);
+    // Aquí puedes implementar la lógica para editar la fila seleccionada
+  };
+
+  const [departamentoDireccionEstudios, setDepartamentoDireccionEstudios] =
+    useState([]);
+
+  // Lista Modulo Select
+  const [optionsModule, setOptions] = useState([
+    'Opción 1',
+    'Opción 2',
+    'Opción 3',
+  ]);
+  const [inputModuleValue, setinputModuleValue] = useState('');
+  const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
+
+  const handleInputModuleChange = (event, newinputModuleValue) => {
+    console.log('newinputModuleValue->' + newinputModuleValue);
+    setinputModuleValue(newinputModuleValue);
+  };
+  const handleInputAutoCompleteChange = (event) => {
+    const newValue = event.target.value;
+    console.log(newValue);
+    setinputAutocompleteModuleValue(newValue);
+  };
+  function agregarNuevoValor(valor) {
+    if (!optionsModule.includes(valor)) {
+      setOptions([...optionsModule, valor]);
+    }
+    setinputModuleValue(valor);
+  }
+  const handleKeyPress = (event) => {
+    if (
+      event.key === 'Enter' &&
+      inputAutocomplete.trim() !== '' &&
+      !optionsModule.includes(inputAutocomplete)
+    ) {
+      agregarNuevoValor(inputAutocomplete);
     }
   };
 
@@ -133,7 +252,8 @@ const AdmisionForm: React.FC = () => {
               multiline
               rows={2}
               variant="outlined"
-              onChange={handleChange}
+              value={descripcionPrograma}
+              onChange={handleDescripcionProgramaChange}
             />
           </FormGroup>
         </div>
@@ -161,7 +281,8 @@ const AdmisionForm: React.FC = () => {
                 multiline
                 rows={2}
                 variant="outlined"
-                onChange={handleChange}
+                value={objetivoPrograma}
+                onChange={handleObjetivoProgramaChange}
               />
             </FormGroup>
           </div>
@@ -190,7 +311,8 @@ const AdmisionForm: React.FC = () => {
                 multiline
                 rows={2}
                 variant="outlined"
-                onChange={handleChange}
+                value={reseniaPrograma}
+                onChange={handleReseniaProgramaChange}
               />
             </FormGroup>
           </div>
@@ -221,7 +343,8 @@ const AdmisionForm: React.FC = () => {
               name="linkedin"
               id="adm_linkedin"
               variant="outlined"
-              onChange={handleChange}
+              value={enlaceLinkedin}
+              onChange={handleEnlaceLinkedinChange}
             />
           </FormGroup>
         </Stack>
@@ -239,8 +362,8 @@ const AdmisionForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={formData.reqprog.cedula}
-                  onChange={handleCheckboxChange}
+                  checked={requisitosPostulante.cedula}
+                  onChange={requisitosPostulanteHandleCheckboxChange}
                   name="cedula"
                 />
               }
@@ -249,9 +372,9 @@ const AdmisionForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={formData.reqprog.licencia}
-                  onChange={handleCheckboxChange}
-                  name="licencia"
+                  checked={requisitosPostulante.licenciaMedia}
+                  onChange={requisitosPostulanteHandleCheckboxChange}
+                  name="licenciaMedia"
                 />
               }
               label="Licencia de Educación Media"
@@ -260,8 +383,8 @@ const AdmisionForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={formData.reqprog.curriculum}
-                  onChange={handleCheckboxChange}
+                  checked={requisitosPostulante.curriculum}
+                  onChange={requisitosPostulanteHandleCheckboxChange}
                   name="curriculum"
                 />
               }
@@ -271,9 +394,9 @@ const AdmisionForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={formData.reqprog.otro}
-                  onChange={handleCheckboxChange}
-                  name="otro"
+                  checked={requisitosPostulante.otra}
+                  onChange={requisitosPostulanteHandleCheckboxChange}
+                  name="otra"
                 />
               }
               label="Otro"
@@ -302,7 +425,8 @@ const AdmisionForm: React.FC = () => {
             name="vacprog"
             id="adm_vacprog"
             variant="outlined"
-            onChange={handleChange}
+            value={numeroEstudianteMaximo}
+            onChange={handleNumeroEstudianteMaximoChange}
           />
         </FormGroup>
 
@@ -314,7 +438,8 @@ const AdmisionForm: React.FC = () => {
             name="matrminprog"
             id="adm_matrminprog"
             variant="outlined"
-            onChange={handleChange}
+            value={numeroEstudianteMinimo}
+            onChange={handleNumeroEstudianteMinimoChange}
           />
         </FormGroup>
       </div>
@@ -330,21 +455,70 @@ const AdmisionForm: React.FC = () => {
             Liste Módulos del Programa
           </Typography>
           <hr />
-
           <div>
-            {/* Campo de texto para Modulos del Programa */}
-            <FormGroup>
-              <TextField
-                fullWidth
-                label="Módulos del Programa"
-                name="descprog"
-                id="adm_descprog"
-                multiline
-                rows={2}
-                variant="outlined"
-                onChange={handleChange}
-              />
-            </FormGroup>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Autocomplete
+                  value={inputModuleValue}
+                  options={optionsModule}
+                  onChange={handleInputModuleChange}
+                  onKeyDown={handleKeyPress}
+                  renderInput={(params) => (
+                    <TextField
+                      onChange={handleInputAutoCompleteChange}
+                      {...params}
+                      label="Módulo"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  type="number"
+                  value={hours}
+                  onChange={(e) => setHours(e.target.value)}
+                  label="Horas"
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className="float-left"
+                  onClick={handleAdd}
+                  sx={{ marginTop: 2 }}
+                >
+                  Agregar
+                </Button>
+              </Grid>
+            </Grid>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Módulo</TableCell>
+                    <TableCell>Hora</TableCell>
+                    <TableCell>Editar</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tableData.map((data, index) => (
+                    <TableRow>
+                      <TableCell>{data.module}</TableCell>
+                      <TableCell>{data.hour}</TableCell>
+                      <TableCell>
+                        <button onClick={() => handleEdit(index)}>
+                          Editar
+                        </button>
+                        <button onClick={() => handleDelete(index)}>
+                          Eliminar
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
         </div>
       </Box>
@@ -371,7 +545,8 @@ const AdmisionForm: React.FC = () => {
                 multiline
                 rows={2}
                 variant="outlined"
-                onChange={handleChange}
+                value={staffProfesores}
+                onChange={handlestaffProfesoresChange}
               />
             </FormGroup>
           </div>

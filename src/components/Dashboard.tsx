@@ -16,15 +16,15 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemButton,
+  // ListItemButton,
   Divider,
 } from '@mui/material';
 import {
   ChevronLeft as ChevronLeftIcon,
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
+  // Menu as MenuIcon,
+  // Notifications as NotificationsIcon,
 } from '@mui/icons-material';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,7 @@ function Copyright(props: any) {
   );
 }
 
-const drawerWidth: number = 240;
+const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

@@ -64,6 +64,11 @@ const FormularioDGEC: React.FC = () => {
   // Maneja el clic en el botón "Guardar sin enviar".
   const handleGuardarClick = async () => {
     try {
+      const formularioObjeto = {
+        dictado_anterior: haDictadoPrograma,
+        programa_academico: programaSeleccionado,
+        memo: memoAdjunto,
+      };
       const datoJson = JSON.stringify({
         haDictadoPrograma,
         programaSeleccionado,
@@ -71,15 +76,15 @@ const FormularioDGEC: React.FC = () => {
         handleProgramaSeleccionadoChange,
         handleGuardarClick,
       });
-      console.log(datoJson);
+      save_form(formularioObjeto);
 
-      save_form({
-        haDictadoPrograma,
-        programaSeleccionado,
-        memoAdjunto,
-        handleProgramaSeleccionadoChange,
-        handleGuardarClick,
-      });
+      // save_form({
+      //   haDictadoPrograma,
+      //   programaSeleccionado,
+      //   memoAdjunto,
+      //   handleProgramaSeleccionadoChange,
+      //   handleGuardarClick,
+      // });
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
     }

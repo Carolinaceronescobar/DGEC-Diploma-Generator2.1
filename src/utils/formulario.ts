@@ -1,7 +1,7 @@
 import { loadingButtonClasses } from '@mui/lab';
 import axios from 'axios';
 
-let url = 'http://127.0.0.1:8000/api/formulario/';
+const url = 'http://127.0.0.1:8000/api/formulario/';
 
 export async function get_form() {
   try {
@@ -41,9 +41,9 @@ export function save_form(obj) {
         console.log(error);
       });
   } else {
-    url = `${url}${body.id}`;
+    const _url = `${url}${body.id}`;
     axios
-      .put(url, body)
+      .put(_url, body)
       .then((response) => {
         write_form(response.data);
       })

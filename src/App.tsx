@@ -7,13 +7,13 @@ import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 
 import LoginScreen from './pages/login/LoginScreen.tsx';
+import UsoInternoFinanzas from './pages/usointfinanzas/UsointernoFinanzasForm.tsx';
 // import TopBar from './components/TopBar.tsx';
 // import Footer from './components/Footer.tsx';
 
 // import { PrivateRoute } from './auth/PrivateRoute';
-// import UsoInternoFinanzas from './pages/usointfinanzas/UsointernoFinanzasForm';
-// import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
-// import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
+import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
+import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,14 +40,13 @@ function App() {
           {/* FIXME Cambiar nomber de componente */}
           <Route path="/" element={<SideBar />} />
           <Route path="/formulario" element={<ProgramRequestForm />} />
+          <Route path="/finanzas" element={<UsoInternoFinanzas />} />
           <Route path="/login" element={<LoginScreen />} />
-          {/* TODO Corregir rutas faltantes */}
-          {/* 
-              
-              <Route path="/finanzas" element={<UsoInternoFinanzas />} />
-              <Route path="/Dgec" element={<UsoInternoDGEC />} />
-              <Route path="/DireccionEstudios" element={<UsointernoDireccionEstudios/>} /> 
-          */}
+          <Route
+            path="/direccionestudios"
+            element={<UsointernoDireccionEstudios />}
+          />
+          <Route path="/dgec" element={<UsoInternoDGEC />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

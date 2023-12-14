@@ -15,6 +15,6 @@ export const mainListItems = [
 
 export const secondaryListItems = [
   // { id: 3, text: 'Opción 1', route: '/opcion1' },
-  { id: 4, text: 'Cerrar Sesión 2', route: '/' },
+  { id: 4, text: 'Cerrar Sesión', route: '/' },
   // Agrega más elementos según sea necesario
 ] as const;

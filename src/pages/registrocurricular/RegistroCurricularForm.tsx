@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { format } from 'date-fns';
+
 import {
   Container,
   Typography,
@@ -23,7 +25,7 @@ import { save_form } from '../../utils/formulario';
 // import { DatePicker } from '@mui/x-date-pickers';
 //import api from '../../../utils/api';
 import DesktopDatePicker from '@mui/x-date-pickers/DesktopDatePicker';
-
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -56,6 +58,7 @@ const RegistroCurricularForm: React.FC = () => {
 
   //Estado para departamentos
   const [departamentoDGEC, setDepartamentoDGEC] = useState<Departamento[]>([]);
+
   const [selectedDepartamento, setSelectedDepartamento] = useState<
     number | string
   >('');
@@ -255,26 +258,38 @@ const RegistroCurricularForm: React.FC = () => {
       //     mostrarUsoInternoDireccionEstudios,
       //   }),
       // });
-      save_form({
-        handleGuardarClick,
-        handleGuardarDGEC,
-        handleGuardarDireccionEstudios,
-        handleEnviarDGEC,
-        handleEnviarDireccionEstudios,
-        UsoInternoDGEC,
-        mostrarUsoInternoDireccionEstudios,
-        nombrePrograma,
-        directorPrograma,
-        FormularioPrincipalCompleto,
-        nivelProgramaAcademicoSeleccionado,
-        tipoProgramaAcademicoSeleccionado,
-        departamento,
-        emplazamiento,
-        ...selectedOptions,
-        value,
-      });
-      // Lógica para Guardar el Formulario
-      console.log('Formulario guardado', response);
+
+      const objetoFormularioDocumento = {
+        programa_nivel: nivelProgramaAcademicoSeleccionado,
+        programa_tipo: tipoProgramaAcademicoSeleccionado,
+        programa_nombre: nombrePrograma,
+        programa_director: directorPrograma,
+        departamento: departamento,
+        emplazamiento: emplazamiento,
+        ...jornadaOptions,
+        ...modalidadOptions,
+        duracion_fecha_inicio: format(
+          new Date(duracionFechaInicio),
+          'dd-MM-yyyy'
+        ),
+        duracion_fecha_termino: format(
+          new Date(duracionFechaTermino),
+          'dd-MM-yyyy'
+        ),
+        programa_duracion: duracionPrograma,
+        programa_numero: numeroPrograma,
+        convocatoria_fecha_inicio: format(
+          new Date(convocatoriaFInicio),
+          'dd-MM-yyyy'
+        ),
+        convocatoria_fecha_termino: format(
+          new Date(convocatoriaFTermino),
+          'dd-MM-yyyy'
+        ),
+      };
+      console.log(JSON.stringify(objetoFormularioDocumento));
+      save_form(objetoFormularioDocumento);
+      console.log('Formulario guardado');
       //Lógica para el error al guardar formulario
     } catch (error: any) {
       console.error('Error al guardar el formulario', error.message || error);
@@ -294,13 +309,13 @@ const RegistroCurricularForm: React.FC = () => {
   const handletipoProgramaAcademicoChange = (event) => {
     settipoProgramaAcademicoSeleccionado(event.target.value); // Actualizar el estado con el valor seleccionado
   };
-  const [nombrePrograma, setNombrePrograma] = useState(''); // Estado local para el nombre del programa
-  const [directorPrograma, setDirectorPrograma] = useState(''); // Estado local para el director del programa
 
+  const [nombrePrograma, setNombrePrograma] = useState(''); // Estado local para el nombre del programa
   const handleNombreProgramaChange = (event) => {
     setNombrePrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
+  const [directorPrograma, setDirectorPrograma] = useState(''); // Estado local para el director del programa
   const handleDirectorProgramaChange = (event) => {
     setDirectorPrograma(event.target.value); // Actualizar el estado con el valor del director del programa
   };
@@ -334,6 +349,7 @@ const RegistroCurricularForm: React.FC = () => {
     Online: false,
     Hibrida: false,
     Otra: false,
+    Adistancia: false,
   });
 
   const handleCheckboxChange = (event) => {
@@ -343,8 +359,63 @@ const RegistroCurricularForm: React.FC = () => {
     });
   };
 
+  const [modalidadOptions, setSelectedModalidadOptions] = useState({
+    presencial: false,
+    online: false,
+    hibrida: false,
+    otra: false,
+    aDistancia: false,
+  });
+
+  const modalidadHandleCheckboxChange = (event) => {
+    setSelectedModalidadOptions({
+      ...modalidadOptions,
+      [event.target.name]: event.target.checked,
+    });
+  };
+  const [jornadaOptions, setSelectedJornadaOptions] = useState({
+    diurna: false,
+    vespertina: false,
+    aDistancia: false,
+    otra: false,
+  });
+
+  const jornadaHandleCheckboxChange = (event) => {
+    setSelectedJornadaOptions({
+      ...jornadaOptions,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
   const [startDate, setStartDate] = useState(dayjs('2023-11-28'));
   const [endDate, setEndDate] = useState(null);
+
+  const [duracionFechaInicio, setduracionFechaInicio] =
+    React.useState<Date | null>(null);
+
+  const [duracionFechaTermino, setduracionFechaTermino] =
+    React.useState<Date | null>(null);
+
+  const [duracionPrograma, setDuracionPrograma] = useState(''); // Estado local para el nombre del programa
+  const handleDuracionProgramaChange = (event) => {
+    setDuracionPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [numeroPrograma, setNumeroPrograma] = useState(''); // Estado local para el nombre del programa
+  const handleNumeroProgramaChange = (event) => {
+    setNumeroPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+
+  const [convocatoriaFechaInicio, setconvocatoriaFechaInicio] =
+    useState<dayjs.Dayjs | null>(dayjs('2023-11-28'));
+
+  const [convocatoriaFInicio, setconvocatoriaFInicio] =
+    React.useState<Date | null>(null);
+
+  const [convocatoriaFechaFinalizacion, setconvocatoriaFechaFinalizacion] =
+    useState<dayjs.Dayjs | null>(dayjs('2023-11-28'));
+  const [convocatoriaFTermino, setconvocatoriaFFinalizacion] =
+    React.useState<Date | null>(null);
 
   return (
     <Container>
@@ -498,9 +569,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Diurna}
-                  onChange={handleCheckboxChange}
-                  name="Diurna"
+                  checked={jornadaOptions.diurna}
+                  onChange={jornadaHandleCheckboxChange}
+                  name="diurna"
                 />
               }
               label="Diurna"
@@ -508,9 +579,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Vespertina}
-                  onChange={handleCheckboxChange}
-                  name="Vespertina"
+                  checked={jornadaOptions.vespertina}
+                  onChange={jornadaHandleCheckboxChange}
+                  name="vespertina"
                 />
               }
               label="Vespertina"
@@ -518,9 +589,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.ADistancia}
-                  onChange={handleCheckboxChange}
-                  name="ADistancia"
+                  checked={jornadaOptions.aDistancia}
+                  onChange={jornadaHandleCheckboxChange}
+                  name="aDistancia"
                 />
               }
               label="A Distancia"
@@ -528,9 +599,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Otra}
-                  onChange={handleCheckboxChange}
-                  name="Otra"
+                  checked={jornadaOptions.otra}
+                  onChange={jornadaHandleCheckboxChange}
+                  name="otra"
                 />
               }
               label="Otra"
@@ -554,9 +625,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Presencial}
-                  onChange={handleCheckboxChange}
-                  name="Presencial"
+                  checked={modalidadOptions.presencial}
+                  onChange={modalidadHandleCheckboxChange}
+                  name="presencial"
                 />
               }
               label="Presencial"
@@ -564,9 +635,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Online}
-                  onChange={handleCheckboxChange}
-                  name="Online"
+                  checked={modalidadOptions.online}
+                  onChange={modalidadHandleCheckboxChange}
+                  name="online"
                 />
               }
               label="Online"
@@ -574,9 +645,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Hibrida}
-                  onChange={handleCheckboxChange}
-                  name="Hibrida"
+                  checked={modalidadOptions.hibrida}
+                  onChange={modalidadHandleCheckboxChange}
+                  name="hibrida"
                 />
               }
               label="Híbrida"
@@ -584,9 +655,9 @@ const RegistroCurricularForm: React.FC = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedOptions.Otra}
-                  onChange={handleCheckboxChange}
-                  name="OtraModalidad"
+                  checked={modalidadOptions.otra}
+                  onChange={modalidadHandleCheckboxChange}
+                  name="otra"
                 />
               }
               label="Otra"
@@ -606,7 +677,7 @@ const RegistroCurricularForm: React.FC = () => {
         <hr />
 
         {/* Fechas de inicio y término */}
-
+        {/* 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker']}>
             <DatePicker
@@ -615,11 +686,33 @@ const RegistroCurricularForm: React.FC = () => {
             />
             <DatePicker
               label="Fecha de Finalización"
+              value={duracionFechaInicio}
+              onChange={(newValue) => setduracionFechaInicio(newValue)}
+            />
+          </DemoContainer>
+        </LocalizationProvider> */}
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker', 'DatePicker']}>
+            <DatePicker
+              label="Fecha Inicio"
               value={value}
-              onChange={(newValue) => setValue(newValue)}
+              onChange={(newValue) => {
+                setduracionFechaInicio(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <DatePicker
+              label="Fecha Termino"
+              value={value}
+              onChange={(newValue) => {
+                setduracionFechaTermino(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
             />
           </DemoContainer>
         </LocalizationProvider>
+
         {/* Duración del programa y Número de versión */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
           <TextField
@@ -634,12 +727,16 @@ const RegistroCurricularForm: React.FC = () => {
               },
             }}
             sx={{ mr: 2 }}
+            value={duracionPrograma}
+            onChange={handleDuracionProgramaChange}
           />
           <TextField
             fullWidth
             id="regcur_verprog"
             label="Número de versión del programa *"
             variant="outlined"
+            value={numeroPrograma}
+            onChange={handleNumeroProgramaChange}
           />
         </Box>
       </Box>
@@ -660,14 +757,43 @@ const RegistroCurricularForm: React.FC = () => {
             <DatePicker
               label="Fecha de Inicio"
               defaultValue={dayjs('2023-11-28')}
+              value={convocatoriaFechaInicio}
+              onChange={(newValue) => {
+                convocatoriaFInicio(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
             />
             <DatePicker
               label="Fecha de Finalización"
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
+              value={convocatoriaFechaFinalizacion}
+              onChange={(newValue) => {
+                convocatoriaFFinal(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
             />
           </DemoContainer>
         </LocalizationProvider>
+
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker', 'DatePicker']}>
+            <DatePicker
+              label="Fecha Inicio"
+              value={convocatoriaFechaInicio}
+              onChange={(newValue) => {
+                convocatoriaFInicio(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <DatePicker
+              label="Fecha Termino"
+              value={value}
+              onChange={(newValue) => {
+                setduracionFechaTermino(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </DemoContainer>
+        </LocalizationProvider> */}
       </Box>
 
       {/* Sección: Uso Interno Departamentos */}

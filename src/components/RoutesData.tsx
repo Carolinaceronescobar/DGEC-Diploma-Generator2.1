@@ -8,17 +8,22 @@ import RegistroCurricular from '../pages/registrocurricular/RegistroCurricularFo
 import UsoInternoDGEC from '../pages/usointdgec/UsointernoDGEC';
 import UsointernoDireccionEstudios from '../pages/usointdireccionestudios/UsointernoDireccionEstudios';
 import UsoInternoFinanzas from '../pages/usointfinanzas/UsointernoFinanzasForm';
+import Dashboard from './Dashboard';
 
 const Content: React.FC = () => {
   return (
     <Routes>
-      <Route path='/admision' element={<AdmisionForm/>}/>
-      <Route path='/finanzas' element={<FinanzasForm/>}/>
-      <Route path='/formulariodgec' element={<FormularioDGEC/>}/>
-      <Route path='/registrocurricular' element={<RegistroCurricular/>}/>
-      <Route path='/usointernofinanzas' element={<UsoInternoFinanzas/>}/>
-      <Route path='/usointernodgec' element={<UsoInternoDGEC/>}/>
-      <Route path='/usointernodirestudios' element={<UsointernoDireccionEstudios/>}/>
+      <Route path="/admision" element={<AdmisionForm />} />
+      <Route path="/finanzas" element={<FinanzasForm />} />
+      <Route path="/formulariodgec" element={<FormularioDGEC />} />
+      <Route path="/registrocurricular" element={<RegistroCurricular />} />
+      <Route path="/usointernofinanzas" element={<UsoInternoFinanzas />} />
+      <Route path="/usointernodgec" element={<UsoInternoDGEC />} />
+      <Route
+        path="/usointernodirestudios"
+        element={<UsointernoDireccionEstudios />}
+      />
+      <Route path="/" element={<Dashboard />} />
     </Routes>
   );
 };
