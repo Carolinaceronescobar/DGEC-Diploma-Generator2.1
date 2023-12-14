@@ -7,9 +7,9 @@ export const mainListItems = [
     id: 4,
     text: 'Direccion Estudios',
     icon: 'person',
-    route: '/DireccionEstudios',
+    route: '/direccionestudios',
   },
-  { id: 5, text: 'DGEC', icon: 'person', route: '/Dgec' },
+  { id: 5, text: 'DGEC', icon: 'person', route: '/dgec' },
   // Agrega más elementos según sea necesario
 ] as const;
 

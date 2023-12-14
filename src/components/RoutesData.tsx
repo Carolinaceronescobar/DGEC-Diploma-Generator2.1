@@ -17,10 +17,10 @@ const Content: React.FC = () => {
       <Route path="/finanzas" element={<FinanzasForm />} />
       <Route path="/formulariodgec" element={<FormularioDGEC />} />
       <Route path="/registrocurricular" element={<RegistroCurricular />} />
-      <Route path="/usointernofinanzas" element={<UsoInternoFinanzas />} />
-      <Route path="/usointernodgec" element={<UsoInternoDGEC />} />
+      <Route path="/finanzas" element={<UsoInternoFinanzas />} />
+      <Route path="/dgec" element={<UsoInternoDGEC />} />
       <Route
-        path="/usointernodirestudios"
+        path="/direccionestudios"
         element={<UsointernoDireccionEstudios />}
       />
       <Route path="/" element={<Dashboard />} />

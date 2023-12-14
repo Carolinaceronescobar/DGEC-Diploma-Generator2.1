@@ -219,7 +219,7 @@ const AdmisionForm: React.FC = () => {
       <Box>
         {/* Sección: Información General del Programa */}
         <Typography
-          variant="h5"
+          variant="h6"
           align="center"
           mt={2}
           mb={1}

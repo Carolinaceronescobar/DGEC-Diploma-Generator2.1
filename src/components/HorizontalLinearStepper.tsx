@@ -30,7 +30,6 @@ const HorizontalLinearStepper: React.FC = () => {
     registroCurricularData: any;
     admisionData: any;
     finanzasData: any;
-    solicitudesData: any;
   };
 
   //añade la deifnicion de formData
@@ -104,8 +103,12 @@ const HorizontalLinearStepper: React.FC = () => {
     // Guardar en la base de datos cuando estés en el último paso
     if (activeStep === steps.length - 1) {
       saveToDatabase();
-      navigate('/');
     }
+  };
+
+  const handleFinish = () => {
+    saveToDatabase();
+    navigate('/');
   };
 
   const steps: string[] = [
@@ -117,13 +120,10 @@ const HorizontalLinearStepper: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      {/* Pasos del formulario */}
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
+          const labelProps: { optional?: React.ReactNode } = {};
 
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -145,12 +145,10 @@ const HorizontalLinearStepper: React.FC = () => {
         })}
       </Stepper>
 
-      {/* Formulario */}
       {React.cloneElement(forms[activeStep], {
         onDataChange: handleFormChange,
       })}
 
-      {/* CTAs del Stepper */}
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Button
           color="inherit"
@@ -161,6 +159,7 @@ const HorizontalLinearStepper: React.FC = () => {
           Atrás
         </Button>
         <Box sx={{ flex: '1 1 auto' }} />
+
         {isStepOptional(activeStep) && (
           <Button
             color="inherit"
@@ -170,15 +169,19 @@ const HorizontalLinearStepper: React.FC = () => {
             Skip
           </Button>
         )}
-        <Button onClick={handleNext} sx={{ color: '#004B85' }}>
-          {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
-        </Button>
+
+        {activeStep === steps.length - 1 ? (
+          <Button onClick={handleFinish} sx={{ color: '#004B85' }}>
+            Finalizar
+          </Button>
+        ) : (
+          <Button onClick={handleNext} sx={{ color: '#004B85' }}>
+            Siguiente
+          </Button>
+        )}
       </Box>
     </Box>
   );
 };
 
-// TODO Evitar exportar por defecto.
-// Es mejor utilizar exportación por funciones ya que eslint pilla mejor los errores
-// export { RequestProgramForm }
 export default HorizontalLinearStepper;

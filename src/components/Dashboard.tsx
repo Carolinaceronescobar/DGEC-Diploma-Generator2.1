@@ -38,6 +38,7 @@ import {
 } from '../pages/resumen/listItems.ts';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Footer from './Footer.tsx';
 
 function Copyright(props: any) {
   return (
@@ -241,7 +242,7 @@ const Dashboard: React.FC = () => {
                 </Grid>
               </Grid>
             </Paper>
-            <Copyright sx={{ pt: 4 }} />
+            <Footer />
           </Container>
         </Box>
       </Box>
