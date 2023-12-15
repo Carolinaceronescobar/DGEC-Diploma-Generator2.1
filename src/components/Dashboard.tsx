@@ -16,22 +16,13 @@ import {
   List,
   ListItem,
   ListItemText,
-  // ListItemButton,
   Divider,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import {
-  ChevronLeft as ChevronLeftIcon,
-  // Menu as MenuIcon,
-  // Notifications as NotificationsIcon,
-} from '@mui/icons-material';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-//import Content from './RoutesData.tsx';
-//import Table from './Table.tsx';
-//import RoutesData from '../RoutesData.tsx';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla.tsx';
 import {
   mainListItems,
@@ -42,24 +33,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Footer from './Footer.tsx';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color="inherit" to="https://mui.com/">
-        Creación Programa
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 
@@ -118,6 +91,14 @@ const Dashboard: React.FC = () => {
   const [open, setOpen] = React.useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -167,7 +148,11 @@ const Dashboard: React.FC = () => {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar
+          position="absolute"
+          open={open}
+          sx={{ backgroundColor: '#004B85' }}
+        >
           {/*Logotipo de la Universidad */}
           <img
             alt="logo"
@@ -278,13 +263,19 @@ const Dashboard: React.FC = () => {
               >
                 <Grid item>
                   <Paper className="p-2" sx={{ margin: '25px' }}>
-                    <Link to="/formulario" style={{ textDecoration: 'none' }}>
+                    <Link
+                      to="/formulario"
+                      style={{
+                        textDecoration: 'none',
+                      }}
+                    >
                       <Button
                         variant="contained"
                         color="primary"
                         startIcon={<AddIcon />}
                         component={Link}
                         to="/formulario"
+                        sx={{ backgroundColor: '#004B85' }}
                       >
                         Nuevo formulario
                       </Button>
