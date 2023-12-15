@@ -367,8 +367,8 @@ const AdmisionForm: React.FC = () => {
           sx={{ marginTop: 2 }}
         >
           {showAdditionalFields
-            ? 'Ocultar Campos'
-            : 'Mostrar Campos Adicionales'}
+            ? 'Ocultar Reseña'
+            : 'Añadir otra Reseña Director'}
         </Button>
         {/* Campos adicionales */}
         {showAdditionalFields && (

@@ -168,6 +168,18 @@ const Dashboard: React.FC = () => {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
+          {/*Logotipo de la Universidad */}
+          <img
+            alt="logo"
+            src="./src/assets/logo-usm_blanco-min.png"
+            style={{
+              width: 150,
+              height: 25,
+              marginTop: 30,
+              marginLeft: 30,
+            }}
+          />
+
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -182,7 +194,7 @@ const Dashboard: React.FC = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              DGEC
+              Direccion General de Estudios Continuos
             </Typography>
             <IconButton color="inherit" onClick={handleOpenProfileMenu}>
               <Badge color="secondary">
@@ -265,7 +277,7 @@ const Dashboard: React.FC = () => {
                 spacing={2}
               >
                 <Grid item>
-                  <Paper className="p-2">
+                  <Paper className="p-2" sx={{ margin: '25px' }}>
                     <Link to="/formulario" style={{ textDecoration: 'none' }}>
                       <Button
                         variant="contained"

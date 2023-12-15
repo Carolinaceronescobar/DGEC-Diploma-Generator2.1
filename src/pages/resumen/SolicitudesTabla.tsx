@@ -110,7 +110,7 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[5, 10, 100]}
           component="div"
           count={algo.length}
           rowsPerPage={rowsPerPage}
