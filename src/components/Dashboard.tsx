@@ -197,7 +197,7 @@ const Dashboard: React.FC = () => {
               open={Boolean(anchorEl)}
               onClose={handleCloseProfileMenu}
             >
-              <MenuItem onClick={handleClose}>Perfil</MenuItem>
+              <MenuItem onClick={handleClose}>Perfil Administrador</MenuItem>
               <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
             </Menu>
           </Toolbar>

@@ -115,6 +115,14 @@ const AdmisionForm: React.FC = () => {
     setFotoAdjunta(file);
   };
 
+  // Nuevo estado para mostrar/ocultar campos adicionales
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+
+  // Función para alternar la visibilidad de los campos adicionales
+  const handleToggleAdditionalFields = () => {
+    setShowAdditionalFields(!showAdditionalFields);
+  };
+
   // Función para manejar cambios en los campos de checkbox
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -348,6 +356,89 @@ const AdmisionForm: React.FC = () => {
             />
           </FormGroup>
         </Stack>
+      </Box>
+
+      {/* Sección para mostrar/ocultar campos adicionales */}
+      <Box>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleToggleAdditionalFields}
+          sx={{ marginTop: 2 }}
+        >
+          {showAdditionalFields
+            ? 'Ocultar Campos'
+            : 'Mostrar Campos Adicionales'}
+        </Button>
+        {/* Campos adicionales */}
+        {showAdditionalFields && (
+          <React.Fragment>
+            <Box>
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+                >
+                  Reseña del Director
+                </Typography>
+                <hr />
+                <div>
+                  {/* Campo de texto para la reseña del Director */}
+                  <FormGroup>
+                    <TextField
+                      fullWidth
+                      label="Reseña del Director"
+                      name="descprog"
+                      id="adm_descprog"
+                      multiline
+                      rows={2}
+                      variant="outlined"
+                      value={reseniaPrograma}
+                      onChange={handleReseniaProgramaChange}
+                    />
+                  </FormGroup>
+                </div>
+              </div>
+            </Box>
+
+            {/*Sección: Adjuntar Foto*/}
+            <Box>
+              <Stack direction="row" spacing={2}>
+                <Input
+                  type="file"
+                  id="FotoAdjunta"
+                  onChange={handleFotoAdjuntaChange}
+                  style={{ display: 'none' }}
+                />
+                <label htmlFor="FotoAdjunta">
+                  <Button
+                    variant="outlined"
+                    component="span"
+                    sx={{ marginTop: 2 }}
+                  >
+                    Adjuntar Foto
+                  </Button>
+                </label>
+              </Stack>
+            </Box>
+
+            {/* Sección: Enlace de LinkedIn */}
+            <Box>
+              <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
+                <TextField
+                  sx={{ marginTop: 2, justifyContent: 'right' }}
+                  fullWidth
+                  label="Enlace de LinkedIn"
+                  name="linkedin"
+                  id="adm_linkedin"
+                  variant="outlined"
+                  value={enlaceLinkedin}
+                  onChange={handleEnlaceLinkedinChange}
+                />
+              </FormGroup>
+            </Box>
+          </React.Fragment>
+        )}
       </Box>
 
       {/* Sección: Requisitos para el postulante*/}
