@@ -1,5 +1,5 @@
 //DGEC-DIPLOMA-GENERATOR2/ui/components/Dashboard.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import AddIcon from '@mui/icons-material/Add';
@@ -19,6 +19,7 @@ import {
   // ListItemButton,
   Divider,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import {
   ChevronLeft as ChevronLeftIcon,
   // Menu as MenuIcon,
@@ -39,6 +40,8 @@ import {
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Footer from './Footer.tsx';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 function Copyright(props: any) {
   return (
@@ -113,11 +116,29 @@ const defaultTheme = createTheme();
 
 const Dashboard: React.FC = () => {
   const [open, setOpen] = React.useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Aquí puedes implementar la lógica para cerrar sesión
+    // Por ejemplo, redirigir al usuario a la página de inicio de sesión
+    console.log('Cerrar Sesión');
+    handleClose();
+    navigate('/login'); // Cierra el menú después de hacer clic en "Cerrar Sesión"
+  };
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
   // Datos de ejemplo para SolicitudesTabla
   const solicitudesData = [
     {
@@ -133,6 +154,14 @@ const Dashboard: React.FC = () => {
     },
     // Agrega más datos según sea necesario
   ];
+
+  const handleOpenProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseProfileMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -155,11 +184,22 @@ const Dashboard: React.FC = () => {
             >
               DGEC
             </Typography>
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={handleOpenProfileMenu}>
               <Badge color="secondary">
                 <AccountCircleIcon />
               </Badge>
             </IconButton>
+
+            {/* Menú de perfil */}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleCloseProfileMenu}
+            >
+              <MenuItem onClick={handleClose}>Perfil</MenuItem>
+              <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -179,7 +219,11 @@ const Dashboard: React.FC = () => {
 
           <List component="nav">
             {mainListItems.map((item) => (
-              <ListItem key={item.id} button component={Link} to={item.route}>
+              <ListItem
+                key={item.id}
+                button
+                onClick={() => navigate(item.route)}
+              >
                 {/* Tu contenido individual del elemento de la lista */}
                 <ListItemText primary={item.text} />
                 {/* ... otros componentes de elementos de lista según sea necesario */}
@@ -227,6 +271,8 @@ const Dashboard: React.FC = () => {
                         variant="contained"
                         color="primary"
                         startIcon={<AddIcon />}
+                        component={Link}
+                        to="/formulario"
                       >
                         Nuevo formulario
                       </Button>

@@ -83,20 +83,20 @@ const TopBar: React.FC = () => {
           </Typography>
         </div>
         {/*Mostrar información del usuario si esta disponible */}
-        {usuario && (
+        {/* {usuario && (
           <div style={{ marginLeft: 20, color: 'white' }}>
             {/* Botón para mostrar el nombre de usuario */}
-            <Button
+        {/* <Button
               color="inherit"
               onClick={handleClick}
               style={{ fontFamily: 'Roboto Condensed' }}
             >
               {usuario.nombre}
-            </Button>
-            {/*Se puede añadir otras propiedades al usuario*/}
+            </Button> */}
+        {/*Se puede añadir otras propiedades al usuario*/}
 
-            {/* Menú desplegable */}
-            <Menu
+        {/* Menú desplegable */}
+        {/* <Menu
               id="simple-menu"
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -105,8 +105,8 @@ const TopBar: React.FC = () => {
               <MenuItem onClick={handleClose}>Perfil</MenuItem>
               <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
             </Menu>
-          </div>
-        )}
+          </div> */}
+
         {/* Mostrar opciones según el perfil de usuario */}
         {usuario && (
           <Button
