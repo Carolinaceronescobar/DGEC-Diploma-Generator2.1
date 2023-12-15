@@ -218,6 +218,7 @@ const FinanzasForm: React.FC = () => {
               labelId="modalidad-pago-label"
               id="regcur_sedeprog"
               label="Modalidad de Pago"
+              sx={{ width: 300 }}
               multiple
               value={modalidadPago}
               onChange={selectModalidadPagohandleChange}

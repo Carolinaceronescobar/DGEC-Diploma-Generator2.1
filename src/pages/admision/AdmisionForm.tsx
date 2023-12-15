@@ -480,6 +480,11 @@ const AdmisionForm: React.FC = () => {
                   label="Horas"
                 />
               </Grid>
+              <Typography>
+                {' '}
+                Al ingresar nuevo módulo, aprete "enter" y continúe completando
+                con horas del módulo{' '}
+              </Typography>
               <Grid item xs={3}>
                 <Button
                   variant="outlined"
