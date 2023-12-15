@@ -33,6 +33,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Footer from './Footer.tsx';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import ModalComponent from './ModalComponent.tsx';
 
 const drawerWidth = 240;
 
@@ -199,6 +200,7 @@ const Dashboard: React.FC = () => {
             </Menu>
           </Toolbar>
         </AppBar>
+
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -238,8 +240,13 @@ const Dashboard: React.FC = () => {
                 {/* ... otros componentes de elementos de lista según sea necesario */}
               </ListItem>
             ))}
+
+            <ListItem>
+              <ModalComponent />
+            </ListItem>
           </List>
         </Drawer>
+
         <Box
           component="main"
           sx={{

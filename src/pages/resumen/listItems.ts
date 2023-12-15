@@ -2,7 +2,7 @@
 export const mainListItems = [
   { id: 1, text: 'Inicio', icon: 'home', route: '/' },
   { id: 2, text: 'Formulario', icon: 'person', route: '/formulario' },
-  { id: 3, text: 'Finanzas', icon: 'person', route: '/finanzas' },
+  //{ id: 3, text: 'Finanzas', icon: 'person', route: '/finanzas' },
   {
     id: 4,
     text: 'Direccion Estudios',
