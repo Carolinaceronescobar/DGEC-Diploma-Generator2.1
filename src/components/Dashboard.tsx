@@ -34,6 +34,8 @@ import Footer from './Footer.tsx';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ModalComponent from './ModalComponent.tsx';
+import DataTable from 'react-data-table-component';
+import { get_form } from '../utils/formulario.ts';
 
 const drawerWidth = 240;
 
@@ -122,20 +124,7 @@ const Dashboard: React.FC = () => {
     setOpen(!open);
   };
   // Datos de ejemplo para SolicitudesTabla
-  const solicitudesData = [
-    {
-      id: 1,
-      fecha: '2023-01-01',
-      programa: 'Programa 1',
-      departamento: 'Departamento 1',
-      campus: 'Campus 1',
-      estado: 'Pendiente',
-      revisionDGEC: false,
-      revisionDIREST: false,
-      revisionFINANZAS: false,
-    },
-    // Agrega más datos según sea necesario
-  ];
+  const solicitudesData = get_form();
 
   const handleOpenProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -143,6 +132,25 @@ const Dashboard: React.FC = () => {
 
   const handleCloseProfileMenu = () => {
     setAnchorEl(null);
+  };
+  // useEffect(() => {
+  //   // Esta función se ejecutará cada vez que se inicialice el HTML
+  //   console.log('La página se ha inicializado');
+  // }, []);
+
+  const mainListItemsFx = () => {
+    try {
+      let usuario = JSON.parse(localStorage.getItem('user'))?.profile.type;
+      // setAnchorEl(null); .filter(x=> x.user.) mainListItems.filter((x) => x.user.includes(usuario.profile.type));
+      const respuesta = mainListItems.filter(
+        (x) => x.user == undefined || x.user?.includes(usuario)
+      );
+      console.log('sale mainListItem');
+      return respuesta;
+    } catch (ex) {
+      console.log(`error -> ${ex}`);
+      return mainListItems;
+    }
   };
 
   return (
@@ -217,7 +225,7 @@ const Dashboard: React.FC = () => {
           <Divider />
 
           <List component="nav">
-            {mainListItems.map((item) => (
+            {mainListItemsFx().map((item) => (
               <ListItem
                 key={item.id}
                 button
@@ -280,8 +288,6 @@ const Dashboard: React.FC = () => {
                         variant="contained"
                         color="primary"
                         startIcon={<AddIcon />}
-                        component={Link}
-                        to="/formulario"
                         sx={{ backgroundColor: '#004B85' }}
                       >
                         Nuevo formulario

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TopBar from './TopBar';
 import HorizontalLinearStepper from './HorizontalLinearStepper';
 import Footer from './Footer'; // Importa el componente Footer
 //import { PrivateRoute } from './pages/login/PrivateRoute';
 //import { AuthProvider } from '../pages/login/AuthContext';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla';
+import { useParams } from 'react-router-dom';
 
 // En el archivo que contiene SolicitudesTabla
 interface Solicitud {
@@ -43,6 +44,10 @@ function obtenerSolicitudes(): Solicitud[] {
 
 // FIXME Cambiar nombre de este archivo y de todas importaciones
 const ProgramRequestForm: React.FC = () => {
+  let { id } = useParams(); // Aqu
+  useEffect(() => {
+    id = id == undefined ? '0' : id;
+  }, []);
   return (
     <div>
       <TopBar />

@@ -31,6 +31,24 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+/*
+//CARO
+0°   let { id } = useParams();
+1° creo documentoForm, poner todas las variables
+2° creo el useEffect(()  -> dentro tiene el cargarDataDocumento
+3° creo el cargarDataDocumento -> dentro tiene el getData
+4° creo el getData -> dentro tiene todos los setAlgo
+4.1° el getData debe tener todos los select que usa las variables
+4.2 el tipo de variable depende de la bbdd
+
+
+
+*/
+let documentoForm = {
+  id: null,
+  nivelProgramaAcademicoSeleccionado: null,
+  tipoProgramaAcademicoSeleccionado: null,
+};
 const RegistroCurricularForm: React.FC = () => {
   //validar funciones
   const validateRequired = (value: string) => !!value.length;
@@ -269,21 +287,21 @@ const RegistroCurricularForm: React.FC = () => {
         ...jornadaOptions,
         ...modalidadOptions,
         duracion_fecha_inicio: format(
-          new Date(duracionFechaInicio),
+          new Date(duracionFechaInicio ?? ''),
           'dd-MM-yyyy'
         ),
         duracion_fecha_termino: format(
-          new Date(duracionFechaTermino),
+          new Date(duracionFechaTermino ?? ''),
           'dd-MM-yyyy'
         ),
         programa_duracion: duracionPrograma,
         programa_numero: numeroPrograma,
         convocatoria_fecha_inicio: format(
-          new Date(convocatoriaFInicio),
+          new Date(convocatoriaFInicio ?? ''),
           'dd-MM-yyyy'
         ),
         convocatoria_fecha_termino: format(
-          new Date(convocatoriaFTermino),
+          new Date(convocatoriaFTermino ?? ''),
           'dd-MM-yyyy'
         ),
       };
@@ -298,35 +316,34 @@ const RegistroCurricularForm: React.FC = () => {
 
   const [nivelProgramaAcademicoSeleccionado, setValorSeleccionado] =
     useState('');
-  const handleNivelProgramaAcademicoChange = (event) => {
+  const handleNivelProgramaAcademicoChange = (event: any) => {
     setValorSeleccionado(event.target.value); // Actualizar el estado con el valor seleccionado
   };
-
   const [
     tipoProgramaAcademicoSeleccionado,
     settipoProgramaAcademicoSeleccionado,
   ] = useState('');
-  const handletipoProgramaAcademicoChange = (event) => {
+  const handletipoProgramaAcademicoChange = (event: any) => {
     settipoProgramaAcademicoSeleccionado(event.target.value); // Actualizar el estado con el valor seleccionado
   };
 
   const [nombrePrograma, setNombrePrograma] = useState(''); // Estado local para el nombre del programa
-  const handleNombreProgramaChange = (event) => {
+  const handleNombreProgramaChange = (event: any) => {
     setNombrePrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [directorPrograma, setDirectorPrograma] = useState(''); // Estado local para el director del programa
-  const handleDirectorProgramaChange = (event) => {
+  const handleDirectorProgramaChange = (event: any) => {
     setDirectorPrograma(event.target.value); // Actualizar el estado con el valor del director del programa
   };
   const [departamento, setDepartamento] = useState(''); // Estado local para el departamento seleccionado
 
-  const handleDepartamentoChange = (event) => {
+  const handleDepartamentoChange = (event: any) => {
     setDepartamento(event.target.value); // Actualizar el estado con el valor del departamento seleccionado
   };
   const [emplazamiento, setEmplazamiento] = useState(''); // Estado local para el emplazamiento seleccionado
 
-  const handleEmplazamientoChange = (event) => {
+  const handleEmplazamientoChange = (event: any) => {
     setEmplazamiento(event.target.value); // Actualizar el estado con el valor del emplazamiento seleccionado
 
     const [selectedOptions, setSelectedOptions] = useState({
@@ -336,7 +353,7 @@ const RegistroCurricularForm: React.FC = () => {
       Otra: false,
     });
 
-    const handleCheckboxChange = (event) => {
+    const handleCheckboxChange = (event: any) => {
       setSelectedOptions({
         ...selectedOptions,
         [event.target.name]: event.target.checked,
@@ -352,7 +369,7 @@ const RegistroCurricularForm: React.FC = () => {
     Adistancia: false,
   });
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: any) => {
     setSelectedOptions({
       ...selectedOptions,
       [event.target.name]: event.target.checked,
@@ -367,7 +384,7 @@ const RegistroCurricularForm: React.FC = () => {
     aDistancia: false,
   });
 
-  const modalidadHandleCheckboxChange = (event) => {
+  const modalidadHandleCheckboxChange = (event: any) => {
     setSelectedModalidadOptions({
       ...modalidadOptions,
       [event.target.name]: event.target.checked,
@@ -380,7 +397,7 @@ const RegistroCurricularForm: React.FC = () => {
     otra: false,
   });
 
-  const jornadaHandleCheckboxChange = (event) => {
+  const jornadaHandleCheckboxChange = (event: any) => {
     setSelectedJornadaOptions({
       ...jornadaOptions,
       [event.target.name]: event.target.checked,
@@ -397,12 +414,12 @@ const RegistroCurricularForm: React.FC = () => {
     React.useState<Date | null>(null);
 
   const [duracionPrograma, setDuracionPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleDuracionProgramaChange = (event) => {
+  const handleDuracionProgramaChange = (event: any) => {
     setDuracionPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [numeroPrograma, setNumeroPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleNumeroProgramaChange = (event) => {
+  const handleNumeroProgramaChange = (event: any) => {
     setNumeroPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
@@ -700,7 +717,7 @@ const RegistroCurricularForm: React.FC = () => {
               onChange={(newValue) => {
                 setduracionFechaInicio(newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params: any) => <TextField {...params} />}
             />
             <DatePicker
               label="Fecha Termino"
@@ -708,7 +725,7 @@ const RegistroCurricularForm: React.FC = () => {
               onChange={(newValue) => {
                 setduracionFechaTermino(newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params: any) => <TextField {...params} />}
             />
           </DemoContainer>
         </LocalizationProvider>
@@ -761,7 +778,7 @@ const RegistroCurricularForm: React.FC = () => {
               onChange={(newValue) => {
                 convocatoriaFInicio(newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params: any) => <TextField {...params} />}
             />
             <DatePicker
               label="Fecha de Finalización"
@@ -769,7 +786,7 @@ const RegistroCurricularForm: React.FC = () => {
               onChange={(newValue) => {
                 convocatoriaFFinal(newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params: any) => <TextField {...params} />}
             />
           </DemoContainer>
         </LocalizationProvider>

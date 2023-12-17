@@ -10,13 +10,18 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  Button,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 // import DGECForm from './Form/DGECForm';
 // import RegistroCurricularForm from './Form/RegistroCurricularForm';
 // import AdmisionForm from './Form/AdmisionForm';
 // import FinanzasForm from './Form/FinanzasForm';
 import Checkbox from '@mui/material/Checkbox';
 import { get_form } from '../../utils/formulario';
+import { useNavigate } from 'react-router-dom';
+
+import DataTable from 'react-data-table-component';
 
 // Define el tipo de datos para las solicitudes
 type Solicitud = {
@@ -34,24 +39,21 @@ type Solicitud = {
 type SolicitudesTablaProps = {
   solicitudes: Solicitud[];
 };
-let algo = await get_form();
+let solicitudes_ = await get_form();
 
-const solicitudesData = [
-  {
-    id: 1,
-    fecha: '2023-12-14',
-    programa: 'Curso de Gestión de Activos',
-    departamento: 'Departamento bbdd Nombre1',
-    campus: 'Sede Nombre2',
-    estado: 'Pendiente',
-    revisionDGEC: true,
-    revisionDIREST: false,
-    revisionFINANZAS: false,
-  },
+// const [data, setData] = useState([]);
+let data = await get_form();
 
-  // Agrega más datos según sea necesario
-];
+const paginationComponentOptions = {
+  rowsPerPageText: 'Filas por página',
+  rangeSeparatorText: 'de',
+  selectAllRowsItem: true,
+  selectAllRowsItemText: 'Todos',
+};
+
 const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
+  const navigate = useNavigate();
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -64,6 +66,12 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
   ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const updateDocument = (solicitud: any) => {
+    console.log('acaa');
+    console.log(solicitud);
+    navigate(`/formulario/${solicitud.id}`);
   };
 
   return (
@@ -86,7 +94,7 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {algo.map((solicitud) => (
+              {solicitudes_.map((solicitud) => (
                 <TableRow key={solicitud.id}>
                   <TableCell>{solicitud.id}</TableCell>
                   <TableCell>{solicitud.value}</TableCell>
@@ -103,21 +111,22 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
                   <TableCell>
                     <Checkbox checked={solicitud.revisionFINANZAS} disabled />
                   </TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <Link to={`/formulario/${solicitud.id}`}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ backgroundColor: '#004B85' }}
+                      >
+                        Gestión
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 100]}
-          component="div"
-          count={algo.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </>
     </Paper>
   );

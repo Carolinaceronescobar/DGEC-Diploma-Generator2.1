@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,7 +11,8 @@ import AdmisionForm from '../pages/admision/AdmisionForm.tsx';
 import FinanzasForm from '../pages/finanzas/FinanzasForm.tsx';
 //import Solicitudes from './Dashboard.tsx';
 import { useNavigate } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
+import { find_form, get_object_localstore } from '../utils/formulario';
 const HorizontalLinearStepper: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
@@ -117,6 +118,26 @@ const HorizontalLinearStepper: React.FC = () => {
     'Informacion del Programa',
     'Finanzas',
   ];
+
+  let { id } = useParams();
+  useEffect(() => {
+    console.log('aq');
+    const cargarDataDocumento = async () => {
+      try {
+        let documentoForm = get_object_localstore();
+        if (id == null && documentoForm == null) {
+          documentoForm = await find_form(id ?? '');
+        } else if (documentoForm != null && documentoForm.id != id) {
+          console.log('CAMBIO!!!!');
+          documentoForm = await find_form(id ?? '');
+        }
+      } catch (error) {
+        console.log('Error al obtener los datos del formulario:', error);
+        // Manejar el error de alguna manera
+      }
+    };
+    cargarDataDocumento();
+  }, []);
 
   return (
     <Box sx={{ width: '100%' }}>

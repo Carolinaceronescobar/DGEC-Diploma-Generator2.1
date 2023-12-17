@@ -39,17 +39,20 @@ interface UsoInternoFinanzasProps {
   readOnly: boolean;
   onGuardar: () => void;
   onEnviar: () => void;
+  someFunction: () => void;
 }
 
-const UsoInternoFinanzas: React.FC<UsoInternoFinanzasProps> = ({
-  campos,
-  setCampos,
-  departamento,
-  setDepartamento,
-  readOnly,
-  onGuardar,
-  onEnviar,
-}) => {
+const UsoInternoFinanzas: React.FC<UsoInternoFinanzasProps> = (
+  {
+    // campos,
+    // setCampos,
+    // departamento,
+    // setDepartamento,
+    // readOnly,
+    // onGuardar,
+    // onEnviar,
+  }
+) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {

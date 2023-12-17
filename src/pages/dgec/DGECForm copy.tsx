@@ -29,25 +29,22 @@ const FormularioDGEC: React.FC = () => {
   const [haDictadoPrograma, setHaDictadoPrograma] = useState<Boolean>(
     documentoForm?.haDictadoPrograma ?? false
   );
-  //programaSeleccionado: Nombre de la variable
-  //setProgramaSeleccionado funcion que asigna un valor a programaSeleccioando
-  //setProgramaSeleccionado acepta solo string por el useState<string>
-  //por defecto inicia con el valor de  documentoForm?.programaSeleccionado
+
   const [programaSeleccionado, setProgramaSeleccionado] = useState<string>(
     documentoForm?.programaSeleccionado ?? ''
   );
-
-  // Maneja cambios en la selección del programa académico.
-  const handleProgramaSeleccionadoChange = (
-    event: SelectChangeEvent<string>
-  ) => {
-    setProgramaSeleccionado(event.target.value as string);
-  };
-
   const [memoAdjunto, setMemoAdjunto] = useState<File | null>(
     documentoForm?.memoAdjunto
   );
   const [programas, setProgramas] = useState<string[]>([]);
+
+  // Maneja cambios en la selección del programa académico.
+  const handleProgramaSeleccionadoChange = (
+    event: SelectChangeEvent<string>,
+    child: React.ReactNode
+  ) => {
+    setProgramaSeleccionado(event.target.value as string);
+  };
 
   // Maneja cambios en la selección del archivo adjunto.
   const handleMemoAdjuntoChange = (
@@ -58,19 +55,14 @@ const FormularioDGEC: React.FC = () => {
     setMemoAdjunto(file);
   };
 
-  //leo el numero del path
-  //EJhttp://localhost:5173/formulario/6
-  // es 6, tambien puede ser null
   let { id } = useParams();
 
   //Maneja la carga de programas desde la base de datos al montar el componente
   useEffect(() => {
-    //Carga cuando la pantalla ya cargo
     const cargarProgramas = async () => {
       const programasDesdeBD = await obtenerProgramasDesdeBD();
       setProgramas(programasDesdeBD);
     };
-    //Debe ser traspasada a otras vistas
     const cargarDataDocumento = async () => {
       try {
         let buscar = false;
@@ -85,9 +77,9 @@ const FormularioDGEC: React.FC = () => {
         } else if (documentoForm != null) {
           getData(documentoForm);
         }
-
         if (buscar) {
           getData(await find_form(id ?? ''));
+          console.log('ya cargo!');
         }
       } catch (error) {
         console.log('Error al obtener los datos del formulario:', error);

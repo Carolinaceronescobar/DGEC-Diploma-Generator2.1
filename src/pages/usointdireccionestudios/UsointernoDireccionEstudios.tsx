@@ -1,6 +1,6 @@
 // UsoInternoDireccionEstudios.tsx
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   FormControl,
@@ -8,6 +8,7 @@ import {
   MenuItem,
   Button,
   Box,
+  Container,
 } from '@mui/material';
 
 interface UsoInternoDireccionEstudiosProps {
@@ -24,28 +25,37 @@ interface UsoInternoDireccionEstudiosProps {
   onMostrarToggle: () => void;
 }
 
-const UsointernoDireccionEstudios: React.FC<
-  UsoInternoDireccionEstudiosProps
-> = ({
-  campos: setCampos,
-  departamento,
-  setDepartamento,
-  readOnly,
-  onGuardar,
-  onEnviar,
-  mostrar,
-  onMostrarToggle,
-}) => {
+const UsointernoDireccionEstudios: React.FC = () => {
+  // const UsointernoDireccionEstudios: React.FC<
+  //   UsoInternoDireccionEstudiosProps
+  // > = ({
+  //   campos: setCampos,
+  //   departamento,
+  //   setDepartamento,
+  //   readOnly,
+  //   onGuardar,
+  //   onEnviar,
+  //   mostrar,
+  //   onMostrarToggle,
+  // }) => {
+
+  const [mostrar, setMostrar] = useState<Boolean>(true);
+  const [departamento, setDepartamento] = useState<string>('');
+  const [readOnly, setReadOnly] = useState<string>('');
+  function onGuardar() {}
+  function onEnviar() {}
   return (
-    <Box style={{ display: mostrar ? 'block' : 'none' }}>
-      <Typography
-        variant="h6"
-        sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-      >
-        {' '}
-        Uso interno Dirección de Estudios
-      </Typography>
-      <hr />
+    <Container>
+      <Box>
+        <Typography
+          variant="h6"
+          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+        >
+          {' '}
+          Uso interno Dirección de Estudios
+        </Typography>
+        <hr />
+      </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <FormControl fullWidth>
@@ -53,7 +63,7 @@ const UsointernoDireccionEstudios: React.FC<
             label="INTERNO - Código del Programa (SIGA)"
             value={departamento}
             onChange={(e) => setDepartamento(e.target.value as string)}
-            disabled={readOnly}
+            // disabled={readOnly}
           ></Select>
         </FormControl>
       </Box>
@@ -64,7 +74,7 @@ const UsointernoDireccionEstudios: React.FC<
             label="INTERNO - Periodo académico en que se impartirá (SIGA)"
             value={departamento}
             onChange={(e) => setDepartamento(e.target.value as string)}
-            disabled={readOnly}
+            // disabled={readOnly}
           >
             <MenuItem key="Tiempo1">2024- 1</MenuItem>
             <MenuItem key="Tiempo2">2023- 2</MenuItem>
@@ -74,14 +84,22 @@ const UsointernoDireccionEstudios: React.FC<
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button variant="outlined" onClick={onGuardar} disabled={readOnly}>
+        <Button
+          variant="outlined"
+          onClick={onGuardar}
+          //  disabled={readOnly}
+        >
           Guardar
         </Button>
-        <Button variant="outlined" onClick={onEnviar} disabled={readOnly}>
+        <Button
+          variant="outlined"
+          onClick={onEnviar}
+          // disabled={readOnly}
+        >
           Enviar
         </Button>
       </Box>
-    </Box>
+    </Container>
   );
 };
 

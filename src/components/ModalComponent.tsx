@@ -1,5 +1,5 @@
 // ModalComponent.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -9,7 +9,10 @@ import {
 } from '@mui/material';
 import UsoInternoFinanzas from '../pages/usointfinanzas/UsointernoFinanzasForm';
 
-const ModalComponent: React.FC = () => {
+const ModalComponent: React.FC = ({}) => {
+  // Código del componente...
+  // const someValue = UsoInternoFinanzas.handleOpenModal();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -19,6 +22,18 @@ const ModalComponent: React.FC = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  //Isra er que mierda es esta variable
+  let resumen: any;
+  // Llama a someFunction dentro de un useEffect
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const someValue = await UsoInternoFinanzas.someFunction();
+  //     // Haz algo con someValue si es necesario
+  //   };
+
+  //   fetchData();
+  // }, []); // Asegúrate de proporcionar las dependencias adecuadas
 
   return (
     <>
@@ -30,10 +45,11 @@ const ModalComponent: React.FC = () => {
       {/* Agregar la lógica de la ventana modal */}
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>Finanzas</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ backgroundColor: '#004B85', color: 'white' }}>
           {/* Contenido del modal */}
           {/* Agregar aquí el contenido de la ventana modal */}
-          <UsoInternoFinanzas />
+          {resumen}
+          {/* <UsoInternoFinanzas /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal}>Cerrar</Button>

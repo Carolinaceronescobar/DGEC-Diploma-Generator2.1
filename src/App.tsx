@@ -40,6 +40,8 @@ function App() {
           {/* FIXME Cambiar nomber de componente */}
           <Route path="/" element={<SideBar />} />
           <Route path="/formulario" element={<ProgramRequestForm />} />
+          <Route path="/formulario/:id" element={<ProgramRequestForm />} />
+          <Route path="/dgec" element={<UsoInternoDGEC />} />
           <Route path="/finanzas" element={<UsoInternoFinanzas />} />
           <Route path="/login" element={<LoginScreen />} />
           <Route

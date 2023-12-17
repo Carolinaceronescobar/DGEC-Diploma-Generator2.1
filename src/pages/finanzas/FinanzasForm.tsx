@@ -12,6 +12,7 @@ import {
   Grid,
   InputLabel,
   Select,
+  Paper,
 } from '@mui/material';
 import UsoInternoFinanzas from '../usointfinanzas/UsointernoFinanzasForm';
 import { save_form } from '../../utils/formulario';
@@ -482,6 +483,24 @@ const FinanzasForm: React.FC = () => {
         onGuardar={handleGuardarFinanzas}
         onEnviar={handleEnviarFinanzas}
       /> */}
+
+      {/* Resumen de Respuestas */}
+      <Paper elevation={3} style={{ padding: '20px', margin: '20px 0' }}>
+        <Typography variant="h6" gutterBottom>
+          Resumen de Respuestas
+        </Typography>
+
+        {/* Aquí puedes agregar más elementos Typography o cualquier otro componente
+        para mostrar un resumen de las respuestas dadas en el formulario */}
+        <Typography>
+          Ex alumnos USM: {formData.exAlumnosUSM ? 'Sí' : 'No'}
+          {formData.exAlumnosUSM &&
+            `, Porcentaje: ${formData.exAlumnosUSMText}%`}
+        </Typography>
+
+        {/* Repite el patrón para otros campos del formulario */}
+        {/* ... */}
+      </Paper>
 
       {/* Botón adicional para guardar sin enviar */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>

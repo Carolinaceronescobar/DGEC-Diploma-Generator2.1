@@ -1,14 +1,24 @@
 // UsoInternoDGEC.tsx
 
 import React from 'react';
-import { Typography, TextField, FormControl, Select, MenuItem, Button, Box } from '@mui/material';
+import {
+  Typography,
+  TextField,
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  Box,
+} from '@mui/material';
 import { makeUsoInternoDGECData, UsoInternoDGECData } from './makeData';
 
 interface UsointernoDGECProps {
   campos: UsoInternoDGECData['campo1'];
   setCampos: React.Dispatch<React.SetStateAction<UsoInternoDGECData['campo1']>>;
   departamento: UsoInternoDGECData['departamento'];
-  setDepartamento: React.Dispatch<React.SetStateAction<UsoInternoDGECData['departamento']>>;
+  setDepartamento: React.Dispatch<
+    React.SetStateAction<UsoInternoDGECData['departamento']>
+  >;
   readOnly: UsoInternoDGECData['readOnly'];
   onGuardar: () => void;
   onEnviar: () => void;
@@ -34,7 +44,12 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = ({
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}>Uso interno DGEC</Typography>
+      <Typography
+        variant="h6"
+        sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+      >
+        Uso interno DGEC
+      </Typography>
       <hr />
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
@@ -47,9 +62,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = ({
           InputProps={{ readOnly: readOnly }}
           sx={{ mr: 2 }}
         />
-        
       </Box>
-
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <Button variant="outlined" onClick={onGuardar} disabled={readOnly}>
