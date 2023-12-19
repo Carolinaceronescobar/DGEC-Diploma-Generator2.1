@@ -42,7 +42,7 @@ interface UsoInternoFinanzasProps {
   someFunction: () => void;
 }
 
-const UsoInternoFinanzas: React.FC<UsoInternoFinanzasProps> = (
+const UsoInternoFinanzas: React.FC = () => {
   {
     // campos,
     // setCampos,
@@ -52,7 +52,7 @@ const UsoInternoFinanzas: React.FC<UsoInternoFinanzasProps> = (
     // onGuardar,
     // onEnviar,
   }
-) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {

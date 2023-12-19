@@ -62,7 +62,7 @@ const UsointernoDireccionEstudios: React.FC = () => {
           <Select
             label="INTERNO - Código del Programa (SIGA)"
             value={departamento}
-            onChange={(e) => setDepartamento(e.target.value as string)}
+            onChange={setDepartamento}
             // disabled={readOnly}
           ></Select>
         </FormControl>

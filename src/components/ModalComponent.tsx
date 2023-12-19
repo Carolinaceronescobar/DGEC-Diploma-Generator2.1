@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Typography,
 } from '@mui/material';
 import UsoInternoFinanzas from '../pages/usointfinanzas/UsointernoFinanzasForm';
 
@@ -44,12 +45,20 @@ const ModalComponent: React.FC = ({}) => {
 
       {/* Agregar la lógica de la ventana modal */}
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>Finanzas</DialogTitle>
+        <DialogTitle>Indicaciones para Finanzas</DialogTitle>
         <DialogContent sx={{ backgroundColor: '#004B85', color: 'white' }}>
           {/* Contenido del modal */}
           {/* Agregar aquí el contenido de la ventana modal */}
           {resumen}
           {/* <UsoInternoFinanzas /> */}
+          <Typography>
+            {' '}
+            <p>Abra el botón de Finanzas para ver su resumen</p>{' '}
+            <p>
+              {' '}
+              Aprete botón "GESTIÓN" para completar la postulación del Programa
+            </p>{' '}
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal}>Cerrar</Button>

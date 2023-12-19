@@ -2,6 +2,8 @@
 #Dependencias node https://docs.npmjs.com/cli/shrinkwrap#caveats
 node_modules
 
+tmp
+
 #Archivos python
 venv
 

@@ -1,6 +1,5 @@
-// Importa las dependencias necesarias de React y Material-UI
-import React, { useState } from 'react';
-
+//Se importan REACT y componentes de Material-UI
+import React, { useState, useEffect } from 'react';
 import {
   Autocomplete,
   Typography,
@@ -26,6 +25,28 @@ import {
   TableBody,
 } from '@mui/material';
 import { save_form } from '../../utils/formulario';
+
+let documentoForm = {
+  id: null,
+  descripcionPrograma: String,
+  objetivoPrograma: String,
+  reseniaPrograma: String,
+  handleFotoAdjuntaChange: null,
+  enlaceLinkedin: String,
+  reseniaProgramados: String,
+  enlaceLinkedindos: String,
+  handleFotoAdjuntadosChange: null,
+  cedula: false,
+  licenciaMedia: false,
+  curriculum: false,
+  otra: false,
+  numeroEstudianteMaximo: Number,
+  numeroEstudianteMinimo: Number,
+  handleInputModuleChange: '',
+  hours: Number,
+  handleAdd: false,
+  staffProfesores: String,
+};
 // Definición del componente funcional AdmisionForm
 const AdmisionForm: React.FC = () => {
   // Estado local para almacenar el formulario y la foto adjunta
@@ -66,7 +87,22 @@ const AdmisionForm: React.FC = () => {
   const handleEnlaceLinkedinChange = (event) => {
     setEnlaceLinkedinChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
+  const [reseniaProgramados, setReseniaProgramadosChange] = useState(''); // Estado local para el nombre del programa
+  const handleReseniaProgramadosChange = (event) => {
+    setReseniaProgramadosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
 
+  const [enlaceLinkedindos, setEnlaceLinkedindosChange] = useState(''); // Estado local para el nombre del programa
+  const handleEnlaceLinkedindosChange = (event) => {
+    setEnlaceLinkedindosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  };
+  // Función para manejar cambios en la selección de la foto adjunta
+  const handleFotoAdjuntadosChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
+    setFotoAdjuntados(file);
+  };
   const [requisitosPostulante, setSelectedJornadaOptions] = useState({
     cedula: false,
     licenciaMedia: false,
@@ -393,8 +429,8 @@ const AdmisionForm: React.FC = () => {
                       multiline
                       rows={2}
                       variant="outlined"
-                      value={reseniaPrograma}
-                      onChange={handleReseniaProgramaChange}
+                      value={reseniaProgramados}
+                      onChange={handleReseniaProgramadosChange}
                     />
                   </FormGroup>
                 </div>
@@ -407,7 +443,7 @@ const AdmisionForm: React.FC = () => {
                 <Input
                   type="file"
                   id="FotoAdjunta"
-                  onChange={handleFotoAdjuntaChange}
+                  onChange={handleFotoAdjuntadosChange}
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="FotoAdjunta">
@@ -432,8 +468,8 @@ const AdmisionForm: React.FC = () => {
                   name="linkedin"
                   id="adm_linkedin"
                   variant="outlined"
-                  value={enlaceLinkedin}
-                  onChange={handleEnlaceLinkedinChange}
+                  value={enlaceLinkedindos}
+                  onChange={handleEnlaceLinkedindosChange}
                 />
               </FormGroup>
             </Box>
