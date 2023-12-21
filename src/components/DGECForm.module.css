@@ -1,6 +1,11 @@
 /* FormularioDGEC.css */
 .formulario-container {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* O ajusta la altura según tus necesidades */
 }
 
 /* Agrega estilos adicionales según sea necesario */

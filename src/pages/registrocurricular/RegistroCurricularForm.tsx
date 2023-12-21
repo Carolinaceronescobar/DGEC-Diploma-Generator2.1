@@ -71,8 +71,10 @@ const RegistroCurricularForm: React.FC = () => {
     setMostrarUsoInternoDireccionEstudios,
   ] = useState<boolean>(false);
 
+  // Obtener la fecha actual
+  const fechaActual = dayjs();
   //Estado para fechas
-  const [value, setValue] = useState<dayjs.Dayjs | null>(dayjs('2023-11-28'));
+  const [value, setValue] = useState<dayjs.Dayjs | null>(dayjs(fechaActual));
 
   //Estado para departamentos
   const [departamentoDGEC, setDepartamentoDGEC] = useState<Departamento[]>([]);
@@ -404,7 +406,7 @@ const RegistroCurricularForm: React.FC = () => {
     });
   };
 
-  const [startDate, setStartDate] = useState(dayjs('2023-11-28'));
+  const [startDate, setStartDate] = useState(dayjs(fechaActual));
   const [endDate, setEndDate] = useState(null);
 
   const [duracionFechaInicio, setduracionFechaInicio] =
@@ -424,13 +426,13 @@ const RegistroCurricularForm: React.FC = () => {
   };
 
   const [convocatoriaFechaInicio, setconvocatoriaFechaInicio] =
-    useState<dayjs.Dayjs | null>(dayjs('2023-11-28'));
+    useState<dayjs.Dayjs | null>(dayjs(fechaActual));
 
   const [convocatoriaFInicio, setconvocatoriaFInicio] =
     React.useState<Date | null>(null);
 
   const [convocatoriaFechaFinalizacion, setconvocatoriaFechaFinalizacion] =
-    useState<dayjs.Dayjs | null>(dayjs('2023-11-28'));
+    useState<dayjs.Dayjs | null>(dayjs(fechaActual));
   const [convocatoriaFTermino, setconvocatoriaFFinalizacion] =
     React.useState<Date | null>(null);
 
@@ -711,22 +713,32 @@ const RegistroCurricularForm: React.FC = () => {
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker']}>
-            <DatePicker
-              label="Fecha Inicio"
-              value={value}
-              onChange={(newValue) => {
-                setduracionFechaInicio(newValue);
-              }}
-              renderInput={(params: any) => <TextField {...params} />}
-            />
-            <DatePicker
-              label="Fecha Termino"
-              value={value}
-              onChange={(newValue) => {
-                setduracionFechaTermino(newValue);
-              }}
-              renderInput={(params: any) => <TextField {...params} />}
-            />
+            <div sx={{ display: 'flex', alignItems: 'center' }}>
+              <DatePicker
+                label="Fecha Inicio"
+                defaultValue={dayjs()}
+                value={duracionFechaInicio}
+                onChange={(newValue) => {
+                  setduracionFechaInicio(newValue);
+                }}
+                slotProps={{
+                  textField: { variant: 'outlined' },
+                  wrapper: { width: 'calc(100% - 8px)', mr: 2 },
+                }}
+              />
+              <Typography sx={{ marginRight: 2 }}> - </Typography>
+              <DatePicker
+                label="Fecha Termino"
+                value={duracionFechaTermino}
+                onChange={(newValue) => {
+                  setduracionFechaTermino(newValue);
+                }}
+                slotProps={{
+                  textField: { variant: 'outlined' },
+                  wrapper: { width: 'calc(100% - 8px)' },
+                }}
+              />
+            </div>
           </DemoContainer>
         </LocalizationProvider>
 
@@ -743,7 +755,7 @@ const RegistroCurricularForm: React.FC = () => {
                 min: 1, // Establece un valor mínimo, si es necesario
               },
             }}
-            sx={{ mr: 2 }}
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             value={duracionPrograma}
             onChange={handleDuracionProgramaChange}
           />
@@ -752,6 +764,7 @@ const RegistroCurricularForm: React.FC = () => {
             id="regcur_verprog"
             label="Número de versión del programa *"
             variant="outlined"
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             value={numeroPrograma}
             onChange={handleNumeroProgramaChange}
           />
@@ -759,7 +772,7 @@ const RegistroCurricularForm: React.FC = () => {
       </Box>
 
       {/*Sección Fecha Convocatoria*/}
-      <Box>
+      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
         <Typography
           variant="h6"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
@@ -773,12 +786,15 @@ const RegistroCurricularForm: React.FC = () => {
           <DemoContainer components={['DatePicker', 'DatePicker']}>
             <DatePicker
               label="Fecha de Inicio"
-              defaultValue={dayjs('2023-11-28')}
+              defaultValue={dayjs()}
               value={convocatoriaFechaInicio}
               onChange={(newValue) => {
                 convocatoriaFInicio(newValue);
               }}
-              renderInput={(params: any) => <TextField {...params} />}
+              slotProps={{
+                textField: { variant: 'outlined' },
+                wrapper: { width: 'calc(100% - 8px)', mr: 2 },
+              }}
             />
             <DatePicker
               label="Fecha de Finalización"
@@ -786,7 +802,10 @@ const RegistroCurricularForm: React.FC = () => {
               onChange={(newValue) => {
                 convocatoriaFFinal(newValue);
               }}
-              renderInput={(params: any) => <TextField {...params} />}
+              slotProps={{
+                textField: { variant: 'outlined' },
+                wrapper: { width: 'calc(100% - 8px)' },
+              }}
             />
           </DemoContainer>
         </LocalizationProvider>

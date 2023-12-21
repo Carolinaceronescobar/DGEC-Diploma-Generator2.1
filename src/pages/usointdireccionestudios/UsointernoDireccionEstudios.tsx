@@ -39,7 +39,6 @@ const UsointernoDireccionEstudios: React.FC = () => {
   //   onMostrarToggle,
   // }) => {
 
-  const [mostrar, setMostrar] = useState<Boolean>(true);
   const [departamento, setDepartamento] = useState<string>('');
   const [readOnly, setReadOnly] = useState<string>('');
   function onGuardar() {}

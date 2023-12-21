@@ -1,16 +1,28 @@
-// UsoInternoDGEC.tsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   TextField,
-  FormControl,
-  Select,
-  MenuItem,
   Button,
   Box,
+  Container,
+  Grid,
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  Divider,
 } from '@mui/material';
-import { makeUsoInternoDGECData, UsoInternoDGECData } from './makeData';
+import Autocomplete from '@mui/material/Autocomplete';
+import { useNavigate } from 'react-router-dom';
+import { UsoInternoDGECData } from './makeData';
+import ModalComponent from '../../components/ModalComponent';
+import { save_form } from '../../utils/formulario';
+import Encabezado from '../../components/Encabezado';
+import Sidebar from '../../components/SideBar';
+import Footer from '../../components/Footer';
 
 interface UsointernoDGECProps {
   campos: UsoInternoDGECData['campo1'];
@@ -24,55 +36,170 @@ interface UsointernoDGECProps {
   onEnviar: () => void;
 }
 
-const UsoInternoDGEC: React.FC<UsointernoDGECProps> = ({
-  campos,
-  setCampos,
-  departamento,
-  setDepartamento,
-  readOnly,
-  onGuardar,
-  onEnviar,
-}) => {
-  // Utiliza makeUsoInternoDGECData para obtener datos ficticios
-  const initialData = makeUsoInternoDGECData();
+const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
+  const [tableData, setTableData] = useState<{ codedgec: string }[]>([]);
+  const [optionsCodedgec, setOptionsCodedgec] = useState([
+    'Codigo Int DGEC1',
+    'Codigo Int DGEC2',
+    'Codigo Int DGEC3',
+  ]);
 
-  // Usa initialData para establecer valores predeterminados si es necesario
-  React.useEffect(() => {
-    setCampos(initialData.campo1);
-    setDepartamento(initialData.departamento);
-  }, []);
+  const [inputCodedgecValue, setInputCodedgecValue] = useState(
+    optionsCodedgec[0] || ''
+  );
+  const [open, setOpen] = useState(false);
+
+  const [inputAutocomplete, setInputAutocomplete] = useState('');
+
+  const handleAdd = () => {
+    setTableData((prevTableData) => [
+      ...prevTableData,
+      { codedgec: inputCodedgecValue },
+    ]);
+  };
+
+  const handleInputCodedgecChange = (
+    event: React.ChangeEvent<{}>,
+    newInputModuleValue: string
+  ) => {
+    setInputCodedgecValue(newInputModuleValue);
+  };
+
+  const handleInputAutoCompleteChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputAutocomplete(event.target.value);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (
+      event.key === 'Enter' &&
+      inputCodedgecValue.trim() !== '' &&
+      !optionsCodedgec.includes(inputCodedgecValue)
+    ) {
+      agregarNuevoValor(inputCodedgecValue);
+    }
+  };
+
+  const agregarNuevoValor = (valor: string) => {
+    if (!optionsCodedgec.includes(valor)) {
+      setOptionsCodedgec([...optionsCodedgec, valor]);
+    }
+    setInputCodedgecValue(valor);
+  };
+
+  const handleGuardarClick = async () => {
+    let formularioObjeto = {
+      handleInputCodedgecChange: inputCodedgecValue,
+    };
+    save_form(formularioObjeto);
+  };
+
+  // const usuario = 'nombreDeUsuario'; // Asegúrate de declarar y asignar un valor a la variable usuario.
+
+  // const respuesta = mainListItemsFx().filter(
+  //   (x) => x.user == undefined || x.user?.includes(usuario)
+  // );
+
+  // console.log(mainListItemsFx); //
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  const navigate = useNavigate();
 
   return (
-    <Box>
-      <Typography
-        variant="h6"
-        sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-      >
-        Uso interno DGEC
-      </Typography>
-      <hr />
-
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <TextField
-          fullWidth
-          label="INTERNO - Código interno DGEC"
-          value={campos}
-          onChange={(e) => setCampos(e.target.value)}
-          variant="outlined"
-          InputProps={{ readOnly: readOnly }}
-          sx={{ mr: 2 }}
+    <>
+      <Encabezado toggleDrawer={toggleDrawer} />
+      <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
+        <Sidebar
+          toggleDrawer={toggleDrawer}
+          secondaryListItems={[]}
+          open={false}
         />
-      </Box>
+        <Container>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              padding: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ marginBottom: 2, fontWeight: 'bold' }}
+            >
+              Codigo Interno DGEC
+            </Typography>
+            <hr />
+            <Divider sx={{ mb: 2 }} />
+            <Grid container spacing={2}>
+              <Grid>
+                <Autocomplete
+                  value={inputCodedgecValue}
+                  options={optionsCodedgec}
+                  onChange={(event, newValue) =>
+                    handleInputAutoCompleteChange(newValue)
+                  }
+                  onKeyDown={handleKeyPress}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Código Interno DGEC" />
+                  )}
+                />
+              </Grid>
+              <Typography sx={{ mt: 2 }}>
+                Al ingresar nuevo codigo, aprete "enter" para guardar
+              </Typography>
+              <Grid item xs={12} md={6}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className="float-left"
+                  onClick={handleAdd}
+                  sx={{ mt: 2, width: '100%' }}
+                >
+                  Agregar
+                </Button>
+              </Grid>
+            </Grid>
+            <br />
+            <TableContainer component={Paper}>
+              <Table>
+                <TableBody>
+                  {tableData.map((data, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{data.codedgec}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button variant="outlined" onClick={onGuardar} disabled={readOnly}>
-          Guardar
-        </Button>
-        <Button variant="outlined" onClick={onEnviar} disabled={readOnly}>
-          Enviar
-        </Button>
+            <Box
+              sx={{
+                marginTop: 2,
+                width: '100%',
+                maxWidth: 'lg',
+                textAlign: 'center',
+              }}
+            >
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleGuardarClick}
+              >
+                Guardar sin enviar
+              </Button>
+            </Box>
+          </Box>
+          <Footer />
+        </Container>
       </Box>
-    </Box>
+    </>
   );
 };
 
