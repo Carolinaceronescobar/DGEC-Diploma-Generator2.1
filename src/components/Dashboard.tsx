@@ -111,44 +111,53 @@ const Dashboard: React.FC = () => {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <HeaderApp />
-      <Box sx={{ display: 'flex', marginTop: '90px' }}>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-            <Grid
-              container
-              direction="row-reverse"
-              justifyContent="flex-start"
-              spacing={2}
+
+      <Box
+        component="main"
+        sx={{
+          marginY: '90px',
+          paddingX: '20px',
+        }}
+      >
+        {/* Section para los CTAs */}
+        <Box
+          component="section"
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box>{/* contenido opcional */}</Box>
+          <Box>
+            <Link
+              to="/formulario"
+              style={{
+                textDecoration: 'none',
+              }}
             >
-              <Grid item>
-                <Paper className="p-2" sx={{ margin: '25px' }}>
-                  <Link
-                    to="/formulario"
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      startIcon={<AddIcon />}
-                      sx={{ backgroundColor: '#004B85' }}
-                    >
-                      Nuevo formulario
-                    </Button>
-                  </Link>
-                </Paper>
-              </Grid>
-            </Grid>
-            <Grid container spacing={3}>
-              {/* primer  row */}
-              <Grid item xs={12} style={{ marginTop: '3vh' }}>
-                {/* Integra SolicitudesTabla con los datos */}
-                {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
-              </Grid>
-            </Grid>
-          </Paper>
-        </Container>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                sx={{ backgroundColor: '#004B85' }}
+              >
+                Nuevo formulario
+              </Button>
+            </Link>
+          </Box>
+        </Box>
+
+        {/* Section para el listado de programas */}
+        <Box
+          component="section"
+          sx={{
+            padding: '20px',
+          }}
+        >
+          {/* Integra SolicitudesTabla con los datos */}
+          {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
+          <p> TODO: Aquí va el listado de componentes</p>
+        </Box>
       </Box>
 
       <Footer />
