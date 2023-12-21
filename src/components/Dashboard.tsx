@@ -8,8 +8,6 @@ import {
   Box,
   Toolbar,
   IconButton,
-  Typography,
-  Badge,
   Container,
   Grid,
   Paper,
@@ -18,49 +16,23 @@ import {
   ListItemText,
   Divider,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+
 import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+
+import SolicitudesTabla from '../pages/resumen/SolicitudesTabla.tsx';
 import MuiDrawer from '@mui/material/Drawer';
 import { Link } from 'react-router-dom';
-import SolicitudesTabla from '../pages/resumen/SolicitudesTabla.tsx';
 import {
   mainListItems,
   secondaryListItems,
 } from '../pages/resumen/listItems.ts';
-
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { HeaderApp } from './HeaderApp.tsx';
 import Footer from './Footer.tsx';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import ModalComponent from './ModalComponent.tsx';
-import HeaderApp from './HeaderApp.tsx';
 // import DataTa  ble from 'react-data-table-component';
 // import { get_form } from '../utils/formulario.ts';
 
 const drawerWidth = 240;
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -92,9 +64,6 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 const Dashboard: React.FC = () => {
-  const [open, setOpen] = React.useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -111,16 +80,6 @@ const Dashboard: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Aquí puedes implementar la lógica para cerrar sesión
-    // Por ejemplo, redirigir al usuario a la página de inicio de sesión
-    console.log('Cerrar Sesión');
-    handleClose();
-    navigate('/login'); // Cierra el menú después de hacer clic en "Cerrar Sesión"
-  };
-
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -128,13 +87,6 @@ const Dashboard: React.FC = () => {
   // Datos de ejemplo para SolicitudesTabla
   // const solicitudesData = get_form();
 
-  const handleOpenProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseProfileMenu = () => {
-    setAnchorEl(null);
-  };
   // useEffect(() => {
   //   // Esta función se ejecutará cada vez que se inicialice el HTML
   //   console.log('La página se ha inicializado');
@@ -160,58 +112,7 @@ const Dashboard: React.FC = () => {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
 
-        {/* <HeaderApp /> */}
-
-        <AppBar
-          position="absolute"
-          open={open}
-          sx={{ backgroundColor: '#004B85' }}
-        >
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            {/* Reemplaza NotificationsIcon con AccountCircleIcon o el icono de perfil que prefieras */}
-
-            {/*Logotipo de la Universidad */}
-            <img
-              alt="logo"
-              src="./src/assets/logo-usm_blanco-min.png"
-              style={{
-                width: 150,
-                height: 25,
-                marginTop: 30,
-                marginLeft: 30,
-              }}
-            />
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Direccion General de Estudios Continuos
-            </Typography>
-            <IconButton color="inherit" onClick={handleOpenProfileMenu}>
-              <Badge color="secondary">
-                <AccountCircleIcon />
-              </Badge>
-            </IconButton>
-
-            {/* Menú de perfil */}
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseProfileMenu}
-            >
-              <MenuItem onClick={handleClose}>Perfil Administrador</MenuItem>
-              <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
-            </Menu>
-          </Toolbar>
-        </AppBar>
+        <HeaderApp />
 
         <Drawer variant="permanent" open={open}>
           <Toolbar

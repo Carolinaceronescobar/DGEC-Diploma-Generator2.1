@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { UsoInternoDGECData } from './makeData';
 import ModalComponent from '../../components/ModalComponent';
 import { save_form } from '../../utils/formulario';
-import Encabezado from '../../components/Encabezado';
+import { HeaderApp } from '../../components/HeaderApp';
 import Sidebar from '../../components/SideBar';
 import Footer from '../../components/Footer';
 
@@ -111,7 +111,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
 
   return (
     <>
-      <Encabezado toggleDrawer={toggleDrawer} />
+      <HeaderApp toggleDrawer={toggleDrawer} />
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
         <Sidebar
           toggleDrawer={toggleDrawer}
