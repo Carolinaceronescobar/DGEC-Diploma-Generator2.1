@@ -1,19 +1,13 @@
 //DGEC-DIPLOMA-GENERATOR2/ui/components/Dashboard.tsx
 import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { Link } from 'react-router-dom';
+
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 
-import { Link } from 'react-router-dom';
-import { HeaderApp } from './HeaderApp.tsx';
-import Footer from './Footer.tsx';
-
 // TODO remove, this demo shouldn't need to reset the theme.
 // import { get_form } from '../utils/formulario.ts';
-
-const defaultTheme = createTheme();
 
 const Dashboard: React.FC = () => {
   // TODO: Solicitar los datos parece que dentro del useEffect()
@@ -39,61 +33,47 @@ const Dashboard: React.FC = () => {
   // };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <HeaderApp />
-
+    <>
+      {/* Section para los CTAs */}
       <Box
-        component="main"
+        component="section"
         sx={{
-          marginY: '90px',
-          paddingX: '20px',
-          minHeight: '70vh',
+          display: 'flex',
+          justifyContent: 'space-between',
         }}
       >
-        {/* Section para los CTAs */}
-        <Box
-          component="section"
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Box>{/* contenido opcional */}</Box>
-          <Box>
-            <Link
-              to="/formulario"
-              style={{
-                textDecoration: 'none',
-              }}
+        <Box>{/* contenido opcional */}</Box>
+        <Box>
+          <Link
+            to="/formulario"
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              sx={{ backgroundColor: '#004B85' }}
             >
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                sx={{ backgroundColor: '#004B85' }}
-              >
-                Nuevo formulario
-              </Button>
-            </Link>
-          </Box>
-        </Box>
-
-        {/* Section para el listado de programas */}
-        <Box
-          component="section"
-          sx={{
-            padding: '20px',
-          }}
-        >
-          {/* Integra SolicitudesTabla con los datos */}
-          {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
-          <p> TODO: Aquí va el listado de componentes</p>
+              Nuevo formulario
+            </Button>
+          </Link>
         </Box>
       </Box>
 
-      <Footer />
-    </ThemeProvider>
+      {/* Section para el listado de programas */}
+      <Box
+        component="section"
+        sx={{
+          padding: '20px',
+        }}
+      >
+        {/* Integra SolicitudesTabla con los datos */}
+        {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
+        <p> TODO: Aquí va el listado de componentes</p>
+      </Box>
+    </>
   );
 };
 
