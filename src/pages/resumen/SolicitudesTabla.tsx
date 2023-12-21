@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 // import AdmisionForm from './Form/AdmisionForm';
 // import FinanzasForm from './Form/FinanzasForm';
 import Checkbox from '@mui/material/Checkbox';
-import { get_form } from '../../utils/formulario';
+// import { get_form } from '../../utils/formulario';
 import { useNavigate } from 'react-router-dom';
 
 import DataTable from 'react-data-table-component';
@@ -39,10 +39,10 @@ type Solicitud = {
 type SolicitudesTablaProps = {
   solicitudes: Solicitud[];
 };
-let solicitudes_ = await get_form();
+// let solicitudes_ = await get_form();
 
 // const [data, setData] = useState([]);
-let data = await get_form();
+// let data = await get_form();
 
 const paginationComponentOptions = {
   rowsPerPageText: 'Filas por página',

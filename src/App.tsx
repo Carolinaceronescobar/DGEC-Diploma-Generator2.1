@@ -1,19 +1,18 @@
 //App.tsx
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from '../src/pages/login/AuthContext';
-import SideBar from './components/Dashboard.tsx';
-import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
-import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 
+import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 import LoginScreen from './pages/login/LoginScreen.tsx';
 import UsoInternoFinanzas from './pages/usointfinanzas/UsointernoFinanzasForm.tsx';
-// import TopBar from './components/TopBar.tsx';
-// import Footer from './components/Footer.tsx';
-
-// import { PrivateRoute } from './auth/PrivateRoute';
 import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
 import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
+
+import { AuthProvider } from '../src/pages/login/AuthContext';
+import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
+import Dashboard from './components/Dashboard.tsx';
+
+// import { PrivateRoute } from './auth/PrivateRoute';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -34,11 +33,11 @@ function App() {
 
   return (
     <AuthProvider login={handleLogin} logout={handleLogout}>
-      {isAuthenticated && <SideBar />}
+      {isAuthenticated && <Dashboard />}
       <BrowserRouter>
         <Routes>
           {/* FIXME Cambiar nomber de componente */}
-          <Route path="/" element={<SideBar />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/formulario" element={<ProgramRequestForm />} />
           <Route path="/formulario/:id" element={<ProgramRequestForm />} />
           <Route path="/dgec" element={<UsoInternoDGEC />} />

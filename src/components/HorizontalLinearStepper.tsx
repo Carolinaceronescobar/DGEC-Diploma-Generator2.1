@@ -12,7 +12,7 @@ import FinanzasForm from '../pages/finanzas/FinanzasForm.tsx';
 //import Solicitudes from './Dashboard.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { find_form, get_object_localstore } from '../utils/formulario';
+// import { find_form, get_object_localstore } from '../utils/formulario';
 const HorizontalLinearStepper: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());

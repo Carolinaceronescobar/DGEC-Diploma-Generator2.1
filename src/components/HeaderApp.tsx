@@ -11,8 +11,8 @@ import {
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 interface HeaderProps {
-  handleOpenProfileMenu: (event: React.MouseEvent<HTMLElement>) => void;
   anchorEl: null | HTMLElement;
+  handleOpenProfileMenu: (event: React.MouseEvent<HTMLElement>) => void;
   handleCloseProfileMenu: () => void;
   handleLogout: () => void;
 }

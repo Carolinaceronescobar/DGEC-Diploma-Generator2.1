@@ -34,8 +34,9 @@ import Footer from './Footer.tsx';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ModalComponent from './ModalComponent.tsx';
-import DataTable from 'react-data-table-component';
-import { get_form } from '../utils/formulario.ts';
+import HeaderApp from './HeaderApp.tsx';
+// import DataTa  ble from 'react-data-table-component';
+// import { get_form } from '../utils/formulario.ts';
 
 const drawerWidth = 240;
 
@@ -123,8 +124,9 @@ const Dashboard: React.FC = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
   // Datos de ejemplo para SolicitudesTabla
-  const solicitudesData = get_form();
+  // const solicitudesData = get_form();
 
   const handleOpenProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -157,23 +159,14 @@ const Dashboard: React.FC = () => {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
+
+        {/* <HeaderApp /> */}
+
         <AppBar
           position="absolute"
           open={open}
           sx={{ backgroundColor: '#004B85' }}
         >
-          {/*Logotipo de la Universidad */}
-          <img
-            alt="logo"
-            src="./src/assets/logo-usm_blanco-min.png"
-            style={{
-              width: 150,
-              height: 25,
-              marginTop: 30,
-              marginLeft: 30,
-            }}
-          />
-
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -181,6 +174,17 @@ const Dashboard: React.FC = () => {
           >
             {/* Reemplaza NotificationsIcon con AccountCircleIcon o el icono de perfil que prefieras */}
 
+            {/*Logotipo de la Universidad */}
+            <img
+              alt="logo"
+              src="./src/assets/logo-usm_blanco-min.png"
+              style={{
+                width: 150,
+                height: 25,
+                marginTop: 30,
+                marginLeft: 30,
+              }}
+            />
             <Typography
               component="h1"
               variant="h6"
@@ -300,7 +304,7 @@ const Dashboard: React.FC = () => {
                 {/* primer  row */}
                 <Grid item xs={12} style={{ marginTop: '3vh' }}>
                   {/* Integra SolicitudesTabla con los datos */}
-                  <SolicitudesTabla solicitudes={solicitudesData} />
+                  {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
                 </Grid>
               </Grid>
             </Paper>
