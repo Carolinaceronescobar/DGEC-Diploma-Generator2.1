@@ -6,6 +6,7 @@ import Footer from './Footer'; // Importa el componente Footer
 //import { AuthProvider } from '../pages/login/AuthContext';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla';
 import { useParams } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
 
 // En el archivo que contiene SolicitudesTabla
 interface Solicitud {
@@ -49,14 +50,15 @@ const ProgramRequestForm: React.FC = () => {
     id = id == undefined ? '0' : id;
   }, []);
   return (
-    <div>
-      <TopBar />
-      <div className="container">
-        <h1>Solicitud Creación de Programa</h1>
+    <>
+      <Box component="section" sx={{ padding: '50px' }}>
+        <Container>
+          <h1>Solicitud Creación de Programa</h1>
+        </Container>
+
         <HorizontalLinearStepper />
-      </div>
-      <Footer />
-    </div>
+      </Box>
+    </>
   );
 };
 
