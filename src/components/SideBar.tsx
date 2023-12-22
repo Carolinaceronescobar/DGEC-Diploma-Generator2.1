@@ -8,6 +8,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
+import ModalComponent from './ModalComponent';
 
 // Crear un nuevo componente para la barra lateral
 const Sidebar = () => {

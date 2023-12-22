@@ -5,14 +5,32 @@ import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
+import SolicitudesTabla from '../pages/resumen/SolicitudesTabla';
+import { Solicitud } from '../pages/resumen/SolicitudesTabla.tsx';
 
 // TODO remove, this demo shouldn't need to reset the theme.
-// import { get_form } from '../utils/formulario.ts';
+import { get_form } from '../utils/formulario.ts';
 
 const Dashboard: React.FC = () => {
   // TODO: Solicitar los datos parece que dentro del useEffect()
   // Datos de ejemplo para SolicitudesTabla
   // const programs = get_form();
+
+  const [solicitudesData, setSolicitudesData] = React.useState<Solicitud[]>([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await get_form();
+        setSolicitudesData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setSolicitudesData([]); // Puedes manejar el error de la manera que prefieras
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // TODO: Parece que permite listar los programas dependiendo del permiso del usuario.
   // Esto es mejor gestionarlo desde el App, por lo que es probable que pueda eliminarse
@@ -40,6 +58,7 @@ const Dashboard: React.FC = () => {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
+          padding: '20px',
         }}
       >
         <Box>{/* contenido opcional */}</Box>
@@ -71,6 +90,7 @@ const Dashboard: React.FC = () => {
       >
         {/* Integra SolicitudesTabla con los datos */}
         {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
+        <SolicitudesTabla solicitudes={solicitudesData} />
         <p> TODO: Aquí va el listado de componentes</p>
       </Box>
     </>

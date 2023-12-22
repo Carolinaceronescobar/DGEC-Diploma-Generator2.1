@@ -47,25 +47,33 @@ export const HeaderApp = () => {
         {/* Reemplaza NotificationsIcon con AccountCircleIcon o el icono de perfil que prefieras */}
 
         {/*Logotipo de la Universidad */}
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <div>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: { xs: 'none', md: 'flex' },
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ marginRight: '20px' }}>
             <img
               alt="logo"
               src="./src/assets/logo-usm_blanco-min.png"
               style={{
-                width: 150,
-                height: 25,
-                marginTop: 30,
-                marginLeft: 30,
+                width: '150px',
+                height: '25px',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                display: 'block',
               }}
             />
           </div>
+
           <Typography
             component="h1"
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1 }}
+            sx={{ flexGrow: 1, margin: '4px' }}
           >
             Direccion General de Estudios Continuos
           </Typography>
