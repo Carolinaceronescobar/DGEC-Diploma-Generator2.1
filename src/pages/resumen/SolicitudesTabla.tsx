@@ -20,20 +20,18 @@ import { Link } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 // import { get_form } from '../../utils/formulario';
 import { useNavigate } from 'react-router-dom';
+import { ProgramItem } from '../../components/ProgramItem';
 
 import DataTable from 'react-data-table-component';
 
 // Define el tipo de datos para las solicitudes
 export type Solicitud = {
   id: number;
-  fecha: string;
   programa: string;
+  fecha: string;
   departamento: string;
   campus: string;
-  estado: string;
-  revisionDGEC: boolean;
-  revisionDIREST: boolean;
-  revisionFINANZAS: boolean;
+  aprobacion: boolean;
 };
 
 type SolicitudesTablaProps = {
@@ -81,79 +79,19 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Fecha</TableCell>
-                <TableCell>Programa</TableCell>
-                <TableCell>Departamento</TableCell>
-                <TableCell>Campus</TableCell>
-                <TableCell>Revisión DGEC</TableCell>
-                <TableCell>Revisión DIREST</TableCell>
-                <TableCell>Revisión FINANZAS</TableCell>
-                <TableCell>editar</TableCell>
+                <TableCell> SIGA </TableCell>
+                <TableCell> NOMBRE </TableCell>
+                <TableCell> Fecha Inicio </TableCell>
+                <TableCell> Departamento </TableCell>
+                <TableCell> Campus </TableCell>
+                <TableCell> APROBACIÓN </TableCell>
+                <TableCell> Acciones </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {solicitudes.map((solicitud) => (
-                <TableRow key={solicitud.id}>
-                  <TableCell>{solicitud.id}</TableCell>
-                  <TableCell>{solicitud.value}</TableCell>
-                  <TableCell>{solicitud.nombrePrograma}</TableCell>
-                  <TableCell>{solicitud.departamento}</TableCell>
-                  <TableCell>{solicitud.sede}</TableCell>
-                  <TableCell>
-                    <Checkbox checked={solicitud.revisionDGEC} disabled />
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox checked={solicitud.revisionDIREST} disabled />
-                  </TableCell>
-                  <TableCell>
-                    <Checkbox checked={solicitud.revisionFINANZAS} disabled />
-                  </TableCell>
-                  <TableCell>
-                    <Link to={`/formulario/${solicitud.id}`}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          backgroundColor: '#004B85',
-                          fontSize: '10px',
-                          padding: '5px 10px',
-                        }}
-                      >
-                        Ver Respuesta
-                      </Button>
-                      <br />
-                      <br />
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          backgroundColor: '#004B85',
-                          fontSize: '10px',
-                          padding: '5px 10px',
-                        }}
-                      >
-                        Editar
-                      </Button>
-                      <br />
-                      <br />
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{
-                          backgroundColor: '#004B85',
-                          fontSize: '10px',
-                          padding: '5px 10px',
-                        }}
-                      >
-                        Eliminar
-                      </Button>
-                      <br />
-                      <br />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
+              <ProgramItem />
+              <ProgramItem />
+              <ProgramItem />
             </TableBody>
           </Table>
         </TableContainer>

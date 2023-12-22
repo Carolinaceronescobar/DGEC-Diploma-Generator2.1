@@ -89,9 +89,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         {/* Integra SolicitudesTabla con los datos */}
-        {/* <SolicitudesTabla solicitudes={solicitudesData} /> */}
         <SolicitudesTabla solicitudes={solicitudesData} />
-        <p> TODO: Aquí va el listado de componentes</p>
       </Box>
     </>
   );
