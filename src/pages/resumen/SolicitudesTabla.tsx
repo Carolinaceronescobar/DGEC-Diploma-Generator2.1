@@ -1,6 +1,6 @@
 // SolicitudesTabla.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -21,8 +21,10 @@ import Checkbox from '@mui/material/Checkbox';
 // import { get_form } from '../../utils/formulario';
 import { useNavigate } from 'react-router-dom';
 import { ProgramItem } from '../../components/ProgramItem';
-
 import DataTable from 'react-data-table-component';
+
+//TODO: cambiar por importacion real o eliminar
+import { programs } from '../../utils/data';
 
 // Define el tipo de datos para las solicitudes
 export type Solicitud = {
@@ -52,24 +54,25 @@ const paginationComponentOptions = {
 const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
   const navigate = useNavigate();
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const handleDgecAprovedUpdate = (event: React.ChangeEvent) => {
+    console.log(
+      'handleDgecAprovedUpdate',
+      event.target.parentElement?.getAttribute('itemId')
+    );
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+    const programId = event.target.parentElement?.getAttribute('itemId');
+    const programIndex = programs.findIndex((program) => {
+      return program.id == Number(programId);
+    });
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+    programs[programIndex].isDgecAproved =
+      !programs[programIndex].isDgecAproved;
 
-  const updateDocument = (solicitud: any) => {
-    console.log('acaa');
-    console.log(solicitud);
-    navigate(`/formulario/${solicitud.id}`);
+    console.log(programs[programIndex].isDgecAproved);
+
+    // TODO: Obtner el program del listado a partir del itemId
+    // TODO: Update del programa en la BBDD. Llama al API
+    // TODO: Si todo anda ok actualizar el esto del check
   };
 
   return (
@@ -89,9 +92,9 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <ProgramItem />
-              <ProgramItem />
-              <ProgramItem />
+              {programs.map((program, index) => {
+                return <ProgramItem program={program} key={index} />;
+              })}
             </TableBody>
           </Table>
         </TableContainer>
