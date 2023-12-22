@@ -86,7 +86,6 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
                 <TableCell>Programa</TableCell>
                 <TableCell>Departamento</TableCell>
                 <TableCell>Campus</TableCell>
-                <TableCell>Estado</TableCell>
                 <TableCell>Revisión DGEC</TableCell>
                 <TableCell>Revisión DIREST</TableCell>
                 <TableCell>Revisión FINANZAS</TableCell>
@@ -101,7 +100,6 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
                   <TableCell>{solicitud.nombrePrograma}</TableCell>
                   <TableCell>{solicitud.departamento}</TableCell>
                   <TableCell>{solicitud.sede}</TableCell>
-                  <TableCell>{solicitud.estado}</TableCell>
                   <TableCell>
                     <Checkbox checked={solicitud.revisionDGEC} disabled />
                   </TableCell>
@@ -116,10 +114,42 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
                       <Button
                         variant="contained"
                         color="primary"
-                        sx={{ backgroundColor: '#004B85' }}
+                        sx={{
+                          backgroundColor: '#004B85',
+                          fontSize: '10px',
+                          padding: '5px 10px',
+                        }}
                       >
-                        Gestión
+                        Ver Respuesta
                       </Button>
+                      <br />
+                      <br />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                          backgroundColor: '#004B85',
+                          fontSize: '10px',
+                          padding: '5px 10px',
+                        }}
+                      >
+                        Editar
+                      </Button>
+                      <br />
+                      <br />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                          backgroundColor: '#004B85',
+                          fontSize: '10px',
+                          padding: '5px 10px',
+                        }}
+                      >
+                        Eliminar
+                      </Button>
+                      <br />
+                      <br />
                     </Link>
                   </TableCell>
                 </TableRow>
