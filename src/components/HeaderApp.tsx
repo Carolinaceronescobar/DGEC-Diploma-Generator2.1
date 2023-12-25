@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Badge,
   Box,
+  Hidden,
   IconButton,
   Menu,
   MenuItem,
@@ -11,8 +12,13 @@ import {
 } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
+import MenuIcon from '@mui/icons-material/Menu';
 
-export const HeaderApp = () => {
+export const HeaderApp = ({
+  onToggleSidebar,
+}: {
+  onToggleSidebar: () => void;
+}) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const navigate = useNavigate();
 
@@ -44,7 +50,12 @@ export const HeaderApp = () => {
       }}
     >
       <Toolbar>
-        {/* Reemplaza NotificationsIcon con AccountCircleIcon o el icono de perfil que prefieras */}
+        {/* Nuevo botón para abrir/cerrar el menú lateral en pantallas pequeñas */}
+        <Hidden lgUp>
+          <IconButton color="inherit" onClick={onToggleSidebar}>
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
 
         {/*Logotipo de la Universidad */}
         <Box
@@ -75,7 +86,7 @@ export const HeaderApp = () => {
             noWrap
             sx={{ flexGrow: 1, margin: '4px' }}
           >
-            Direccion General de Estudios Continuos
+            DGEC
           </Typography>
         </Box>
 
