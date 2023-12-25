@@ -37,7 +37,7 @@ interface UsointernoDGECProps {
 }
 
 const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
-  const [tableData, setTableData] = useState<{ codedgec: string }[]>([]);
+  const [tableData, setTableData] = useState([]);
   const [optionsCodedgec, setOptionsCodedgec] = useState([
     'Codigo Int DGEC1',
     'Codigo Int DGEC2',
@@ -52,10 +52,10 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
   const [inputAutocomplete, setInputAutocomplete] = useState('');
 
   const handleAdd = () => {
-    setTableData((prevTableData) => [
-      ...prevTableData,
-      { codedgec: inputCodedgecValue },
-    ]);
+    console.log('aca2');
+    let val = inputAutocomplete;
+    let tabla_temporal = [... tableData, inputAutocomplete]
+    setTableData(tabla_temporal);
   };
 
   const handleInputCodedgecChange = (
@@ -65,10 +65,10 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
     setInputCodedgecValue(newInputModuleValue);
   };
 
-  const handleInputAutoCompleteChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setInputAutocomplete(event.target.value);
+  const handleInputAutoCompleteChange = (event: any, value_input:any ) => {
+    const newValue = event.target.value;
+    console.log()
+    setInputAutocomplete(value_input);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -109,14 +109,14 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
 
   const navigate = useNavigate();
 
-  const handleDelete = (index) => {
+  const handleDelete = (index:any) => {
     // tableData[index].module);
     tableData.splice(index, 1);
     setTableData([...tableData]);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
   };
 
-  const handleEdit = (index) => {
+  const handleEdit = (index:any) => {
     setInputCodedgecValue(tableData[index].codedgec);
     handleDelete(index);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
@@ -150,12 +150,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
                 )}
               />
             </Grid>
-            <Grid item xs={3}></Grid>
-            <Typography>
-              {' '}
-              Al ingresar nuevo módulo, aprete "enter" y continúe completando
-              con horas del módulo{' '}
-            </Typography>
+
             <Grid item xs={3}>
               <Button
                 variant="outlined"
@@ -166,6 +161,13 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
               >
                 Agregar
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>
+                {' '}
+                Al ingresar nuevo módulo, aprete "enter" y continúe completando
+                con horas del módulo{' '}
+              </Typography>
             </Grid>
           </Grid>
           <TableContainer>
@@ -179,7 +181,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
               <TableBody>
                 {tableData.map((data, index) => (
                   <TableRow key={index}>
-                    <TableCell>{data.codedgec}</TableCell>
+                    <TableCell>{data}</TableCell>
                     <TableCell>
                       <button onClick={() => handleEdit(index)}>Editar</button>
                       <button onClick={() => handleDelete(index)}>
