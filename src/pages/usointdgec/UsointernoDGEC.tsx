@@ -109,97 +109,100 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
 
   const navigate = useNavigate();
 
-  return (
-    <>
-      <HeaderApp toggleDrawer={toggleDrawer} />
-      <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
-        <Sidebar
-          toggleDrawer={toggleDrawer}
-          secondaryListItems={[]}
-          open={false}
-        />
-        <Container>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flex: 1,
-              padding: 2,
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{ marginBottom: 2, fontWeight: 'bold' }}
-            >
-              Codigo Interno DGEC
-            </Typography>
-            <hr />
-            <Divider sx={{ mb: 2 }} />
-            <Grid container spacing={2}>
-              <Grid>
-                <Autocomplete
-                  value={inputCodedgecValue}
-                  options={optionsCodedgec}
-                  onChange={(event, newValue) =>
-                    handleInputAutoCompleteChange(newValue)
-                  }
-                  onKeyDown={handleKeyPress}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Código Interno DGEC" />
-                  )}
-                />
-              </Grid>
-              <Typography sx={{ mt: 2 }}>
-                Al ingresar nuevo codigo, aprete "enter" para guardar
-              </Typography>
-              <Grid item xs={12} md={6}>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className="float-left"
-                  onClick={handleAdd}
-                  sx={{ mt: 2, width: '100%' }}
-                >
-                  Agregar
-                </Button>
-              </Grid>
-            </Grid>
-            <br />
-            <TableContainer component={Paper}>
-              <Table>
-                <TableBody>
-                  {tableData.map((data, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{data.codedgec}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+  const handleDelete = (index) => {
+    // tableData[index].module);
+    tableData.splice(index, 1);
+    setTableData([...tableData]);
+    // Aquí puedes implementar la lógica para editar la fila seleccionada
+  };
 
-            <Box
-              sx={{
-                marginTop: 2,
-                width: '100%',
-                maxWidth: 'lg',
-                textAlign: 'center',
-              }}
-            >
+  const handleEdit = (index) => {
+    setInputCodedgecValue(tableData[index].codedgec);
+    handleDelete(index);
+    // Aquí puedes implementar la lógica para editar la fila seleccionada
+  };
+
+  return (
+    <Box>
+      <div>
+        <Typography
+          variant="h6"
+          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+        >
+          {' '}
+          Codigo Interno DGEC
+        </Typography>
+        <hr />
+        <div>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Autocomplete
+                value={inputAutocomplete}
+                options={optionsCodedgec}
+                onChange={handleInputAutoCompleteChange}
+                onKeyDown={handleKeyPress}
+                renderInput={(params) => (
+                  <TextField
+                    onChange={handleInputAutoCompleteChange}
+                    {...params}
+                    label="Codigo DGEC"
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={3}></Grid>
+            <Typography>
+              {' '}
+              Al ingresar nuevo módulo, aprete "enter" y continúe completando
+              con horas del módulo{' '}
+            </Typography>
+            <Grid item xs={3}>
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={handleGuardarClick}
+                className="float-left"
+                onClick={handleAdd}
+                sx={{ marginTop: 2 }}
               >
-                Guardar sin enviar
+                Agregar
               </Button>
-            </Box>
-          </Box>
-          <Footer />
-        </Container>
-      </Box>
-    </>
+            </Grid>
+          </Grid>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Módulo</TableCell>
+                  <TableCell>Editar</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tableData.map((data, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{data.codedgec}</TableCell>
+                    <TableCell>
+                      <button onClick={() => handleEdit(index)}>Editar</button>
+                      <button onClick={() => handleDelete(index)}>
+                        Eliminar
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleGuardarClick} // Call handleGuardarClick when "Guardar" button is clicked
+            sx={{ marginTop: 2 }}
+          >
+            Guardar
+          </Button>
+        </div>
+      </div>
+    </Box>
   );
 };
 

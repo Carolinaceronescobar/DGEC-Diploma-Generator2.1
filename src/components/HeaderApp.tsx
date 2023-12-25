@@ -65,7 +65,8 @@ export const HeaderApp = ({
             alignItems: 'center',
           }}
         >
-          <div style={{ marginRight: '20px' }}>
+          {/* Utilizando Box para el margen derecho */}
+          <Box sx={{ marginRight: '20px' }}>
             <img
               alt="logo"
               src="./src/assets/logo-usm_blanco-min.png"
@@ -77,7 +78,7 @@ export const HeaderApp = ({
                 display: 'block',
               }}
             />
-          </div>
+          </Box>
 
           <Typography
             component="h1"

@@ -19,9 +19,9 @@ import { HeaderApp } from './components/HeaderApp.tsx';
 import Footer from './components/Footer.tsx';
 import Sidebar from './components/SideBar.tsx';
 
-const defaultTheme = createTheme();
-
 // import { PrivateRoute } from './auth/PrivateRoute';
+
+const defaultTheme = createTheme();
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,7 +52,7 @@ function App() {
       {/* Contenedor principal */}
       <Container>
         {/* Header */}
-        <HeaderApp />
+        <HeaderApp onToggleSidebar={toggleSidebar} />
 
         {/* Contenido Principal */}
         <Grid container spacing={0}>
