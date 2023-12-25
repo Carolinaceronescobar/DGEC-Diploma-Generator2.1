@@ -69,31 +69,31 @@ const AdmisionForm: React.FC = () => {
   const [FotoAdjunta, setFotoAdjunta] = useState<File | null>(null);
 
   const [descripcionPrograma, setdescripcionPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleDescripcionProgramaChange = (event) => {
+  const handleDescripcionProgramaChange = (event:any) => {
     setdescripcionPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [objetivoPrograma, setobjetivoPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleObjetivoProgramaChange = (event) => {
+  const handleObjetivoProgramaChange = (event:any) => {
     setobjetivoPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [reseniaPrograma, setReseniaProgramaChange] = useState(''); // Estado local para el nombre del programa
-  const handleReseniaProgramaChange = (event) => {
+  const handleReseniaProgramaChange = (event:any) => {
     setReseniaProgramaChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [enlaceLinkedin, setEnlaceLinkedinChange] = useState(''); // Estado local para el nombre del programa
-  const handleEnlaceLinkedinChange = (event) => {
+  const handleEnlaceLinkedinChange = (event:any) => {
     setEnlaceLinkedinChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
   const [reseniaProgramados, setReseniaProgramadosChange] = useState(''); // Estado local para el nombre del programa
-  const handleReseniaProgramadosChange = (event) => {
+  const handleReseniaProgramadosChange = (event:any) => {
     setReseniaProgramadosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [enlaceLinkedindos, setEnlaceLinkedindosChange] = useState(''); // Estado local para el nombre del programa
-  const handleEnlaceLinkedindosChange = (event) => {
+  const handleEnlaceLinkedindosChange = (event:any) => {
     setEnlaceLinkedindosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
   // Función para manejar cambios en la selección de la foto adjunta
@@ -101,8 +101,9 @@ const AdmisionForm: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files && event.target.files[0];
-    setFotoAdjuntados(file);
+    // setFotoAdjuntados(file);
   };
+  
   const [requisitosPostulante, setSelectedJornadaOptions] = useState({
     cedula: false,
     licenciaMedia: false,
@@ -110,7 +111,7 @@ const AdmisionForm: React.FC = () => {
     otra: false,
   });
 
-  const requisitosPostulanteHandleCheckboxChange = (event) => {
+  const requisitosPostulanteHandleCheckboxChange = (event:any) => {
     setSelectedJornadaOptions({
       ...requisitosPostulante,
       [event.target.name]: event.target.checked,
@@ -119,18 +120,18 @@ const AdmisionForm: React.FC = () => {
 
   const [numeroEstudianteMaximo, setNumeroEstudianteMaximoChange] =
     useState(''); // Estado local para el nombre del programa
-  const handleNumeroEstudianteMaximoChange = (event) => {
+  const handleNumeroEstudianteMaximoChange = (event:any) => {
     setNumeroEstudianteMaximoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [numeroEstudianteMinimo, setNumeroEstudianteMinimoChange] =
     useState(''); // Estado local para el nombre del programa
-  const handleNumeroEstudianteMinimoChange = (event) => {
+  const handleNumeroEstudianteMinimoChange = (event:any) => {
     setNumeroEstudianteMinimoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [staffProfesores, sethandlestaffProfesoresChange] = useState(''); // Estado local para el nombre del programa
-  const handlestaffProfesoresChange = (event) => {
+  const handlestaffProfesoresChange = (event:any) => {
     sethandlestaffProfesoresChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
@@ -207,13 +208,13 @@ const AdmisionForm: React.FC = () => {
     setHours('');
   };
 
-  const handleEdit = (index) => {
+  const handleEdit = (index:number) => {
     agregarNuevoValor(tableData[index].module);
     setHours(tableData[index].hour);
     handleDelete(index);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
   };
-  const handleDelete = (index) => {
+  const handleDelete = (index:number) => {
     // tableData[index].module);
     tableData.splice(index, 1);
     setTableData([...tableData]);
@@ -232,22 +233,22 @@ const AdmisionForm: React.FC = () => {
   const [inputModuleValue, setinputModuleValue] = useState('');
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
 
-  const handleInputModuleChange = (event, newinputModuleValue) => {
+  const handleInputModuleChange = (event:any, newinputModuleValue:any) => {
     console.log('newinputModuleValue->' + newinputModuleValue);
     setinputModuleValue(newinputModuleValue);
   };
-  const handleInputAutoCompleteChange = (event) => {
+  const handleInputAutoCompleteChange = (event:any) => {
     const newValue = event.target.value;
     console.log(newValue);
     setinputAutocompleteModuleValue(newValue);
   };
-  function agregarNuevoValor(valor) {
+  function agregarNuevoValor(valor:any) {
     if (!optionsModule.includes(valor)) {
       setOptions([...optionsModule, valor]);
     }
     setinputModuleValue(valor);
   }
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event:any) => {
     if (
       event.key === 'Enter' &&
       inputAutocomplete.trim() !== '' &&
@@ -533,7 +534,7 @@ const AdmisionForm: React.FC = () => {
       </FormGroup>
 
       {/* Sección: Cupos */}
-      <div>
+      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
         <Typography
           variant="h5"
           className="titulo"
@@ -542,34 +543,29 @@ const AdmisionForm: React.FC = () => {
           Cupos
         </Typography>
         <hr />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            {/* Campos de texto para los cupos */}
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Número de cupos máximo (vacantes)"
+              name="vacprog"
+              id="adm_vacprog"
+              variant="outlined"
+              value={numeroEstudianteMaximo}
+              onChange={handleNumeroEstudianteMaximoChange}
+            />
 
-        <FormGroup>
-          {/* Campos de texto para los cupos */}
-          <TextField
-            sx={{ marginTop: 2 }}
-            fullWidth
-            label="Número de cupos máximo (vacantes)"
-            name="vacprog"
-            id="adm_vacprog"
-            variant="outlined"
-            value={numeroEstudianteMaximo}
-            onChange={handleNumeroEstudianteMaximoChange}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <TextField
-            sx={{ marginTop: 2 }}
-            fullWidth
-            label="Número de estudiantes matriculados mínimos para impartir el programa"
-            name="matrminprog"
-            id="adm_matrminprog"
-            variant="outlined"
-            value={numeroEstudianteMinimo}
-            onChange={handleNumeroEstudianteMinimoChange}
-          />
-        </FormGroup>
-      </div>
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Número de estudiantes matriculados mínimos para impartir el programa"
+              name="matrminprog"
+              id="adm_matrminprog"
+              variant="outlined"
+              value={numeroEstudianteMinimo}
+              onChange={handleNumeroEstudianteMinimoChange}
+            />
+        </Box>
+      </Box>
 
       {/* Sección: Módulos del Programa */}
       <Box>
@@ -636,8 +632,8 @@ const AdmisionForm: React.FC = () => {
                 <TableBody>
                   {tableData.map((data, index) => (
                     <TableRow>
-                      <TableCell>{data.module}</TableCell>
-                      <TableCell>{data.hour}</TableCell>
+                      <TableCell>{data?.module}</TableCell>
+                      <TableCell>{data?.hour}</TableCell>
                       <TableCell>
                         <button onClick={() => handleEdit(index)}>
                           Editar

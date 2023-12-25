@@ -13,6 +13,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Grid,
 } from '@mui/material';
 import Box from '@mui/system/Box';
 import UsoInternoDGEC from '../usointdgec/UsointernoDGEC';
@@ -166,14 +167,6 @@ const RegistroCurricularForm: React.FC = () => {
     setFormularioPrincipalCompleto(true);
   };
 
-  // En tu componente principal
-  // const handleMostrarUsoInternoDGEC = () => {
-  // setMostrarUsoInternoDGEC(!mostrarUsoInternoDGEC);
-  // };
-  // const handleMostrarUsoInternoDireccionEstudios = () => {
-  //   setMostrarUsoInternoDireccionEstudios(!mostrarUsoInternoDireccionEstudios);
-  // };
-
   //Manejo de clic para DGEC ----****CAMBIO*****------
   const handleGuardarDGEC = async () => {
     try {
@@ -184,15 +177,6 @@ const RegistroCurricularForm: React.FC = () => {
       console.error('Error al enviar a DGEC', error);
     }
   };
-  //   const handleGuardarDGEC = async () => {};
-  //   try {
-  //     console.log('Enviado a DGEC:', UsoInternoDGEC);
-  //     await axios.post('/api/enviarDGEC', { UsoInternoDGEC });
-  //     console.log('Enviado a DGEC:', UsoInternoDGEC);
-  //   } catch (error) {
-  //     console.error('Error al enviar a DGEC', error);
-  //   }
-  // };
 
   const handleEnviarDGEC = async () => {
     try {
@@ -213,7 +197,7 @@ const RegistroCurricularForm: React.FC = () => {
   };
 
   // Manejadores de clic para Direccion de Estudios
-  const handleGuardarDireccionEstudios = async () => {};
+  const handleGuardarDireccionEstudios = async () => { };
 
   //*-------------*****CAMBIO--------------******
   const handleEnviarDireccionEstudios = async () => {
@@ -234,44 +218,11 @@ const RegistroCurricularForm: React.FC = () => {
       console.log('Error al enviar a Direccion de Estudios', error);
     }
   };
-  // const handleEnviarDireccionEstudios = async () => {
-  //   try {
-  //     //Llamada a la ruta de backend para enviar a Direccion de Estudios
-  //     await fetch('/api/enviarDireccionEstudios', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ mostrarUsoInternoDireccionEstudios }),
-  //     });
-  //     console.log(
-  //       'Enviado en Direccion de Estudios',
-  //       mostrarUsoInternoDireccionEstudios
-  //     );
-  //   } catch (error) {
-  //     console.log('Error al enviar a Direccion de Estudios', error);
-  //   }
-  // };
 
   //Maneja el clic en el botón 'Guardar sin enviar'
   const handleGuardarClick = async () => {
     try {
-      //Solicitud POST a un endpoint del servidor con los datos del formulario.
-      // const response = await fetch('/api/guardarFormulario', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     handleGuardarClick,
-      //     handleGuardarDGEC,
-      //     handleGuardarDireccionEstudios,
-      //     handleEnviarDGEC,
-      //     handleEnviarDireccionEstudios,
-      //     UsoInternoDGEC,
-      //     mostrarUsoInternoDireccionEstudios,
-      //   }),
-      // });
+
 
       const objetoFormularioDocumento = {
         programa_nivel: nivelProgramaAcademicoSeleccionado,
@@ -283,7 +234,7 @@ const RegistroCurricularForm: React.FC = () => {
         ...jornadaOptions,
         ...modalidadOptions,
         duracion_fecha_inicio: format(
-          new Date(duracionFechaInicio ?? ''),
+          new Date(duracionFechaInicio?.toString() ?? ''),
           'dd-MM-yyyy'
         ),
         duracion_fecha_termino: format(
@@ -293,7 +244,7 @@ const RegistroCurricularForm: React.FC = () => {
         programa_duracion: duracionPrograma,
         programa_numero: numeroPrograma,
         convocatoria_fecha_inicio: format(
-          new Date(convocatoriaFInicio ?? ''),
+          new Date(convocatoriaFInicio?.toString() ?? ''),
           'dd-MM-yyyy'
         ),
         convocatoria_fecha_termino: format(
@@ -406,7 +357,7 @@ const RegistroCurricularForm: React.FC = () => {
   const [duracionFechaInicio, setduracionFechaInicio] =
     React.useState<Dayjs | null>(dayjs('2022-04-17'));
 
-    // const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
+  // const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
 
   const [duracionFechaTermino, setduracionFechaTermino] =
     React.useState<Date | null>(null);
@@ -425,7 +376,7 @@ const RegistroCurricularForm: React.FC = () => {
     useState<dayjs.Dayjs | null>(dayjs(fechaActual));
 
   const [convocatoriaFInicio, setconvocatoriaFInicio] =
-    React.useState<Date | null>(null);
+    React.useState<dayjs.Dayjs | null>(dayjs(fechaActual));
 
   const [convocatoriaFechaFinalizacion, setconvocatoriaFechaFinalizacion] =
     useState<dayjs.Dayjs | null>(dayjs(fechaActual));
@@ -446,7 +397,7 @@ const RegistroCurricularForm: React.FC = () => {
       </Typography>
 
       {/* Sección: Programa */}
-      <Box>
+      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
         <Typography
           variant="h6"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
@@ -511,16 +462,15 @@ const RegistroCurricularForm: React.FC = () => {
         {/* Nombre y director del programa */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
           <TextField
-            fullWidth
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             id="regcur_nomprog"
             label="Nombre del Programa *"
             variant="outlined"
-            sx={{ mr: 2 }}
             value={nombrePrograma}
             onChange={handleNombreProgramaChange}
           />
           <TextField
-            fullWidth
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             id="regcur_dirprog"
             label="Director del Programa *"
             variant="outlined"
@@ -541,10 +491,10 @@ const RegistroCurricularForm: React.FC = () => {
               sx={{ mr: 2 }}
               value={departamento}
               onChange={handleDepartamentoChange}
-              // value={selectedDepartamento}
-              // onChange={(e) =>
-              //   setSelectedDepartamento(e.target.value as number)
-              // }
+            // value={selectedDepartamento}
+            // onChange={(e) =>
+            //   setSelectedDepartamento(e.target.value as number)
+            // }
             >
               {departamentoDGEC.map((departamento) => (
                 <MenuItem key={departamento.id} value={departamento.id}>
@@ -554,136 +504,144 @@ const RegistroCurricularForm: React.FC = () => {
             </Select>
           </FormControl>
 
-        {/* Emplazamiento */}
-        <FormControl fullWidth>
-          <Typography variant="subtitle1">Emplazamiento</Typography>
-          <Select
-            id="regcur_sedeprog"
-            label="Emplazamiento"
-            variant="outlined"
-            sx={{ mr: 2 }}
-            value={emplazamiento}
-            onChange={handleEmplazamientoChange}
-          >
-            {sedes.map((sede) => (
-              <MenuItem key={sede.id} value={sede.id}>
-                {sede.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+          {/* Emplazamiento */}
+          <FormControl fullWidth>
+            <Typography variant="subtitle1">Emplazamiento</Typography>
+            <Select
+              id="regcur_sedeprog"
+              label="Emplazamiento"
+              variant="outlined"
+              sx={{ mr: 2 }}
+              value={emplazamiento}
+              onChange={handleEmplazamientoChange}
+            >
+              {sedes.map((sede) => (
+                <MenuItem key={sede.id} value={sede.id}>
+                  {sede.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
 
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+
+
+          <Grid container spacing={0} sx={{ width: 'calc(100% - 8px)', pl: 10 }} >
+            {/* SideBar */}
+            <Grid item xs={6}>
+              <FormControl component="fieldset">
+                <Typography variant="subtitle1">Jornada</Typography>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.diurna}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="diurna"
+                      />
+                    }
+                    label="Diurna"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.vespertina}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="vespertina"
+                      />
+                    }
+                    label="Vespertina"
+                  />{' '}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.aDistancia}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="aDistancia"
+                      />
+                    }
+                    label="A Distancia"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.otra}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="otra"
+                      />
+                    }
+                    label="Otra"
+                  />
+                </FormGroup>
+              </FormControl>
+            </Grid>
+
+          </Grid>
+          <Divider
+            component="div"
+            variant="fullWidth"
+            role="presentation"
+            style={{ marginInline: '10px', border: '0.5px solid #808080' }}
+          />
+          <Grid container spacing={0} sx={{ width: 'calc(100% - 8px)', pl: 10 }} >
+            {/* SideBar */}
+            <Grid item xs={6}>
+              <FormControl component="fieldset">
+                <Typography variant="subtitle1">Jornada</Typography>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.diurna}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="diurna"
+                      />
+                    }
+                    label="Diurna"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.vespertina}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="vespertina"
+                      />
+                    }
+                    label="Vespertina"
+                  />{' '}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.aDistancia}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="aDistancia"
+                      />
+                    }
+                    label="A Distancia"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={jornadaOptions.otra}
+                        onChange={jornadaHandleCheckboxChange}
+                        name="otra"
+                      />
+                    }
+                    label="Otra"
+                  />
+                </FormGroup>
+              </FormControl>
+            </Grid>
+
+          </Grid>
+        </Box>
+
+        {/* Jornada y Modalidad */}
+
       </Box>
-
-      {/* Jornada y Modalidad */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        {/* Jornada */}
-        <FormControl component="fieldset">
-          <Typography variant="subtitle1">Jornada</Typography>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={jornadaOptions.diurna}
-                  onChange={jornadaHandleCheckboxChange}
-                  name="diurna"
-                />
-              }
-              label="Diurna"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={jornadaOptions.vespertina}
-                  onChange={jornadaHandleCheckboxChange}
-                  name="vespertina"
-                />
-              }
-              label="Vespertina"
-            />{' '}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={jornadaOptions.aDistancia}
-                  onChange={jornadaHandleCheckboxChange}
-                  name="aDistancia"
-                />
-              }
-              label="A Distancia"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={jornadaOptions.otra}
-                  onChange={jornadaHandleCheckboxChange}
-                  name="otra"
-                />
-              }
-              label="Otra"
-            />
-          </FormGroup>
-        </FormControl>
-
-        {/* Línea divisoria entre secciones */}
-        <Divider
-          component="div"
-          variant="fullWidth"
-          role="presentation"
-          style={{ marginInline: '30px', border: '1px solid #808080' }}
-        />
-
-        {/* Modalidad */}
-
-        <FormControl component="fieldset">
-          <Typography variant="subtitle1">Modalidad</Typography>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={modalidadOptions.presencial}
-                  onChange={modalidadHandleCheckboxChange}
-                  name="presencial"
-                />
-              }
-              label="Presencial"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={modalidadOptions.online}
-                  onChange={modalidadHandleCheckboxChange}
-                  name="online"
-                />
-              }
-              label="Online"
-            />{' '}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={modalidadOptions.hibrida}
-                  onChange={modalidadHandleCheckboxChange}
-                  name="hibrida"
-                />
-              }
-              label="Híbrida"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={modalidadOptions.otra}
-                  onChange={modalidadHandleCheckboxChange}
-                  name="otra"
-                />
-              }
-              label="Otra"
-            />
-          </FormGroup>
-        </FormControl>
-      </Box>
-
       {/* Sección: Duración */}
-      <Box>
+      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
         <Typography
           variant="h6"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
@@ -693,42 +651,39 @@ const RegistroCurricularForm: React.FC = () => {
         <hr />
 
         {/* Fechas de inicio y término */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}
+          localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText} >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs} 
-         localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText} >
-          <DemoContainer components={['DatePicker', 'DatePicker']}
-          sx={{ display: 'flex', justifyContent: 'space-between', mt: 2}}
-          >
-              <DatePicker
-              localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
-                label="Fecha Inicio"
-                defaultValue={dayjs()}
-                value={duracionFechaInicio}
-                onChange={(newValue) => {
-                  setduracionFechaInicio(newValue);
-                  
-                }}
-                format="DD-MM-YYYY"
-                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              />
-              <DatePicker
-                format="DD-MM-YYYY"
-                label="Fecha Termino"
-                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-                value={duracionFechaTermino}
-                onChange={(newValue) => {
-                  setduracionFechaTermino(newValue);
-                }}
-               
-              />
+            <DatePicker
+              format="DD-MM-YYYY"
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Fecha Inicio"
+              defaultValue={dayjs()}
+              value={duracionFechaInicio}
+              onChange={(newValue) => {
+                setduracionFechaInicio(newValue);
+              }}
 
-          </DemoContainer>
+            />
+            <DatePicker
+              format="DD-MM-YYYY"
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Fecha Termino"
+              value={duracionFechaTermino}
+              onChange={(newValue) => {
+                setduracionFechaTermino(newValue);
+              }}
+
+            />
+          </Box>
         </LocalizationProvider>
+
 
         {/* Duración del programa y Número de versión */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
           <TextField
-            fullWidth
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             id="regcur_durprog"
             label="Duración del programa (horas) *"
             variant="outlined"
@@ -738,16 +693,15 @@ const RegistroCurricularForm: React.FC = () => {
                 min: 1, // Establece un valor mínimo, si es necesario
               },
             }}
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             value={duracionPrograma}
             onChange={handleDuracionProgramaChange}
           />
           <TextField
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             fullWidth
             id="regcur_verprog"
             label="Número de versión del programa *"
             variant="outlined"
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             value={numeroPrograma}
             onChange={handleNumeroProgramaChange}
           />
@@ -765,96 +719,34 @@ const RegistroCurricularForm: React.FC = () => {
         <hr />
 
         {/* Fechas de inicio y término */}
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker']}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}
+          localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText} >
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
             <DatePicker
+              format="DD-MM-YYYY"
               label="Fecha de Inicio"
               defaultValue={dayjs()}
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
               value={convocatoriaFechaInicio}
               onChange={(newValue) => {
-                convocatoriaFInicio(newValue);
+                setconvocatoriaFInicio(newValue);
               }}
-              slotProps={{
-                textField: { variant: 'outlined' },
-                wrapper: { width: 'calc(100% - 8px)', mr: 2 },
-              }}
+
             />
             <DatePicker
+              format="DD-MM-YYYY"
               label="Fecha de Finalización"
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
               value={convocatoriaFechaFinalizacion}
               onChange={(newValue) => {
-                convocatoriaFFinal(newValue);
+                setconvocatoriaFInicio(newValue);
               }}
-              slotProps={{
-                textField: { variant: 'outlined' },
-                wrapper: { width: 'calc(100% - 8px)' },
-              }}
+
             />
-          </DemoContainer>
+          </Box>
         </LocalizationProvider>
-
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker']}>
-            <DatePicker
-              label="Fecha Inicio"
-              value={convocatoriaFechaInicio}
-              onChange={(newValue) => {
-                convocatoriaFInicio(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-            <DatePicker
-              label="Fecha Termino"
-              value={value}
-              onChange={(newValue) => {
-                setduracionFechaTermino(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </DemoContainer>
-        </LocalizationProvider> */}
       </Box>
-
-      {/* Sección: Uso Interno Departamentos */}
-      {/* <Typography variant="h6" align="center" mt={4} mb={5} sx={{ marginTop: 10, marginBottom: 2, fontWeight: 'bold' }}>
-        USO INTERNO DEPARTAMENTOS
-      </Typography> */}
-
-      {/* Componente para Uso interno DGEC */}
-      {/* <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-      <Button variant="outlined" color="primary" className="float-left" onClick={handleMostrarUsoInternoDGEC}>
-        Mostrar/Ocultar Uso Interno DGEC
-      </Button> */}
-
-      {/*Mostrar/Ocultar Uso Interno DGEC*/}
-
-      {/* <Button variant="outlined" color="primary" className="float-left" onClick={handleMostrarUsoInternoDireccionEstudios}>
-        Mostrar/Ocultar Uso Interno Direccion Estudios
-      </Button>
-       */}
-      {/*Mostrar/Ocultar Uso Interno Dirección de Estudios*/}
-      {/* </Box> */}
-
-      {/* Secciones de Uso Interno */}
-      {/* <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button variant="outlined" color="primary" className="float-left" onClick={handleMostrarUsoInternoDGEC}>
-          Mostrar/Ocultar Uso Interno DGEC
-        </Button>
-
-        <Button
-          variant="outlined"
-          color="primary"
-          className="float-left"
-          onClick={handleMostrarUsoInternoDireccionEstudios}
-        >
-          Mostrar/Ocultar Uso Interno Direccion Estudios
-        </Button>
-      </Box> */}
-
-      {/* Botón para marcar el formulario como completo */}
-      {/* <Button variant="outlined" color="primary" className="float-left" onClick={handleFormularioCompleto}>
-        Marcar como completo
-      </Button> */}
 
       {/* Botón para guardar sin enviar */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
