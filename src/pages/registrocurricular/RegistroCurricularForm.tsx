@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
-
 import {
   Container,
   Typography,
@@ -17,19 +16,14 @@ import {
 } from '@mui/material';
 import Box from '@mui/system/Box';
 import UsoInternoDGEC from '../usointdgec/UsointernoDGEC';
-import UsointernoDireccionEstudios from '../usointdireccionestudios/UsointernoDireccionEstudios';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { save_form } from '../../utils/formulario';
-// import { DatePicker } from '@mui/x-date-pickers';
-//import api from '../../../utils/api';
-import DesktopDatePicker from '@mui/x-date-pickers/DesktopDatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { esES } from '@mui/x-date-pickers/locales';
 
 /*
 //CARO
@@ -410,7 +404,9 @@ const RegistroCurricularForm: React.FC = () => {
   const [endDate, setEndDate] = useState(null);
 
   const [duracionFechaInicio, setduracionFechaInicio] =
-    React.useState<Date | null>(null);
+    React.useState<Dayjs | null>(dayjs('2022-04-17'));
+
+    // const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'));
 
   const [duracionFechaTermino, setduracionFechaTermino] =
     React.useState<Date | null>(null);
@@ -557,7 +553,6 @@ const RegistroCurricularForm: React.FC = () => {
               ))}
             </Select>
           </FormControl>
-        </Box>
 
         {/* Emplazamiento */}
         <FormControl fullWidth>
@@ -577,6 +572,8 @@ const RegistroCurricularForm: React.FC = () => {
             ))}
           </Select>
         </FormControl>
+        </Box>
+
       </Box>
 
       {/* Jornada y Modalidad */}
@@ -696,49 +693,35 @@ const RegistroCurricularForm: React.FC = () => {
         <hr />
 
         {/* Fechas de inicio y término */}
-        {/* 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker']}>
-            <DatePicker
-              label="Fecha de Inicio"
-              defaultValue={dayjs('2023-11-28')}
-            />
-            <DatePicker
-              label="Fecha de Finalización"
-              value={duracionFechaInicio}
-              onChange={(newValue) => setduracionFechaInicio(newValue)}
-            />
-          </DemoContainer>
-        </LocalizationProvider> */}
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker']}>
-            <div sx={{ display: 'flex', alignItems: 'center' }}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} 
+         localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText} >
+          <DemoContainer components={['DatePicker', 'DatePicker']}
+          sx={{ display: 'flex', justifyContent: 'space-between', mt: 2}}
+          >
               <DatePicker
+              localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
                 label="Fecha Inicio"
                 defaultValue={dayjs()}
                 value={duracionFechaInicio}
                 onChange={(newValue) => {
                   setduracionFechaInicio(newValue);
+                  
                 }}
-                slotProps={{
-                  textField: { variant: 'outlined' },
-                  wrapper: { width: 'calc(100% - 8px)', mr: 2 },
-                }}
+                format="DD-MM-YYYY"
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
               />
-              <Typography sx={{ marginRight: 2 }}> - </Typography>
               <DatePicker
+                format="DD-MM-YYYY"
                 label="Fecha Termino"
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
                 value={duracionFechaTermino}
                 onChange={(newValue) => {
                   setduracionFechaTermino(newValue);
                 }}
-                slotProps={{
-                  textField: { variant: 'outlined' },
-                  wrapper: { width: 'calc(100% - 8px)' },
-                }}
+               
               />
-            </div>
+
           </DemoContainer>
         </LocalizationProvider>
 

@@ -4,15 +4,13 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-//import Typography from '@mui/material/Typography';
 import FormularioDGEC from '../pages/dgec/DGECForm.tsx';
 import RegistroCurricularForm from '../pages/registrocurricular/RegistroCurricularForm.tsx';
 import AdmisionForm from '../pages/admision/AdmisionForm.tsx';
 import FinanzasForm from '../pages/finanzas/FinanzasForm.tsx';
-//import Solicitudes from './Dashboard.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-// import { find_form, get_object_localstore } from '../utils/formulario';
+import { find_form, get_object_localstore } from '../utils/formulario';
 const HorizontalLinearStepper: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
@@ -26,12 +24,12 @@ const HorizontalLinearStepper: React.FC = () => {
     return step === 1; // O cualquier otra lógica que necesites
   };
   // Define el tipo de formData
-  type FormData = {
-    dgecData: any;
-    registroCurricularData: any;
-    admisionData: any;
-    finanzasData: any;
-  };
+  // type FormData = {
+  //   dgecData: any;
+  //   registroCurricularData: any;
+  //   admisionData: any;
+  //   finanzasData: any;
+  // };
 
   //añade la deifnicion de formData
   const [formData, setFormData] = React.useState<{
@@ -56,10 +54,6 @@ const HorizontalLinearStepper: React.FC = () => {
     <AdmisionForm />,
     <FinanzasForm />,
   ]);
-
-  const save_form = () => {
-    console.log('¡Hola desde la función en el componente padre!');
-  };
 
   //Funcion para manejar el cambio de datos en el formulario
   const handleFormChange = (data: any) => {
@@ -113,7 +107,7 @@ const HorizontalLinearStepper: React.FC = () => {
   };
 
   const steps: string[] = [
-    'Autorizacion',
+    'Autorización',
     'Registro Curricular',
     'Informacion del Programa',
     'Finanzas',
@@ -171,25 +165,18 @@ const HorizontalLinearStepper: React.FC = () => {
       })}
 
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+        {activeStep !== 0 && 
         <Button
-          color="inherit"
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1, color: '#004B85' }}
+        color="inherit"
+        disabled={activeStep === 0}
+        onClick={handleBack}
+        sx={{ mr: 1, color: '#004B85' }}
         >
           Atrás
         </Button>
+        }
         <Box sx={{ flex: '1 1 auto' }} />
 
-        {isStepOptional(activeStep) && (
-          <Button
-            color="inherit"
-            onClick={handleSkip}
-            sx={{ mr: 1, color: '#004B85' }}
-          >
-            Skip
-          </Button>
-        )}
 
         {activeStep === steps.length - 1 ? (
           <Button onClick={handleFinish} sx={{ color: '#004B85' }}>

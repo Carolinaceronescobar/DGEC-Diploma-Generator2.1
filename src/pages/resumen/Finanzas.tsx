@@ -1,12 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Importa BrowserRouter, Routes y Route
+import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom'; // Importa BrowserRouter, Routes y Route
 import TopBar from '../../components/TopBar.tsx';
-import HorizontalLinearStepper from '../../components/HorizontalLinearStepper.tsx';
 import Footer from '../../components/Footer.tsx';
 import './App.css'; // Ruta correcta al archivo de estilo CSS
-//import { PrivateRoute } from './auth/PrivateRoute';
 import { AuthProvider } from '../login/AuthContext.tsx';
-import SolicitudesTabla from './SolicitudesTabla';
 
 function obtenerSolicitudes() {
   return [
@@ -23,16 +20,6 @@ function obtenerSolicitudes() {
     },
   ];
 }
-
-const SolicitudCreacionPrograma = () => {
-  const solicitudesData = obtenerSolicitudes();
-  return (
-    <div className="container">
-      <h1>Solicitud Creación de Programa</h1>
-      <HorizontalLinearStepper />
-    </div>
-  );
-};
 
 const App = () => {
   const handleLogin = (token: string) => {

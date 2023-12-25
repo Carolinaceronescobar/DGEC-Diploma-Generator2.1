@@ -1,6 +1,6 @@
 // SolicitudesTabla.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -9,19 +9,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  TablePagination,
-  Button,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
-// import DGECForm from './Form/DGECForm';
-// import RegistroCurricularForm from './Form/RegistroCurricularForm';
-// import AdmisionForm from './Form/AdmisionForm';
-// import FinanzasForm from './Form/FinanzasForm';
-import Checkbox from '@mui/material/Checkbox';
-// import { get_form } from '../../utils/formulario';
 import { useNavigate } from 'react-router-dom';
 import { ProgramItem } from '../../components/ProgramItem';
-import DataTable from 'react-data-table-component';
 
 //TODO: cambiar por importacion real o eliminar
 import { programs } from '../../utils/data';

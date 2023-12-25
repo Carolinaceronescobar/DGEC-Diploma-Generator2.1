@@ -139,11 +139,6 @@ const FormularioDGEC: React.FC = () => {
 
       {/* Sección "Programa" */}
       <Box mt={3}>
-        <div>
-          <pre>{JSON.stringify(documentoForm, null, 2)}</pre>
-        </div>
-      </Box>
-      <Box mt={3}>
         <Typography
           variant="h6"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
