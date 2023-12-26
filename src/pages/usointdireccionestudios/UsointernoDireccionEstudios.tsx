@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import Autocomplete from '@mui/material/Autocomplete';
 
 interface UsoInternoDireccionEstudiosProps {
   campos: { campo1: string; campo2: string }; // Ajusta según sea necesario
