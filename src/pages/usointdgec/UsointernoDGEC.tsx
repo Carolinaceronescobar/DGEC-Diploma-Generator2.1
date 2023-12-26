@@ -49,10 +49,10 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
   );
   const [open, setOpen] = useState(false);
 
-  const [inputAutocomplete, setInputAutocomplete] = useState('');
+  const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
+
 
   const handleAdd = () => {
-    console.log('aca2');
     let val = inputAutocomplete;
     let tabla_temporal = [... tableData, inputAutocomplete]
     setTableData(tabla_temporal);
@@ -66,23 +66,29 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
   };
 
   const handleInputAutoCompleteChange = (event: any, value_input:any ) => {
-    const newValue = event.target.value;
-    console.log()
-    setInputAutocomplete(value_input);
+    setinputAutocompleteModuleValue(value_input);
   };
+
+  const handleInputModuleChange= (event:any) => {
+    const newValue = event.target.value;
+    setinputAutocompleteModuleValue(newValue);
+  };
+  
+
+handleInputAutoCompleteChange
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (
       event.key === 'Enter' &&
-      inputCodedgecValue.trim() !== '' &&
-      !optionsCodedgec.includes(inputCodedgecValue)
+      inputAutocomplete.trim() !== '' &&
+      (optionsCodedgec.findIndex(z => z == inputAutocomplete)==-1)
     ) {
-      agregarNuevoValor(inputCodedgecValue);
+      agregarNuevoValor(inputAutocomplete);
     }
   };
 
   const agregarNuevoValor = (valor: string) => {
-    if (!optionsCodedgec.includes(valor)) {
+    if (optionsCodedgec.findIndex(z => z == inputAutocomplete)==-1) {
       setOptionsCodedgec([...optionsCodedgec, valor]);
     }
     setInputCodedgecValue(valor);
@@ -143,9 +149,9 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
                 onKeyDown={handleKeyPress}
                 renderInput={(params) => (
                   <TextField
-                    onChange={handleInputAutoCompleteChange}
+                    onChange={handleInputModuleChange}
                     {...params}
-                    label="Codigo DGEC"
+                    label="Codigo DGECsss"
                   />
                 )}
               />

@@ -232,22 +232,20 @@ const AdmisionForm: React.FC = () => {
   const [inputModuleValue, setinputModuleValue] = useState('');
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
 
-  const handleInputModuleChange = (event, newinputModuleValue) => {
-    console.log('newinputModuleValue->' + newinputModuleValue);
+  const handleInputModuleChange = (event:any, newinputModuleValue:any) => {
     setinputModuleValue(newinputModuleValue);
   };
-  const handleInputAutoCompleteChange = (event) => {
+  const handleInputAutoCompleteChange = (event:any) => {
     const newValue = event.target.value;
-    console.log(newValue);
     setinputAutocompleteModuleValue(newValue);
   };
-  function agregarNuevoValor(valor) {
+  function agregarNuevoValor(valor:any) {
     if (!optionsModule.includes(valor)) {
       setOptions([...optionsModule, valor]);
     }
     setinputModuleValue(valor);
   }
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event:any) => {
     if (
       event.key === 'Enter' &&
       inputAutocomplete.trim() !== '' &&
