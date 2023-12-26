@@ -19,9 +19,22 @@ import { HeaderApp } from './components/HeaderApp.tsx';
 import Footer from './components/Footer.tsx';
 import Sidebar from './components/SideBar.tsx';
 
+import { MsalProvider, MsalAuthenticationTemplate } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
+
 // import { PrivateRoute } from './auth/PrivateRoute';
 
 const defaultTheme = createTheme();
+
+const msalConfig = {
+  auth: {
+    clientId: 'TU_CLIENT_ID_DE_AZURE_AD',
+    authority: 'https://login.microsoftonline.com/TU_TENANT_ID',
+    redirectUri: 'http://localhost:3000', // Debes configurar esto según tu aplicación
+  },
+};
+
+const msalInstance = new PublicClientApplication(msalConfig);
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,59 +59,64 @@ function App() {
   }, []);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
+    <MsalProvider instance={msalInstance}>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
 
-      {/* Contenedor principal */}
-      <Container>
-        {/* Header */}
-        <HeaderApp onToggleSidebar={toggleSidebar} />
+        {/* Contenedor principal */}
+        <Container>
+          {/* Header */}
+          <HeaderApp onToggleSidebar={toggleSidebar} />
 
-        {/* Contenido Principal */}
-        <Grid container spacing={0}>
-          {/* SideBar */}
-          <Grid item xs={2}>
-            <Sidebar />
+          {/* Contenido Principal */}
+          <Grid container spacing={0}>
+            {/* SideBar */}
+            <Grid item xs={2}>
+              <Sidebar />
+            </Grid>
+
+            {/* Contenido principal */}
+            <Grid item xs={10}>
+              <Box
+                sx={{
+                  marginY: '90px',
+                  paddingX: '20px',
+                  minHeight: '70vh',
+                }}
+              >
+                {/* Auth Provider */}
+                <AuthProvider login={handleLogin} logout={handleLogout}>
+                  {/* Router  */}
+                  <Routes>
+                    {/* FIXME Cambiar nomber de componente */}
+                    <Route path="/" element={<Dashboard />} />
+                    <Route
+                      path="/formulario"
+                      element={<ProgramRequestForm />}
+                    />
+                    <Route
+                      path="/formulario/:id"
+                      element={<ProgramRequestForm />}
+                    />
+                    <Route path="/dgec" element={<UsoInternoDGEC />} />
+                    <Route path="/finanzas" element={<UsoInternoFinanzas />} />
+                    <Route path="/login" element={<LoginScreen />} />
+                    <Route
+                      path="/direccionestudios"
+                      element={<UsointernoDireccionEstudios />}
+                    />
+                    <Route path="/dgec" element={<UsoInternoDGEC />} />
+                  </Routes>
+                </AuthProvider>
+              </Box>
+            </Grid>
           </Grid>
 
-          {/* Contenido principal */}
-          <Grid item xs={10}>
-            <Box
-              sx={{
-                marginY: '90px',
-                paddingX: '20px',
-                minHeight: '70vh',
-              }}
-            >
-              {/* Auth Provider */}
-              <AuthProvider login={handleLogin} logout={handleLogout}>
-                {/* Router  */}
-                <Routes>
-                  {/* FIXME Cambiar nomber de componente */}
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/formulario" element={<ProgramRequestForm />} />
-                  <Route
-                    path="/formulario/:id"
-                    element={<ProgramRequestForm />}
-                  />
-                  <Route path="/dgec" element={<UsoInternoDGEC />} />
-                  <Route path="/finanzas" element={<UsoInternoFinanzas />} />
-                  <Route path="/login" element={<LoginScreen />} />
-                  <Route
-                    path="/direccionestudios"
-                    element={<UsointernoDireccionEstudios />}
-                  />
-                  <Route path="/dgec" element={<UsoInternoDGEC />} />
-                </Routes>
-              </AuthProvider>
-            </Box>
-          </Grid>
-        </Grid>
-
-        {/* Footer */}
-        <Footer />
-      </Container>
-    </ThemeProvider>
+          {/* Footer */}
+          <Footer />
+        </Container>
+      </ThemeProvider>
+    </MsalProvider>
   );
 }
 

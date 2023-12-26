@@ -51,10 +51,9 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
 
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
 
-
   const handleAdd = () => {
     let val = inputAutocomplete;
-    let tabla_temporal = [... tableData, inputAutocomplete]
+    let tabla_temporal = [...tableData, inputAutocomplete];
     setTableData(tabla_temporal);
   };
 
@@ -65,30 +64,29 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
     setInputCodedgecValue(newInputModuleValue);
   };
 
-  const handleInputAutoCompleteChange = (event: any, value_input:any ) => {
+  const handleInputAutoCompleteChange = (event: any, value_input: any) => {
     setinputAutocompleteModuleValue(value_input);
   };
 
-  const handleInputModuleChange= (event:any) => {
+  const handleInputModuleChange = (event: any) => {
     const newValue = event.target.value;
     setinputAutocompleteModuleValue(newValue);
   };
-  
 
-handleInputAutoCompleteChange
+  handleInputAutoCompleteChange;
 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (
       event.key === 'Enter' &&
       inputAutocomplete.trim() !== '' &&
-      (optionsCodedgec.findIndex(z => z == inputAutocomplete)==-1)
+      optionsCodedgec.findIndex((z) => z == inputAutocomplete) == -1
     ) {
       agregarNuevoValor(inputAutocomplete);
     }
   };
 
   const agregarNuevoValor = (valor: string) => {
-    if (optionsCodedgec.findIndex(z => z == inputAutocomplete)==-1) {
+    if (optionsCodedgec.findIndex((z) => z == inputAutocomplete) == -1) {
       setOptionsCodedgec([...optionsCodedgec, valor]);
     }
     setInputCodedgecValue(valor);
@@ -115,14 +113,14 @@ handleInputAutoCompleteChange
 
   const navigate = useNavigate();
 
-  const handleDelete = (index:any) => {
+  const handleDelete = (index: any) => {
     // tableData[index].module);
     tableData.splice(index, 1);
     setTableData([...tableData]);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
   };
 
-  const handleEdit = (index:any) => {
+  const handleEdit = (index: any) => {
     setInputCodedgecValue(tableData[index]);
     handleDelete(index);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
@@ -151,7 +149,7 @@ handleInputAutoCompleteChange
                   <TextField
                     onChange={handleInputModuleChange}
                     {...params}
-                    label="Codigo DGECsss"
+                    label="Codigo Interno DGEC"
                   />
                 )}
               />
