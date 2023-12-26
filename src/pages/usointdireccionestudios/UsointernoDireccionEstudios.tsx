@@ -13,17 +13,17 @@ import {
 // import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 interface UsoInternoDireccionEstudiosProps {
-  campos: { campo1: string; campo2: string }; // Ajusta según sea necesario
-  setCampos: React.Dispatch<
+  campos?: { campo1: string; campo2: string }; // Ajusta según sea necesario
+  setCampos?: React.Dispatch<
     React.SetStateAction<{ campo1: string; campo2: string }>
   >;
-  departamento: string;
-  setDepartamento: React.Dispatch<React.SetStateAction<string>>;
-  readOnly: boolean;
-  onGuardar: () => void;
-  onEnviar: () => void;
-  mostrar: boolean;
-  onMostrarToggle: () => void;
+  departamento?: string;
+  setDepartamento?: React.Dispatch<React.SetStateAction<string>>;
+  readOnly?: boolean;
+  onGuardar?: () => void;
+  onEnviar?: () => void;
+  mostrar?: boolean;
+  onMostrarToggle?: () => void;
 }
 
 const columns: GridColDef[] = [
@@ -77,13 +77,13 @@ const rows = [
 const UsoInternoDireccionEstudios: React.FC<
   UsoInternoDireccionEstudiosProps
 > = ({
-  campos,
-  setCampos,
-  departamento,
-  setDepartamento,
-  readOnly,
-  onGuardar,
-  onEnviar,
+  campos= null,
+  setCampos= null,
+  departamento= null,
+  setDepartamento= null,
+  readOnly= null,
+  onGuardar= null,
+  onEnviar = null,
 }) => {
   return (
     <Container>

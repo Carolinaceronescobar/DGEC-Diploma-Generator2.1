@@ -25,15 +25,15 @@ import Sidebar from '../../components/SideBar';
 import Footer from '../../components/Footer';
 
 interface UsointernoDGECProps {
-  campos: UsoInternoDGECData['campo1'];
-  setCampos: React.Dispatch<React.SetStateAction<UsoInternoDGECData['campo1']>>;
-  departamento: UsoInternoDGECData['departamento'];
-  setDepartamento: React.Dispatch<
+  campos?: UsoInternoDGECData['campo1'];
+  setCampos?: React.Dispatch<React.SetStateAction<UsoInternoDGECData['campo1']>>;
+  departamento?: UsoInternoDGECData['departamento'];
+  setDepartamento?: React.Dispatch<
     React.SetStateAction<UsoInternoDGECData['departamento']>
   >;
-  readOnly: UsoInternoDGECData['readOnly'];
-  onGuardar: () => void;
-  onEnviar: () => void;
+  readOnly?: UsoInternoDGECData['readOnly'];
+  onGuardar?: () => void;
+  onEnviar?: () => void;
 }
 
 const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {

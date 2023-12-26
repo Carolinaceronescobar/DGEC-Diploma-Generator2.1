@@ -13,7 +13,7 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions<FinanzaOptionType>();
 
-const UsoInternoFinanzas = ({ onGuardar, onEnviar, readOnly }) => {
+const UsoInternoFinanzas = ({ onGuardar=null, onEnviar=null, readOnly =null}) => {
   const [value, setValue] = React.useState<FinanzaOptionType | null>(null);
 
   return (
