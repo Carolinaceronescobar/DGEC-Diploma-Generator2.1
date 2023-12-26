@@ -61,7 +61,7 @@ function App() {
             >
               <AuthProvider login={handleLogin} logout={handleLogout}>
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/index" element={<Dashboard />} />
                   <Route path="/formulario" element={<ProgramRequestForm />} />
                   <Route
                     path="/formulario/:id"
@@ -69,11 +69,11 @@ function App() {
                   />
                   <Route path="/dgec" element={<UsoInternoDGEC />} />
                   <Route path="/finanzas" element={<UsoInternoFinanzas />} />
-                  <Route path="/login" element={<LoginScreen />} />
                   <Route
                     path="/direccionestudios"
                     element={<UsoInternoDireccionEstudios />}
                   />
+                  <Route path="/" element={<LoginScreen />} />
                 </Routes>
               </AuthProvider>
             </Box>

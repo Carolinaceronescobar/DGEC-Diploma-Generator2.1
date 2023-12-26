@@ -23,11 +23,11 @@ const Sidebar = () => {
         paddingTop: '10rem', // Espaciado superior
       }}
     >
-      <ListItemButton component={Link} to="/">
+      <ListItemButton component={Link} to="/index">
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Inicio" />
       </ListItemButton>
       <ListItemButton component={Link} to="/formulario">
         <ListItemIcon>
