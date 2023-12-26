@@ -19,6 +19,7 @@ import {
   get_object_localstore,
   save_form,
 } from '../../utils/formulario';
+import { mainListRegistro } from '../registrocurricular/makeData';
 
 let documentoForm = {
   id: null,
@@ -39,16 +40,13 @@ const FormularioDGEC: React.FC = () => {
   );
 
   // Maneja cambios en la selección del programa académico.
-  const handleProgramaSeleccionadoChange = (
-    event: SelectChangeEvent<string>
-  ) => {
-    setProgramaSeleccionado(event.target.value as string);
+  const handleProgramaSeleccionadoChange = (event) => {
+    setProgramaSeleccionado(event.target.value);
   };
 
   const [memoAdjunto, setMemoAdjunto] = useState<File | null>(
     documentoForm?.memoAdjunto
   );
-  const [programas, setProgramas] = useState<string[]>([]);
 
   // Maneja cambios en la selección del archivo adjunto.
   const handleMemoAdjuntoChange = (
@@ -122,6 +120,8 @@ const FormularioDGEC: React.FC = () => {
       console.error('Error al enviar la solicitud:', error);
     }
   };
+
+  const programas = mainListRegistro.map((programa) => programa.ProgramName);
 
   // Renderiza el formulario con Material-UI.
   return (
