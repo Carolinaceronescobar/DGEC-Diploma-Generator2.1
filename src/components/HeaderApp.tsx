@@ -43,13 +43,8 @@ export const HeaderApp = ({
   };
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: '#004B85',
-      }}
-    >
-      <Toolbar>
+ 
+      <Toolbar sx={{  justifyContent: 'space-between'}}>
         {/* Nuevo botón para abrir/cerrar el menú lateral en pantallas pequeñas */}
         <Hidden lgUp>
           <IconButton color="inherit" onClick={onToggleSidebar}>
@@ -60,25 +55,13 @@ export const HeaderApp = ({
         {/*Logotipo de la Universidad */}
         <Box
           sx={{
+          
             flexGrow: 1,
             display: { xs: 'none', md: 'flex' },
             alignItems: 'center',
           }}
         >
-          <div style={{ marginRight: '20px' }}>
-            <img
-              alt="logo"
-              src="./src/assets/logo-usm_blanco-min.png"
-              style={{
-                width: '150px',
-                height: '25px',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                display: 'block',
-              }}
-            />
-          </div>
-
+         
           <Typography
             component="h1"
             variant="h6"
@@ -107,6 +90,5 @@ export const HeaderApp = ({
           <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
         </Menu>
       </Toolbar>
-    </AppBar>
   );
 };

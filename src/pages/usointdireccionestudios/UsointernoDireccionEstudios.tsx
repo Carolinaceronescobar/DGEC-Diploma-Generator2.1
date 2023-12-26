@@ -10,7 +10,7 @@ import {
   Container,
 } from '@mui/material';
 
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 interface UsoInternoDireccionEstudiosProps {
   campos: { campo1: string; campo2: string }; // Ajusta según sea necesario
