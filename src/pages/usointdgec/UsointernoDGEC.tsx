@@ -123,7 +123,7 @@ handleInputAutoCompleteChange
   };
 
   const handleEdit = (index:any) => {
-    setInputCodedgecValue(tableData[index].codedgec);
+    setInputCodedgecValue(tableData[index]);
     handleDelete(index);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
   };
