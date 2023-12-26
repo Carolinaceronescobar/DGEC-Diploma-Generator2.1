@@ -10,7 +10,7 @@ import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 import LoginScreen from './pages/login/LoginScreen.tsx';
 import UsoInternoFinanzas from './pages/usointfinanzas/UsoInternoFinanzasForm.tsx';
 import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
-import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
+import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsoInternoDireccionEstudios.tsx';
 import { AuthProvider } from '../src/pages/login/AuthContext';
 
 import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';

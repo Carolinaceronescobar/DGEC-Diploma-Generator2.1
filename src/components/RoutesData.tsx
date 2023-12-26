@@ -6,7 +6,7 @@ import FormularioDGEC from '../pages/dgec/DGECForm';
 import FinanzasForm from '../pages/finanzas/FinanzasForm';
 import RegistroCurricular from '../pages/registrocurricular/RegistroCurricularForm';
 import UsoInternoDGEC from '../pages/usointdgec/UsointernoDGEC';
-import UsointernoDireccionEstudios from '../pages/usointdireccionestudios/UsointernoDireccionEstudios';
+import UsointernoDireccionEstudios from '../pages/usointdireccionestudios/UsoInternoDireccionEstudios';
 import UsoInternoFinanzas from '../pages/usointfinanzas/UsoInternoFinanzasForm';
 import Dashboard from './Dashboard';
 
