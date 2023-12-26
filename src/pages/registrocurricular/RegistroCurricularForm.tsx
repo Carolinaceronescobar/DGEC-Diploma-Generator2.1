@@ -16,8 +16,8 @@ import {
   Radio,
 } from '@mui/material';
 import Box from '@mui/system/Box';
-import UsoInternoDGEC from '../usointdgec/UsointernoDGEC';
-import UsointernoDireccionEstudios from '../usointdireccionestudios/UsointernoDireccionEstudios';
+import UsoInternoDGEC from '../usointdgec/UsoInternoDGEC';
+import UsointernoDireccionEstudios from '../usointdireccionestudios/UsoInternoDireccionEstudios';
 import dayjs from 'dayjs';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';

@@ -1,40 +1,24 @@
-//App.tsx
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box, Container, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 import LoginScreen from './pages/login/LoginScreen.tsx';
-import UsoInternoFinanzas from './pages/usointfinanzas/UsoInternoFinanzasForm.tsx';
-import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
-import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
+import UsoInternoFinanzas from '../src/pages/usointfinanzas/UsointernoFinanzasForm.tsx';
+import UsoInternoDGEC from '../src/pages/usointdgec/UsointernoDGEC.tsx';
+
 import { AuthProvider } from '../src/pages/login/AuthContext';
 
-import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
 import Dashboard from './components/Dashboard.tsx';
-import { HeaderApp } from './components/HeaderApp.tsx';
+import { HeaderApp } from '../src/components/HeaderApp.tsx';
 import Footer from './components/Footer.tsx';
-import Sidebar from './components/SideBar.tsx';
-
-import { MsalProvider, MsalAuthenticationTemplate } from '@azure/msal-react';
-import { PublicClientApplication } from '@azure/msal-browser';
-
-// import { PrivateRoute } from './auth/PrivateRoute';
+import Sidebar from '../src/components/SideBar.tsx';
+import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
+import UsoInternoDireccionEstudios from './pages/usointdireccionestudios/UsoInternoDireccionEstudios';
 
 const defaultTheme = createTheme();
-
-const msalConfig = {
-  auth: {
-    clientId: 'TU_CLIENT_ID_DE_AZURE_AD',
-    authority: 'https://login.microsoftonline.com/TU_TENANT_ID',
-    redirectUri: 'http://localhost:3000', // Debes configurar esto según tu aplicación
-  },
-};
-
-const msalInstance = new PublicClientApplication(msalConfig);
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +27,7 @@ function App() {
   const handleLogin = (token: string) => {
     console.log(token);
     setIsAuthenticated(true);
-    //Store token securely (e.g., in-memory)
+    // Store token securely (e.g., in-memory)
   };
 
   const handleLogout = () => {
@@ -59,64 +43,45 @@ function App() {
   }, []);
 
   return (
-    <MsalProvider instance={msalInstance}>
-      <ThemeProvider theme={defaultTheme}>
-        <CssBaseline />
-
-        {/* Contenedor principal */}
-        <Container>
-          {/* Header */}
-          <HeaderApp onToggleSidebar={toggleSidebar} />
-
-          {/* Contenido Principal */}
-          <Grid container spacing={0}>
-            {/* SideBar */}
-            <Grid item xs={2}>
-              <Sidebar />
-            </Grid>
-
-            {/* Contenido principal */}
-            <Grid item xs={10}>
-              <Box
-                sx={{
-                  marginY: '90px',
-                  paddingX: '20px',
-                  minHeight: '70vh',
-                }}
-              >
-                {/* Auth Provider */}
-                <AuthProvider login={handleLogin} logout={handleLogout}>
-                  {/* Router  */}
-                  <Routes>
-                    {/* FIXME Cambiar nomber de componente */}
-                    <Route path="/" element={<Dashboard />} />
-                    <Route
-                      path="/formulario"
-                      element={<ProgramRequestForm />}
-                    />
-                    <Route
-                      path="/formulario/:id"
-                      element={<ProgramRequestForm />}
-                    />
-                    <Route path="/dgec" element={<UsoInternoDGEC />} />
-                    <Route path="/finanzas" element={<UsoInternoFinanzas />} />
-                    <Route path="/login" element={<LoginScreen />} />
-                    <Route
-                      path="/direccionestudios"
-                      element={<UsointernoDireccionEstudios />}
-                    />
-                    <Route path="/dgec" element={<UsoInternoDGEC />} />
-                  </Routes>
-                </AuthProvider>
-              </Box>
-            </Grid>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <Container>
+        <HeaderApp onToggleSidebar={toggleSidebar} />
+        <Grid container spacing={0}>
+          <Grid item xs={2}>
+            <Sidebar />
           </Grid>
-
-          {/* Footer */}
-          <Footer />
-        </Container>
-      </ThemeProvider>
-    </MsalProvider>
+          <Grid item xs={10}>
+            <Box
+              sx={{
+                marginY: '90px',
+                paddingX: '20px',
+                minHeight: '70vh',
+              }}
+            >
+              <AuthProvider login={handleLogin} logout={handleLogout}>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/formulario" element={<ProgramRequestForm />} />
+                  <Route
+                    path="/formulario/:id"
+                    element={<ProgramRequestForm />}
+                  />
+                  <Route path="/dgec" element={<UsoInternoDGEC />} />
+                  <Route path="/finanzas" element={<UsoInternoFinanzas />} />
+                  <Route path="/login" element={<LoginScreen />} />
+                  <Route
+                    path="/direccionestudios"
+                    element={<UsoInternoDireccionEstudios />}
+                  />
+                </Routes>
+              </AuthProvider>
+            </Box>
+          </Grid>
+        </Grid>
+        <Footer />
+      </Container>
+    </ThemeProvider>
   );
 }
 

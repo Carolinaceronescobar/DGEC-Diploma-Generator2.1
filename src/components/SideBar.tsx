@@ -1,85 +1,59 @@
-import { useState } from 'react';
-import {
-  Drawer,
-  Toolbar,
-  IconButton,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Hidden,
-} from '@mui/material';
-import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
-import ModalComponent from './ModalComponent';
-import { mainListItems, secondaryListItems } from '../pages/resumen/listItems';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ArticleIcon from '@mui/icons-material/Article';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SchoolIcon from '@mui/icons-material/School';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
-interface SidebarProps {
-  open: boolean;
-  onClose: () => void;
-  onOpen?: () => void;
-}
-
-const drawerWidth = 220;
-
-// Crear un nuevo componente para la barra lateral
-const Sidebar: React.FC<SidebarProps> = ({ open, onClose, onOpen }) => {
-  const navigate = (route: string) => {
-    console.log(`Navigating to: ${route}`);
-    // Aquí puedes agregar la lógica de navegación a la ruta deseada
-  };
-
+const Sidebar = () => {
   return (
-    <Drawer
-      variant="temporary"
-      open={open}
-      onClose={onClose}
+    <List
+      component="nav"
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: drawerWidth,
-          backgroundColor: '#081627',
-          color: 'rgba(255, 255, 255, 0.87)',
-          boxShadow: 'none',
-          borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-        },
+        height: '100vh', // 100% de la altura de la ventana
+        width: '100%', // Ajusta el ancho según tus necesidades
+        backgroundColor: '#004B85', // Cambia al color deseado
+        color: 'white', // Cambia al color deseado
+        textAlign: 'center',
+        paddingTop: '10rem', // Espaciado superior
       }}
     >
-      <Toolbar
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          px: [1],
-        }}
-      >
-        <IconButton onClick={onClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </Toolbar>
-      <Divider />
-
-      <List component="nav">
-        {mainListItems.map((item) => (
-          <ListItem key={item.id} button onClick={() => navigate(item.route)}>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-      </List>
-
-      <Divider sx={{ my: 1 }} />
-
-      <List component="nav">
-        {secondaryListItems.map((item) => (
-          <ListItem key={item.id}>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-        <ListItem>
-          <ModalComponent />
-        </ListItem>
-      </List>
-    </Drawer>
+      <ListItemButton component={Link} to="/">
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/formulario">
+        <ListItemIcon>
+          <ArticleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Formulario" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/finanzas">
+        <ListItemIcon>
+          <AttachMoneyIcon />
+        </ListItemIcon>
+        <ListItemText primary="Finanzas" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/direccionestudios">
+        <ListItemIcon>
+          <SchoolIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dirección Estudios" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/dgec">
+        <ListItemIcon>
+          <HistoryEduIcon />
+        </ListItemIcon>
+        <ListItemText primary="DGEC" />
+      </ListItemButton>
+    </List>
   );
 };
 
