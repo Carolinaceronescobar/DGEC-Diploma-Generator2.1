@@ -8,7 +8,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import UsoInternoFinanzas from '../pages/usointfinanzas/UsointernoFinanzasForm';
+import UsoInternoFinanzas from '../pages/usointfinanzas/UsoInternoFinanzasForm';
 
 const ModalComponent: React.FC = ({}) => {
   // Código del componente...

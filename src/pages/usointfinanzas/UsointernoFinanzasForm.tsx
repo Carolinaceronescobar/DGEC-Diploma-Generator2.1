@@ -1,146 +1,105 @@
-//UsoInternoFinanzasForm.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Typography,
-  TextField,
+  Box,
+  Button,
   FormControl,
-  RadioGroup,
   FormControlLabel,
   Radio,
-  Button,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  RadioGroup,
+  TextField,
+  Typography,
 } from '@mui/material';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
-// Define los tipos de campos y departamento según tus necesidades
-type TipoDeCampos = {
-  fin_valoraraprog: string;
-  fin_valormatprog: string;
-  fin_valordescprog: {
-    fin_valordescprog_1: { checked: boolean; porcentaje: number };
-    fin_valordescprog_2: { checked: boolean; porcentaje: number };
-    fin_valordescprog_3: { checked: boolean; porcentaje: number };
-    fin_valordescprog_4: { checked: boolean; porcentaje: number };
-    fin_valordescprog_5: { checked: boolean; porcentaje: number };
-    fin_valordescprog_6: { checked: boolean; porcentaje: number };
-  };
-};
+const filter = createFilterOptions<FinanzaOptionType>();
 
-type TipoDeDepartamento = string;
-
-interface UsoInternoFinanzasProps {
-  campos: TipoDeCampos;
-  setCampos: React.Dispatch<React.SetStateAction<TipoDeCampos>>;
-  departamento: TipoDeDepartamento;
-  setDepartamento: React.Dispatch<React.SetStateAction<TipoDeDepartamento>>;
-  readOnly: boolean;
-  onGuardar: () => void;
-  onEnviar: () => void;
-  someFunction: () => void;
-}
-
-const UsoInternoFinanzas: React.FC = () => {
-  {
-    // campos,
-    // setCampos,
-    // departamento,
-    // setDepartamento,
-    // readOnly,
-    // onGuardar,
-    // onEnviar,
-  }
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+const UsoInternoFinanzas = ({ onGuardar, onEnviar, readOnly }) => {
+  const [value, setValue] = React.useState<FinanzaOptionType | null>(null);
 
   return (
     <Box>
       <Typography
-        variant="h5"
+        variant="h6"
         sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
       >
         Uso interno Finanzas
       </Typography>
       <hr />
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <TextField
-          fullWidth
-          label="INTERNO - Código de la Organización (Banner) "
-          value={campos?.fin_valoraraprog || ''} /* Corregido aquí */
-          onChange={(e) =>
-            setCampos((prevCampos) => ({
-              ...prevCampos,
-              fin_valoraraprog: e.target.value,
-            }))
+      <Autocomplete
+        value={value}
+        onChange={(event, newValue) => {
+          if (typeof newValue === 'string') {
+            setValue({
+              finanzaCode: newValue,
+            });
+          } else if (newValue && newValue.inputValue) {
+            // Create a new value from the user input
+            setValue({
+              finanzaCode: newValue.inputValue,
+            });
+          } else {
+            setValue(newValue);
           }
-          variant="outlined"
-          InputProps={{ readOnly: readOnly }}
-          sx={{ mr: 2 }}
-        />
-      </Box>
+        }}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <TextField
-          fullWidth
-          label="INTERNO - Código de Detalle (Banner) "
-          value={campos?.fin_valormatprog || ''} /* Corregido aquí */
-          onChange={(e) =>
-            setCampos((prevCampos) => ({
-              ...prevCampos,
-              fin_valormatprog: e.target.value,
-            }))
+          const { inputValue } = params;
+          // Suggest the creation of a new value
+          const isExisting = options.some(
+            (option) => inputValue === option.finanzaCode
+          );
+          if (inputValue !== '' && !isExisting) {
+            filtered.push({
+              finanzaCode: inputValue,
+            });
           }
-          variant="outlined"
-          InputProps={{ readOnly: readOnly }}
-          sx={{ mr: 2 }}
-        />
-      </Box>
 
-      <Box mt={3}>
+          return filtered;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        id="free-solo-with-text-demo"
+        options={topFinanzas}
+        getOptionLabel={(option) => {
+          // Value selected with enter, right from the input
+          if (typeof option === 'string') {
+            return option;
+          }
+          // Add "xxx" option created dynamically
+          if (option.inputValue) {
+            return option.inputValue;
+          }
+          // Regular option
+          return option.finanzaCode;
+        }}
+        renderOption={(props, option) => (
+          <li {...props}>{option.finanzaCode}</li>
+        )}
+        sx={{ width: 300 }}
+        freeSolo
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Interno - Código de Organización (Banner)"
+          />
+        )}
+      />
+
+      <FormControl component="fieldset">
         <Typography
           variant="body1"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
         >
-          {' '}
-          INTERNO - Distribución Presupuestaria del Código de Detalle{' '}
+          INTERNO - Distribución Presupuestaria del Código de Detalle
         </Typography>
-        <FormControl component="fieldset">
-          <RadioGroup
-            row
-            aria-label="haDictadoPrograma"
-            name="haDictadoPrograma"
-            value={
-              campos?.fin_valordescprog?.fin_valordescprog_2.checked || false
-            } /* Corregido aquí */
-            onChange={(e) =>
-              setCampos((prevCampos) => ({
-                ...prevCampos,
-                fin_valordescprog: {
-                  ...prevCampos.fin_valordescprog,
-                  fin_valordescprog_2: {
-                    ...prevCampos.fin_valordescprog.fin_valordescprog_2,
-                    checked: e.target.checked,
-                  },
-                },
-              }))
-            }
-          >
-            <FormControlLabel value="80/20" control={<Radio />} label="80/20" />
-            <FormControlLabel value="100/0" control={<Radio />} label="100/0" />
-          </RadioGroup>
-        </FormControl>
-      </Box>
+        <RadioGroup row aria-label="haDictadoPrograma" name="haDictadoPrograma">
+          <FormControlLabel value="80/20" control={<Radio />} label="80/20" />
+          <FormControlLabel value="100/0" control={<Radio />} label="100/0" />
+        </RadioGroup>
+      </FormControl>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <Button variant="outlined" onClick={onGuardar} disabled={readOnly}>
@@ -155,3 +114,15 @@ const UsoInternoFinanzas: React.FC = () => {
 };
 
 export default UsoInternoFinanzas;
+
+interface FinanzaOptionType {
+  inputValue?: string;
+  finanzaCode: string;
+}
+
+const topFinanzas: readonly FinanzaOptionType[] = [
+  { finanzaCode: 'finanza123' },
+  { finanzaCode: 'finanza4000' },
+  { finanzaCode: 'finanza3456' },
+  { finanzaCode: 'finanza3454' },
+];

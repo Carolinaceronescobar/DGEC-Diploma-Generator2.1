@@ -7,7 +7,7 @@ import FinanzasForm from '../pages/finanzas/FinanzasForm';
 import RegistroCurricular from '../pages/registrocurricular/RegistroCurricularForm';
 import UsoInternoDGEC from '../pages/usointdgec/UsointernoDGEC';
 import UsointernoDireccionEstudios from '../pages/usointdireccionestudios/UsointernoDireccionEstudios';
-import UsoInternoFinanzas from '../pages/usointfinanzas/UsointernoFinanzasForm';
+import UsoInternoFinanzas from '../pages/usointfinanzas/UsoInternoFinanzasForm';
 import Dashboard from './Dashboard';
 
 const Content: React.FC = () => {

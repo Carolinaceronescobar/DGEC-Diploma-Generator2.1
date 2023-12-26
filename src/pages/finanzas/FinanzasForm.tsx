@@ -14,7 +14,7 @@ import {
   Select,
   Paper,
 } from '@mui/material';
-import UsoInternoFinanzas from '../usointfinanzas/UsointernoFinanzasForm';
+import UsoInternoFinanzas from '../usointfinanzas/UsoInternoFinanzasForm';
 import { save_form } from '../../utils/formulario';
 // Definir un tipo para las claves posibles en fin_valordescprog
 type ValordescprogKey =

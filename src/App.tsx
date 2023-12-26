@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 import LoginScreen from './pages/login/LoginScreen.tsx';
-import UsoInternoFinanzas from './pages/usointfinanzas/UsointernoFinanzasForm.tsx';
+import UsoInternoFinanzas from './pages/usointfinanzas/UsoInternoFinanzasForm.tsx';
 import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
 import UsointernoDireccionEstudios from './pages/usointdireccionestudios/UsointernoDireccionEstudios';
 import { AuthProvider } from '../src/pages/login/AuthContext';
