@@ -8,9 +8,18 @@ import {
   Button,
   Box,
   Container,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Grid,
+  TextField,
 } from '@mui/material';
 
-// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import Autocomplete from '@mui/material/Autocomplete';
 
 interface UsoInternoDireccionEstudiosProps {
   campos?: { campo1: string; campo2: string }; // Ajusta según sea necesario
@@ -77,14 +86,73 @@ const rows = [
 const UsoInternoDireccionEstudios: React.FC<
   UsoInternoDireccionEstudiosProps
 > = ({
-  campos= null,
-  setCampos= null,
-  departamento= null,
-  setDepartamento= null,
-  readOnly= null,
-  onGuardar= null,
-  onEnviar = null,
+  campos,
+  setCampos,
+  departamento,
+  setDepartamento,
+  readOnly,
+  onGuardar,
+  onEnviar,
 }) => {
+  const [selectedModule, setSelectedModule] = useState('');
+  const [tableData, setTableData] = useState<string[]>([]);
+  const [optionsCodedgec, setOptionsCodedgec] = useState([
+    'Codigo Int DGEC1',
+    'Codigo Int DGEC2',
+    'Codigo Int DGEC3',
+  ]);
+
+  const [optionsDirest, setOptionsDirest] = useState([
+    'DIREST2023-1',
+    'DIREST2022-2',
+    'DIREST2024-1',
+  ]);
+
+  const handleDelete = (index: number) => {
+    const updatedTableData = [...tableData];
+    updatedTableData.splice(index, 1);
+    setTableData(updatedTableData);
+  };
+
+  const handleEdit = (index: any) => {
+    setinputAutocompleteModuleValue(tableData[index]);
+    handleDelete(index);
+  };
+
+  const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
+
+  const handleAdd = () => {
+    let val = inputAutocomplete;
+    let tabla_temporal = [...tableData, inputAutocomplete];
+    setTableData(tabla_temporal);
+  };
+
+  const handleInputAutoCompleteChange = (event: any, value_input: any) => {
+    setinputAutocompleteModuleValue(value_input);
+  };
+
+  const handleInputDirestChange = (event: any) => {
+    const newValue = event.target.value;
+    setinputAutocompleteModuleValue(newValue);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (
+      event.key === 'Enter' &&
+      inputAutocomplete.trim() !== '' &&
+      optionsCodedgec.findIndex((z) => z == inputAutocomplete) == -1
+    ) {
+      agregarNuevoValor(inputAutocomplete);
+    }
+  };
+
+  const agregarNuevoValor = (valor: string) => {
+    if (optionsCodedgec.findIndex((z) => z == inputAutocomplete) == -1) {
+      setOptionsCodedgec([...optionsCodedgec, valor]);
+    }
+    setInputCodedgecValue(valor);
+  };
+
   return (
     <Container>
       <Box>
@@ -121,8 +189,7 @@ const UsoInternoDireccionEstudios: React.FC<
       </Box>
 
       <Typography>
-        {' '}
-        INTERNO - Periodo académico en que se impartirá (SIGA){' '}
+        INTERNO - Periodo académico en que se impartirá (SIGA)
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <FormControl fullWidth>
@@ -130,7 +197,6 @@ const UsoInternoDireccionEstudios: React.FC<
             label="INTERNO - Periodo académico en que se impartirá (SIGA)"
             value={departamento}
             onChange={(e) => setDepartamento(e.target.value as string)}
-            // disabled={readOnly}
           >
             <MenuItem key="Tiempo1">2024- 1</MenuItem>
             <MenuItem key="Tiempo2">2023- 2</MenuItem>
@@ -140,18 +206,10 @@ const UsoInternoDireccionEstudios: React.FC<
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button
-          variant="outlined"
-          onClick={onGuardar}
-          //  disabled={readOnly}
-        >
+        <Button variant="outlined" onClick={onGuardar}>
           Guardar
         </Button>
-        <Button
-          variant="outlined"
-          onClick={onEnviar}
-          // disabled={readOnly}
-        >
+        <Button variant="outlined" onClick={onEnviar}>
           Enviar
         </Button>
       </Box>

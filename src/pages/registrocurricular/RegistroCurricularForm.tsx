@@ -16,8 +16,9 @@ import {
   Grid,
 } from '@mui/material';
 import Box from '@mui/system/Box';
-import UsoInternoDGEC from '../usointdgec/UsointernoDGEC';
-import dayjs, { Dayjs } from 'dayjs';
+import UsoInternoDGEC from '../usointdgec/UsoInternoDGEC';
+import UsointernoDireccionEstudios from '../usointdireccionestudios/UsoInternoDireccionEstudios';
+import dayjs from 'dayjs';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import { save_form } from '../../utils/formulario';
@@ -25,6 +26,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { esES } from '@mui/x-date-pickers/locales';
+import { mainListRegistro } from './makeData';
 
 /*
 //CARO
@@ -275,8 +277,16 @@ const RegistroCurricularForm: React.FC = () => {
   };
 
   const [nombrePrograma, setNombrePrograma] = useState(''); // Estado local para el nombre del programa
-  const handleNombreProgramaChange = (event: any) => {
-    setNombrePrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
+  const handleProgramaSeleccionadoChange = (event) => {
+    const programaSeleccionado = event.target.value;
+
+    // Encuentra el objeto programa que coincide con el valor seleccionado
+    const programaElegido = programas.find(
+      (programa) => programa.nombre === programaSeleccionado
+    );
+
+    // Actualiza el estado nombrePrograma con el nombre del programa seleccionado
+    setNombrePrograma(programaElegido ? programaElegido.nombre : '');
   };
 
   const [directorPrograma, setDirectorPrograma] = useState(''); // Estado local para el director del programa
@@ -459,16 +469,25 @@ const RegistroCurricularForm: React.FC = () => {
           </FormControl>
         </Box>
 
-        {/* Nombre y director del programa */}
+        {/* Nombre y director del programa: ARREGLAR ESTA SECCION NO ELIGE */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            id="regcur_nomprog"
-            label="Nombre del Programa *"
-            variant="outlined"
-            value={nombrePrograma}
-            onChange={handleNombreProgramaChange}
-          />
+          <FormControl fullWidth>
+            <Select
+              labelId="programa-academico-label"
+              id="programa-academico"
+              value={handleProgramaSeleccionadoChange}
+              onChange={handleProgramaSeleccionadoChange}
+            >
+              {mainListRegistro.map((programa) => (
+                <MenuItem
+                  key={programa.Program_Id}
+                  value={programa.ProgramName}
+                >
+                  {programa.ProgramName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             sx={{ width: 'calc(100% - 8px)', mr: 2 }}
             id="regcur_dirprog"

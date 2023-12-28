@@ -1,10 +1,16 @@
 import React from 'react';
+import React from 'react';
 import {
+  Box,
+  Button,
   Box,
   Button,
   FormControl,
   FormControlLabel,
   Radio,
+  RadioGroup,
+  TextField,
+  Typography,
   RadioGroup,
   TextField,
   Typography,
@@ -19,6 +25,7 @@ const UsoInternoFinanzas = ({ onGuardar=null, onEnviar=null, readOnly =null}) =>
   return (
     <Box>
       <Typography
+        variant="h6"
         variant="h6"
         sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
       >

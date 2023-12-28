@@ -1,157 +1,59 @@
-import { useState } from 'react';
-import {
-  Drawer,
-  Toolbar,
-  IconButton,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Hidden,
-} from '@mui/material';
-import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material';
-import ModalComponent from './ModalComponent';
-import { mainListItems, secondaryListItems } from '../pages/resumen/listItems';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ArticleIcon from '@mui/icons-material/Article';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SchoolIcon from '@mui/icons-material/School';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 
-// Crear un nuevo componente para la barra lateral
 const Sidebar = () => {
-  const [open, setOpen] = useState(true);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
-  const navigate = (route: string) => {
-    console.log('Navigate to:', route);
-    // Aquí puedes agregar la lógica de navegación a la ruta deseada
-  };
-
   return (
-    <>
-      {/* Mostrar el Drawer solo en pantallas grandes */}
-      <Hidden mdDown>
-        <Drawer
-          variant="permanent"
-          open={open}
-          sx={{
-            width: '240px', // Ancho del drawer
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              backgroundColor: '#081627', // Color de fondo del drawer
-              color: 'rgba(255, 255, 255, 0.87)', // Color del texto
-              boxShadow: 'none', // Eliminar sombra
-              borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-            },
-          }}
-        >
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-
-          <List component="nav">
-            {mainListItems.map((item) => (
-              <ListItem
-                key={item.id}
-                button
-                onClick={() => navigate(item.route)}
-              >
-                {/* Tu contenido individual del elemento de la lista */}
-                <ListItemText primary={item.text} />
-                {/* ... otros componentes de elementos de lista según sea necesario */}
-              </ListItem>
-            ))}
-          </List>
-
-          <Divider sx={{ my: 1 }} />
-
-          <List component="nav">
-            {secondaryListItems.map((item) => (
-              <ListItem key={item.id}>
-                {/* Tu contenido individual del elemento de la lista */}
-                <ListItemText primary={item.text} />
-                {/* ... otros componentes de elementos de lista según sea necesario */}
-              </ListItem>
-            ))}
-
-            <ListItem>
-              <ModalComponent />
-            </ListItem>
-          </List>
-        </Drawer>
-      </Hidden>
-
-      {/* Mostrar el Drawer solo en pantallas pequeñas */}
-      <Hidden lgUp>
-        <Drawer
-          variant="temporary"
-          open={open}
-          onClose={toggleDrawer}
-          ModalProps={{
-            keepMounted: true, // Mejora la velocidad de apertura en dispositivos móviles.
-          }}
-          sx={{
-            width: '240px',
-            '& .MuiDrawer-paper': {
-              backgroundColor: '#081627',
-              color: 'rgba(255, 255, 255, 0.87)',
-              boxShadow: 'none',
-              borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-            },
-          }}
-        >
-          {/* Contenido del Drawer */}
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-
-          <List component="nav">
-            {mainListItems.map((item) => (
-              <ListItem
-                key={item.id}
-                button
-                onClick={() => navigate(item.route)}
-              >
-                <ListItemText primary={item.text} />
-              </ListItem>
-            ))}
-          </List>
-
-          <Divider sx={{ my: 1 }} />
-
-          <List component="nav">
-            {secondaryListItems.map((item) => (
-              <ListItem key={item.id}>
-                <ListItemText primary={item.text} />
-              </ListItem>
-            ))}
-
-            <ListItem>
-              <ModalComponent />
-            </ListItem>
-          </List>
-        </Drawer>
-      </Hidden>
-    </>
+    <List
+      component="nav"
+      sx={{
+        height: '100vh', // 100% de la altura de la ventana
+        width: '100%', // Ajusta el ancho según tus necesidades
+        backgroundColor: '#004B85', // Cambia al color deseado
+        color: 'white', // Cambia al color deseado
+        textAlign: 'center',
+        paddingTop: '10rem', // Espaciado superior
+      }}
+    >
+      <ListItemButton component={Link} to="/index">
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Inicio" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/formulario">
+        <ListItemIcon>
+          <ArticleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Formulario" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/finanzas">
+        <ListItemIcon>
+          <AttachMoneyIcon />
+        </ListItemIcon>
+        <ListItemText primary="Finanzas" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/direccionestudios">
+        <ListItemIcon>
+          <SchoolIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dirección Estudios" />
+      </ListItemButton>
+      <ListItemButton component={Link} to="/dgec">
+        <ListItemIcon>
+          <HistoryEduIcon />
+        </ListItemIcon>
+        <ListItemText primary="DGEC" />
+      </ListItemButton>
+    </List>
   );
 };
 

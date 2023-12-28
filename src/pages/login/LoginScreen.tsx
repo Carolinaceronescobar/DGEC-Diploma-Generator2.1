@@ -5,7 +5,7 @@ import Logo from '../../assets/Recurso 1.svg';
 import Background from '../../assets/MicrosoftTeams-image.png';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginScreen = () => {
   const [authConfig, setAuthConfig] = useState(null);
@@ -137,8 +137,7 @@ const LoginScreen = () => {
                         textAlign={'center'}
                         mb={1}
                       >
-                        Sistema integrado de gestión de profesores e
-                        investigadores
+                        Direccion General de Estudios Continuos - DGEC -
                       </Typography>
                       <Typography
                         variant="subtitle2"
@@ -148,32 +147,36 @@ const LoginScreen = () => {
                       ></Typography>
                     </Stack>
                   </Grid>
-                  <Button
-                    variant="contained"
-                    startIcon={<MicrosoftIcon />}
-                    onClick={handleLogin}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center', // Center content horizontally
-                      alignItems: 'center', // Center content vertically
-                      width: 'fit-content',
-                      borderRadius: 1,
-                      bgcolor: '#00a2ed', // Background color
-                      color: 'white', // Text color
-                      '& svg': {
-                        m: 1,
-                        color: 'white', // Icon color
-                      },
-                      '& hr': {
-                        mx: 0.5, // Adjust margin for the divider
-                        alignSelf: 'stretch', // Make the divider stretch to fill the button height
-                        borderColor: 'white', // Divider color
-                      },
-                    }}
-                  >
-                    <Divider orientation="vertical" flexItem />
-                    <Typography>Iniciar Sesión</Typography>
-                  </Button>
+
+                  <Link to="/index" style={{ textDecoration: 'none' }}>
+                    <Button
+                      variant="contained"
+                      startIcon={<MicrosoftIcon />}
+                      //onClick={handleLogin}
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center', // Center content horizontally
+                        alignItems: 'center', // Center content vertically
+                        width: 'fit-content',
+                        borderRadius: 1,
+                        bgcolor: '#00a2ed', // Background color
+                        color: 'white', // Text color
+                        '& svg': {
+                          m: 1,
+                          color: 'white', // Icon color
+                        },
+                        '& hr': {
+                          mx: 0.5, // Adjust margin for the divider
+                          alignSelf: 'stretch', // Make the divider stretch to fill the button height
+                          borderColor: 'white', // Divider color
+                        },
+                      }}
+                      onClick={handleLogin}
+                    >
+                      <Divider orientation="vertical" flexItem />
+                      <Typography>Iniciar Sesión</Typography>
+                    </Button>
+                  </Link>
                 </Grid>
               </Box>
             </Box>

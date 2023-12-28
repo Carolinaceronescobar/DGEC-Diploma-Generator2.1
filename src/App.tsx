@@ -1,21 +1,22 @@
-//App.tsx
-// import * as React from 'react';
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box, Container, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Dashboard from './components/Dashboard.tsx';
 
 import { setupAxiosInterceptors } from './pages/login/axiosConfig.ts';
 import LoginScreen from './pages/login/LoginScreen.tsx';
-import UsoInternoDGEC from './pages/usointdgec/UsointernoDGEC';
+import UsoInternoFinanzas from '../src/pages/usointfinanzas/UsointernoFinanzasForm.tsx';
+import UsoInternoDGEC from '../src/pages/usointdgec/UsointernoDGEC.tsx';
+
 import { AuthProvider } from '../src/pages/login/AuthContext';
 
 import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
 import Footer from './components/Footer.tsx';
-import Sidebar from './components/SideBar.tsx';
+import Sidebar from '../src/components/SideBar.tsx';
+import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
+import UsoInternoDireccionEstudios from './pages/usointdireccionestudios/UsoInternoDireccionEstudios';
 
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -51,7 +52,7 @@ import { maxHeight } from '@mui/system';
 //   const handleLogin = (token: string) => {
 //     console.log(token);
 //     setIsAuthenticated(true);
-//     //Store token securely (e.g., in-memory)
+//     // Store token securely (e.g., in-memory)
 //   };
 
 //   const handleLogout = () => {

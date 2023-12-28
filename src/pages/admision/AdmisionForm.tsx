@@ -234,12 +234,10 @@ const AdmisionForm: React.FC = () => {
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
 
   const handleInputModuleChange = (event:any, newinputModuleValue:any) => {
-    console.log('newinputModuleValue->' + newinputModuleValue);
     setinputModuleValue(newinputModuleValue);
   };
   const handleInputAutoCompleteChange = (event:any) => {
     const newValue = event.target.value;
-    console.log(newValue);
     setinputAutocompleteModuleValue(newValue);
   };
   function agregarNuevoValor(valor:any) {
