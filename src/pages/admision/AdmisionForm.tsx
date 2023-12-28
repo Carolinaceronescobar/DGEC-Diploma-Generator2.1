@@ -24,29 +24,31 @@ import {
   TableCell,
   TableBody,
 } from '@mui/material';
-import { save_form } from '../../utils/formulario';
+import { save_form,get_object_localstore } from '../../utils/formulario';
 
-let documentoForm = {
-  id: null,
-  descripcionPrograma: String,
-  objetivoPrograma: String,
-  reseniaPrograma: String,
-  handleFotoAdjuntaChange: null,
-  enlaceLinkedin: String,
-  reseniaProgramados: String,
-  enlaceLinkedindos: String,
-  handleFotoAdjuntadosChange: null,
-  cedula: false,
-  licenciaMedia: false,
-  curriculum: false,
-  otra: false,
-  numeroEstudianteMaximo: Number,
-  numeroEstudianteMinimo: Number,
-  handleInputModuleChange: '',
-  hours: Number,
-  handleAdd: false,
-  staffProfesores: String,
-};
+// let documentoForm = {
+//   id: null,
+//   descripcionPrograma: String,
+//   objetivoPrograma: String,
+//   reseniaPrograma: String,
+//   handleFotoAdjuntaChange: null,
+//   enlaceLinkedin: String,
+//   reseniaProgramados: String,
+//   enlaceLinkedindos: String,
+//   handleFotoAdjuntadosChange: null,
+//   cedula: false,
+//   licenciaMedia: false,
+//   curriculum: false,
+//   otra: false,
+//   numeroEstudianteMaximo: Number,
+//   numeroEstudianteMinimo: Number,
+//   handleInputModuleChange: '',
+//   hours: Number,
+//   handleAdd: false,
+//   staffProfesores: String,
+// };
+let documentoForm :any;
+
 // Definición del componente funcional AdmisionForm
 const AdmisionForm: React.FC = () => {
   // Estado local para almacenar el formulario y la foto adjunta
@@ -118,6 +120,36 @@ const AdmisionForm: React.FC = () => {
     });
   };
 
+  const requisitosPostulanteHandleCheckboxOnChange = (event: any) => {
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "cedula",
+        checked: documentoForm?.cedula ?? false,
+      },
+    });
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "licenciaMedia",
+        checked: documentoForm?.licenciaMedia ?? false,
+      },
+    });
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "curriculum",
+        checked: documentoForm?.curriculum ?? false,
+      },
+    });
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "otra",
+        checked: documentoForm?.otra ?? false,
+      },
+    });
+    
+  };
+
+
+
   const [numeroEstudianteMaximo, setNumeroEstudianteMaximoChange] =
     useState(''); // Estado local para el nombre del programa
   const handleNumeroEstudianteMaximoChange = (event:any) => {
@@ -188,8 +220,13 @@ const AdmisionForm: React.FC = () => {
     let formularioObjeto = {
       programa_descripcion: descripcionPrograma,
       programa_objetivo: objetivoPrograma,
+      
       programa_resenia: reseniaPrograma,
       linkedin: enlaceLinkedin,
+      programa_resenia_dos: reseniaProgramados,
+      linkedin_dos: enlaceLinkedindos,
+
+      
       ...requisitosPostulante,
       cupo_maximo: numeroEstudianteMaximo,
       cupo_minimo: numeroEstudianteMinimo,
@@ -255,6 +292,41 @@ const AdmisionForm: React.FC = () => {
       agregarNuevoValor(inputAutocomplete);
     }
   };
+
+
+  useEffect(() => {
+    // Realizar la solicitud al backend para obtener los datos de los departamentos
+    const cargarProgramas = async () => {
+      //Leo la "variable local" formulario (se modifica al momento de dar "Guardar sin enviar") -> 3ra Linea hacia abajo
+      //ASigno el valor de la "variable local" a documentoForm-> 4ra linea hacia abajo
+      //Leo documentoForm y asigno valor a la variable "programa_value"-> 4 linea hacia abajo
+      const objetoDesdeSesion = get_object_localstore();
+      if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
+        documentoForm = objetoDesdeSesion;
+        console.log(documentoForm);
+
+        setdescripcionPrograma(documentoForm?.programa_descripcion??"");
+        setobjetivoPrograma(documentoForm?.programa_objetivo??"");
+        setReseniaProgramaChange(documentoForm?.programa_resenia??"");
+        setEnlaceLinkedinChange(documentoForm?.linkedin??"");
+        setReseniaProgramadosChange(documentoForm?.programa_resenia_dos??"");
+        setEnlaceLinkedindosChange(documentoForm?.linkedin_dos??"");
+        console.log(documentoForm?.profesores)
+        console.log(documentoForm?.profesores)
+        if(documentoForm?.programa_resenia_dos || documentoForm?.linkedin_dos){
+          setShowAdditionalFields(true)
+        }
+
+
+        setNumeroEstudianteMaximoChange(documentoForm?.cupo_maximo??"");
+        setNumeroEstudianteMinimoChange(documentoForm?.cupo_minimo??"");
+        sethandlestaffProfesoresChange(documentoForm?.profesores??"");
+        requisitosPostulanteHandleCheckboxOnChange(documentoForm)
+
+      }
+    };
+    cargarProgramas();
+  }, []);
 
   // Renderización del componente
   return (

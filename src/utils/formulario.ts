@@ -20,19 +20,15 @@ export async function get_form() {
 
 export function save_form(obj: any) {
   const body = get_object(obj);
-
-  // const objetoDesdeSesion = localStorage.getItem('formulario');
   const objetoDesdeSesion = get_object_localstore();
   let post = true;
-  if (objetoDesdeSesion !== null) {
+  if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
     post = false;
-  }
-
+  } 
   if (post) {
     axios
       .post(url, body)
       .then((response) => {
-        console.log('ok');
         set_object_localstore(response.data);
       })
       .catch((error) => {
@@ -50,14 +46,16 @@ export function save_form(obj: any) {
       });
   }
 }
-
 export async function find_form(id: string): Promise<any> {
+  if(id==""){
+    return get_object_localstore();
+  }
+
   const _url = `${url}${id}`;
   return axios
     .get(_url)
     .then((response) => {
       set_object_localstore(response.data);
-      console.log(`devolvio ${response.data.id}`);
       return response.data;
     })
     .catch((error) => {

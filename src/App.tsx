@@ -183,10 +183,8 @@ function App() {
 
               {/* Recent Orders */}
             </Grid>
-          </Container>
-        </Box>
-        <Box  sx={{ marginTop: "auto" }}>
           <Footer />
+          </Container>
         </Box>
       </Box>
     </ThemeProvider>

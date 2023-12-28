@@ -1,4 +1,3 @@
-// Se importa React y los componentes de Material-UI que necesito para construir el formulario.
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -10,9 +9,7 @@ import {
   Box,
   Input,
   ButtonGroup,
-  SelectChangeEvent,
 } from '@mui/material';
-import { obtenerProgramasDesdeBD } from '../../utils/api';
 import { useParams } from 'react-router-dom';
 import {
   find_form,
@@ -40,7 +37,7 @@ const FormularioDGEC: React.FC = () => {
   );
 
   // Maneja cambios en la selección del programa académico.
-  const handleProgramaSeleccionadoChange = (event) => {
+  const handleProgramaSeleccionadoChange = (event:any) => {
     setProgramaSeleccionado(event.target.value);
   };
 
@@ -66,8 +63,11 @@ const FormularioDGEC: React.FC = () => {
   useEffect(() => {
     //Carga cuando la pantalla ya cargo
     const cargarProgramas = async () => {
-      const programasDesdeBD = await obtenerProgramasDesdeBD();
-      setProgramas(programasDesdeBD);
+      const objetoDesdeSesion = get_object_localstore();
+      if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
+        documentoForm = objetoDesdeSesion
+        cargarDataDocumento();
+      }
     };
     //Debe ser traspasada a otras vistas
     const cargarDataDocumento = async () => {
@@ -94,9 +94,6 @@ const FormularioDGEC: React.FC = () => {
       }
     };
     console.log('cargando datos');
-    if (id != null) {
-      cargarDataDocumento();
-    }
     cargarProgramas();
   }, []); //el segundo argumento [] asegura que esto solo se ejecute una vez al montar el componente
   function getData(param: any) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -15,7 +15,7 @@ import {
   Paper,
 } from '@mui/material';
 import UsoInternoFinanzas from '../usointfinanzas/UsoInternoFinanzasForm';
-import { save_form } from '../../utils/formulario';
+import { save_form,get_object_localstore } from '../../utils/formulario';
 // Definir un tipo para las claves posibles en fin_valordescprog
 type ValordescprogKey =
   | 'fin_valordescprog_asd'
@@ -57,11 +57,16 @@ const FinanzasForm: React.FC = () => {
     exAlumnosUSM: false,
     exAlumnosUSMText: '',
     mujeres: false,
+    mujeresText: '',
     funcionariosUSM: false,
+    funcionariosUSMText: '',
     funcionariosServiciosPublicos: false,
+    funcionariosServiciosPublicosText: '',
     matriculaAnticipada: false,
+    matriculaAnticipadaText: '',
     otros: false,
     otrosText: '',
+    otrosDesc: '',
   });
 
   // Manejador para cambios en los campos de entrada
@@ -92,6 +97,14 @@ const FinanzasForm: React.FC = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: checked,
+    }));
+  };
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    // Actualiza el estado formData con el nuevo valor del checkbox
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: event.target.value,
     }));
   };
 
@@ -181,6 +194,83 @@ const FinanzasForm: React.FC = () => {
     setHandleArancelChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
+  const requisitosPostulanteHandleCheckboxChange = (event:any) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
+  const requisitosPostulanteHandleCheckboxChangeText = (event:any) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSetOtros = (value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      otros: value,
+    }));
+  };
+
+  const requisitosPostulanteHandleCheckboxOnChange = (documentoForm:any) => {
+    console.log(documentoForm?.mujeres)
+    console.log('documentoForm?.mujeres')
+
+    handleSetOtros(true);
+
+    // requisitosPostulanteHandleCheckboxChange({
+    //   target: {
+    //     name: "mujeres",
+    //     checked: documentoForm?.mujeres ?? false,
+    //   },
+    // });
+    requisitosPostulanteHandleCheckboxChangeText({
+      target: {
+        name: "mujeresText",
+        checked: documentoForm?.mujeresText ?? 0,
+      },
+    });
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "funcionariosUSM",
+        checked: documentoForm?.funcionariosUSM ?? false,
+      },
+    });
+    requisitosPostulanteHandleCheckboxChange({
+      target: {
+        name: "funcionariosUSMText",
+        checked: documentoForm?.funcionariosUSMText ?? 0,
+      },
+    });
+    
+  };
+
+
+
+
+
+  useEffect(() => {
+  
+    const cargarProgramas = async () => {
+      //Leo la "variable local" formulario (se modifica al momento de dar "Guardar sin enviar") -> 3ra Linea hacia abajo
+      //ASigno el valor de la "variable local" a documentoForm-> 4ra linea hacia abajo
+      //Leo documentoForm y asigno valor a la variable "programa_value"-> 4 linea hacia abajo
+      const objetoDesdeSesion = get_object_localstore();
+      if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
+        let documentoForm = objetoDesdeSesion;
+        if (documentoForm ){
+          console.log(documentoForm)
+          setHandleArancelChange(documentoForm?.arancel??"");
+          requisitosPostulanteHandleCheckboxOnChange(documentoForm)
+        }
+      }
+    };
+    cargarProgramas();
+  }, []);
+
   // Renderizado del componente
   return (
     <Container>
@@ -267,11 +357,12 @@ const FinanzasForm: React.FC = () => {
               <TextField
                 type="number"
                 className="form-control"
-                name="exAlumnosUSM"
+                name="exAlumnosUSMText"
                 id="exAlumnosUSM"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                onChange={handlePorcentajeChange}
+                value={formData.exAlumnosUSMText  }
+                onChange={handleFormChange}
               />
             ) : (
               <>&nbsp;</>
@@ -298,11 +389,12 @@ const FinanzasForm: React.FC = () => {
               <TextField
                 type="number"
                 className="form-control"
-                name="mujeres"
+                name="mujeresText"
                 id="mujeres"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                onChange={handlePorcentajeChange}
+                value={formData.mujeresText  }
+                onChange={handleFormChange}
               />
             ) : (
               <>&nbsp;</>
@@ -330,11 +422,12 @@ const FinanzasForm: React.FC = () => {
               <TextField
                 type="number"
                 className="form-control"
-                name="funcionariosUSM"
+                name="funcionariosUSMText"
                 id="funcionariosUSM"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                onChange={handlePorcentajeChange}
+                value={formData.funcionariosUSMText  }
+                onChange={handleFormChange}
               />
             ) : (
               <>&nbsp;</>
@@ -363,11 +456,12 @@ const FinanzasForm: React.FC = () => {
               <TextField
                 type="number"
                 className="form-control"
-                name="funcionariosServiciosPublicos"
+                name="funcionariosServiciosPublicosText"
                 id="funcionariosServiciosPublicos"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                onChange={handlePorcentajeChange}
+                value={formData.funcionariosServiciosPublicosText  }
+                onChange={handleFormChange}
               />
             ) : (
               <>&nbsp;</>
@@ -397,11 +491,12 @@ const FinanzasForm: React.FC = () => {
                 style={{ maxHeight: '5px' }}
                 type="number"
                 className="form-control"
-                name="matriculaAnticipada"
+                name="matriculaAnticipadaText"
                 id="matriculaAnticipada"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                onChange={handlePorcentajeChange}
+                value={formData.matriculaAnticipadaText  }
+                onChange={handleFormChange}
               />
             ) : (
               <>&nbsp;</>
@@ -431,21 +526,23 @@ const FinanzasForm: React.FC = () => {
                   <TextField
                     type="text"
                     className="form-control"
-                    name="otrosText"
+                    name="otrosDesc"
                     id="otrosText"
                     label="Otro descuento"
-                    onChange={handleChange}
+                    value={formData.otrosDesc  }
+                    onChange={handleFormChange}
                   />
                 </Grid>
                 <Grid item md={6}>
                   <TextField
                     type="number"
                     className="form-control"
-                    name="otrosPorcentaje"
+                    name="otrosText"
                     id="otrosPorcentaje"
                     label="Porcentaje"
                     InputProps={{ inputProps: { min: 0, max: 100 } }}
-                    onChange={handlePorcentajeChange}
+                    value={formData.otrosText  }
+                    onChange={handleFormChange}
                   />
                 </Grid>
               </Grid>
