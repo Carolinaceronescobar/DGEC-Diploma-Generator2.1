@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Badge,
   Box,
@@ -9,10 +9,10 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AppBar from '@mui/material/AppBar';
-import MenuIcon from '@mui/icons-material/Menu';
+} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AppBar from "@mui/material/AppBar";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export const HeaderApp = ({
   onToggleSidebar,
@@ -37,41 +37,38 @@ export const HeaderApp = ({
   const handleLogout = () => {
     // Aquí puedes implementar la lógica para cerrar sesión
     // Por ejemplo, redirigir al usuario a la página de inicio de sesión
-    console.log('Cerrar Sesión');
+    console.log("Cerrar Sesión");
     handleClose();
-    navigate('/login'); // Cierra el menú después de hacer clic en "Cerrar Sesión"
+    navigate("/login"); // Cierra el menú después de hacer clic en "Cerrar Sesión"
   };
 
   return (
- 
-      <Toolbar sx={{  justifyContent: 'space-between'}}>
+    <AppBar position="absolute">
+      <Toolbar sx={{ justifyContent: "space-between", ml:50 }}>
         {/* Nuevo botón para abrir/cerrar el menú lateral en pantallas pequeñas */}
-        <Hidden lgUp>
           <IconButton color="inherit" onClick={onToggleSidebar}>
             <MenuIcon />
           </IconButton>
-        </Hidden>
 
         {/*Logotipo de la Universidad */}
         <Box
           sx={{
-          
             flexGrow: 1,
-            display: { xs: 'none', md: 'flex' },
-            alignItems: 'center',
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
           }}
         >
           {/* Utilizando Box para el margen derecho */}
-          <Box sx={{ marginRight: '20px' }}>
+          <Box sx={{ marginRight: "20px" }}>
             <img
               alt="logo"
               src="./src/assets/logo-usm_blanco-min.png"
               style={{
-                width: '150px',
-                height: '25px',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                display: 'block',
+                width: "150px",
+                height: "25px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                display: "block",
               }}
             />
           </Box>
@@ -81,7 +78,7 @@ export const HeaderApp = ({
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1, margin: '4px' }}
+            sx={{ flexGrow: 1, margin: "4px" }}
           >
             DGEC
           </Typography>
@@ -104,5 +101,6 @@ export const HeaderApp = ({
           <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
         </Menu>
       </Toolbar>
+    </AppBar>
   );
 };
