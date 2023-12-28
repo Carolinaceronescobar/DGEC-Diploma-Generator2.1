@@ -1,30 +1,38 @@
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { Box, Container, Drawer, Grid, IconButton, Switch } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
+import {
+  Box,
+  Container,
+  Drawer,
+  Grid,
+  IconButton,
+  Switch,
+} from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 // import Dashboard from './components/Dashboard.tsx';
 
-import Footer from "./components/Footer.tsx";
+import Footer from './components/Footer.tsx';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ArticleIcon from "@mui/icons-material/Article";
-import ListItemText from "@mui/material/ListItemText";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import SchoolIcon from "@mui/icons-material/School";
-import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
-import { Link, NavLink, Route, Routes } from "react-router-dom";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import React from "react";
-import { ProgramRequestForm } from "./components/ProgramRequestForm.tsx";
-import UsoInternoDGEC from "./pages/usointdgec/UsoInternoDGEC.tsx";
-import Dashboard from "./components/Dashboard.tsx";
-import UsoInternoFinanzas from "./pages/usointfinanzas/UsoInternoFinanzasForm.tsx";
-import LoginScreen from "./pages/login/LoginScreen.tsx";
-import { HeaderApp } from "./components/HeaderApp.tsx";
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ArticleIcon from '@mui/icons-material/Article';
+import ListItemText from '@mui/material/ListItemText';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SchoolIcon from '@mui/icons-material/School';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import React from 'react';
+import { ProgramRequestForm } from './components/ProgramRequestForm.tsx';
+import UsoInternoDGEC from './pages/usointdgec/UsoInternoDGEC.tsx';
+import Dashboard from './components/Dashboard.tsx';
+import UsoInternoFinanzas from './pages/usointfinanzas/UsoInternoFinanzasForm.tsx';
+import UsoInternoDireccionEstudios from './pages/usointdireccionestudios/UsoInternoDireccionEstudios.tsx';
+import LoginScreen from './pages/login/LoginScreen.tsx';
+import { HeaderApp } from './components/HeaderApp.tsx';
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -52,33 +60,31 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer_ = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
+const Drawer_ = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: 'border-box',
+    ...(!open && {
+      overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
-
+      width: theme.spacing(7),
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
 function App() {
   const [open, setOpen] = React.useState(true);
@@ -89,15 +95,15 @@ function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#004B85",
+        main: '#004B85',
       },
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ flexDirection: "column" }}>
-        <Box sx={{ display: "flex",height: "90vh" }}>
+      <Box sx={{ flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', height: '90vh' }}>
           <CssBaseline />
 
           <HeaderApp onToggleSidebar={toggleDrawer} />
@@ -105,21 +111,20 @@ function App() {
           <Drawer variant="permanent" open={open}>
             <Toolbar
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
                 px: [1],
-                backgroundColor: "#004B85",
-                color: "white",
-                padding: "1rem",
-                textAlign: "center",
-                fontSize: "0.8rem",
+                backgroundColor: '#004B85',
+                color: 'white',
+                padding: '1rem',
+                textAlign: 'center',
+                fontSize: '0.8rem',
               }}
             >
- <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-
+              <IconButton onClick={toggleDrawer}>
+                <ChevronLeftIcon />
+              </IconButton>
             </Toolbar>
             <Divider />
             <nav>
@@ -176,6 +181,10 @@ function App() {
                   />
                   <Route path="/dgec" element={<UsoInternoDGEC />} />
                   <Route path="/finanzas" element={<UsoInternoFinanzas />} />
+                  <Route
+                    path="/direst"
+                    element={<UsoInternoDireccionEstudios />}
+                  />
                   <Route path="/login" element={<LoginScreen />} />
                 </Routes>
               </Grid>
@@ -183,7 +192,7 @@ function App() {
 
               {/* Recent Orders */}
             </Grid>
-          <Footer />
+            <Footer />
           </Container>
         </Box>
       </Box>

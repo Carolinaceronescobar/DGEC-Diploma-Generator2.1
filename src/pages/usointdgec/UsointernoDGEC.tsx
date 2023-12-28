@@ -26,7 +26,9 @@ import Footer from '../../components/Footer';
 
 interface UsointernoDGECProps {
   campos?: UsoInternoDGECData['campo1'];
-  setCampos?: React.Dispatch<React.SetStateAction<UsoInternoDGECData['campo1']>>;
+  setCampos?: React.Dispatch<
+    React.SetStateAction<UsoInternoDGECData['campo1']>
+  >;
   departamento?: UsoInternoDGECData['departamento'];
   setDepartamento?: React.Dispatch<
     React.SetStateAction<UsoInternoDGECData['departamento']>
@@ -165,13 +167,6 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
               >
                 Agregar
               </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>
-                {' '}
-                Al ingresar nuevo módulo, aprete "enter" y continúe completando
-                con horas del módulo{' '}
-              </Typography>
             </Grid>
           </Grid>
           <TableContainer>
