@@ -119,6 +119,7 @@ const RegistroCurricularForm: React.FC = () => {
       //Leo la "variable local" formulario (se modifica al momento de dar "Guardar sin enviar") -> 3ra Linea hacia abajo
       //ASigno el valor de la "variable local" a documentoForm-> 4ra linea hacia abajo
       //Leo documentoForm y asigno valor a la variable "programa_value"-> 4 linea hacia abajo
+      console.log('cargarProgramas');
       const objetoDesdeSesion = get_object_localstore();
       if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
         documentoForm = objetoDesdeSesion;
@@ -129,6 +130,7 @@ const RegistroCurricularForm: React.FC = () => {
         handleDepartamentoOnChange(documentoForm?.departamento_int);
         handleEmplazamientoOnChange(documentoForm?.emplazamiento_int);
         jornadaHandleCheckboxOnChange(documentoForm);
+
         modalidadHandleCheckboxOnChange(documentoForm);
         if (documentoForm.duracion_fecha_inicio)
           setduracionFechaInicio(
@@ -462,6 +464,12 @@ const RegistroCurricularForm: React.FC = () => {
   });
 
   const jornadaHandleCheckboxChange = (event: any) => {
+    console.log(
+      `jornadaHandleCheckboxChange -> [${event.target.name}] : ${event.target.checked}`
+    );
+    console.log(
+      `${jornadaOptions.jornada_diurna} ${jornadaOptions.jornada_vespertina} ${jornadaOptions.jornada_aDistancia} ${jornadaOptions.jornada_otra}`
+    );
     setSelectedJornadaOptions({
       ...jornadaOptions,
       [event.target.name]: event.target.checked,
