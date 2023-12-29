@@ -129,7 +129,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ ml: 10 }}>
       <div>
         <Typography
           variant="h6"
@@ -173,7 +173,7 @@ const UsoInternoDGEC: React.FC<UsointernoDGECProps> = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Módulo</TableCell>
+                  <TableCell>Código Ingresado</TableCell>
                   <TableCell>Editar</TableCell>
                 </TableRow>
               </TableHead>

@@ -269,9 +269,9 @@ const AdmisionForm: React.FC = () => {
 
   // Lista Modulo Select
   const [optionsModule, setOptions] = useState([
-    'Opción 1',
-    'Opción 2',
-    'Opción 3',
+    'Curso 1',
+    'Curso 2',
+    'Curso 3',
   ]);
   const [inputModuleValue, setinputModuleValue] = useState('');
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
@@ -455,7 +455,7 @@ const AdmisionForm: React.FC = () => {
       </Box>
 
       <Box>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
           {/*Sección: Adjuntar Foto*/}
           <Input
             type="file"
@@ -530,7 +530,7 @@ const AdmisionForm: React.FC = () => {
 
             {/*Sección: Adjuntar Foto*/}
             <Box>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={2} alignItems="center">
                 <Input
                   type="file"
                   id="FotoAdjunta"
@@ -553,7 +553,6 @@ const AdmisionForm: React.FC = () => {
             <Box>
               <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
                 <TextField
-                  sx={{ marginTop: 2, justifyContent: 'right' }}
                   fullWidth
                   label="Enlace de LinkedIn"
                   name="linkedin"
@@ -693,11 +692,7 @@ const AdmisionForm: React.FC = () => {
                   label="Horas"
                 />
               </Grid>
-              <Typography>
-                {' '}
-                Al ingresar nuevo módulo, aprete "enter" y continúe completando
-                con horas del módulo{' '}
-              </Typography>
+
               <Grid item xs={3}>
                 <Button
                   variant="outlined"
