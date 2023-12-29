@@ -276,6 +276,7 @@ const RegistroCurricularForm: React.FC = () => {
         programa_tipo: tipoProgramaAcademicoSeleccionado,
         programa_nombre: nombrePrograma,
         programa_director: directorPrograma,
+        otrosNombres: setOtrosNombres,
         departamento_int: departamento,
         emplazamiento_int: emplazamiento,
         ...jornadaOptions,
@@ -349,8 +350,20 @@ const RegistroCurricularForm: React.FC = () => {
   };
 
   const [directorPrograma, setDirectorPrograma] = useState(''); // Estado local para el director del programa
+  const [otrosNombres, setOtrosNombres] = useState(['']);
+
   const handleDirectorProgramaChange = (event: any) => {
     setDirectorPrograma(event.target.value); // Actualizar el estado con el valor del director del programa
+  };
+
+  const handleOtrosNombresChange = (index, value) => {
+    const nuevosNombres = [...otrosNombres];
+    nuevosNombres[index] = value;
+    setOtrosNombres(nuevosNombres);
+  };
+
+  const agregarNombre = () => {
+    setOtrosNombres([...otrosNombres, '']);
   };
   const [departamento, setDepartamento] = useState(''); // Estado local para el departamento seleccionado
 
@@ -519,20 +532,20 @@ const RegistroCurricularForm: React.FC = () => {
   //   React.useState<Date | null>(null);
 
   return (
-    <Container>
-      {/* Sección: Información relevante para Registro Curricular */}
-      <Typography
-        variant="h5"
-        align="center"
-        mt={2}
-        mb={1}
-        sx={{ marginTop: 5, marginBottom: 5, fontWeight: 'bold' }}
-      >
-        Información relevante para Registro Curricular
-      </Typography>
+    <>
+      <Container>
+        {/* Sección: Información relevante para Registro Curricular */}
+        <Typography
+          variant="h5"
+          align="center"
+          mt={2}
+          mb={1}
+          sx={{ marginTop: 5, marginBottom: 5, fontWeight: 'bold' }}
+        >
+          Información relevante para Registro Curricular
+        </Typography>
 
-      {/* Sección: Programa */}
-      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
+        {/* Sección: Programa */}
         <Typography
           variant="h6"
           sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
@@ -594,357 +607,380 @@ const RegistroCurricularForm: React.FC = () => {
           </FormControl>
         </Box>
 
-        {/* Nombre y director del programa: ARREGLAR ESTA SECCION NO ELIGE */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          <FormControl fullWidth>
+        {/* Nombre y director del programa */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', mt: 2 }}>
+          <FormControl fullWidth sx={{ mb: 2 }}>
             <TextField
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              sx={{ width: 'calc(100% - 8px)' }}
               id="regcur_dirprog"
               label="Programa Academico"
               variant="outlined"
               value={programa_value}
-              onChange={(e) => setprograma_value(e.target.value)} // Manejador de cambios para actualizar el estado
+              onChange={(e) => setprograma_value(e.target.value)}
             />
           </FormControl>
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            id="regcur_dirprog"
-            label="Director del Programa *"
-            variant="outlined"
-            value={directorPrograma}
-            onChange={handleDirectorProgramaChange}
-          />
-        </Box>
 
-        {/* Sección: Donde se imparte el Programa */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          {/* Departamento o Unidad */}
-          <FormControl fullWidth>
-            <Typography variant="subtitle1">Departamento</Typography>
-            <Select
-              id="regcur_depprog"
-              label="Departamento o Unidad"
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <TextField
+              sx={{ width: 'calc(100% - 8px)' }}
+              id="regcur_dirprog"
+              label="Director del Programa *"
               variant="outlined"
-              sx={{ mr: 2 }}
-              value={departamento}
-              onChange={handleDepartamentoChange}
-              // value={selectedDepartamento}
-              // onChange={(e) =>
-              //   setSelectedDepartamento(e.target.value as number)
-              // }
-            >
-              {departamentoDGEC.map((departamento) => (
-                <MenuItem key={departamento.id} value={departamento.id}>
-                  {departamento.name}
-                </MenuItem>
-              ))}
-            </Select>
+              value={directorPrograma}
+              onChange={handleDirectorProgramaChange}
+            />
           </FormControl>
 
-          {/* Emplazamiento */}
-          <FormControl fullWidth>
-            <Typography variant="subtitle1">Emplazamiento</Typography>
-            <Select
-              id="regcur_sedeprog"
-              label="Emplazamiento"
+          {/* Sección para otros nombres y apellidos */}
+          {otrosNombres.map((nombre, index) => (
+            <FormControl fullWidth key={index} sx={{ mb: 2 }}>
+              <TextField
+                sx={{ width: 'calc(100% - 8px)', mr: 15 }}
+                id={`otro_nombre_${index}`}
+                label={'Otro Director Programa'}
+                variant="outlined"
+                value={nombre}
+                onChange={(e) =>
+                  handleOtrosNombresChange(index, e.target.value)
+                }
+              />
+            </FormControl>
+          ))}
+
+          {/* Sección: Donde se imparte el Programa */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            {/* Departamento o Unidad */}
+            <FormControl fullWidth>
+              <Typography variant="subtitle1">Departamento</Typography>
+              <Select
+                id="regcur_depprog"
+                label="Departamento o Unidad"
+                variant="outlined"
+                sx={{ mr: 2 }}
+                value={departamento}
+                onChange={handleDepartamentoChange}
+                // value={selectedDepartamento}
+                // onChange={(e) =>
+                //   setSelectedDepartamento(e.target.value as number)
+                // }
+              >
+                {departamentoDGEC.map((departamento) => (
+                  <MenuItem key={departamento.id} value={departamento.id}>
+                    {departamento.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            {/* Emplazamiento */}
+            <FormControl fullWidth>
+              <Typography variant="subtitle1">Emplazamiento</Typography>
+              <Select
+                id="regcur_sedeprog"
+                label="Emplazamiento"
+                variant="outlined"
+                sx={{ mr: 2 }}
+                value={emplazamiento}
+                onChange={handleEmplazamientoChange}
+              >
+                {sedes.map((sede) => (
+                  <MenuItem key={sede.id} value={sede.id}>
+                    {sede.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            <Grid
+              container
+              spacing={0}
+              sx={{ width: 'calc(100% - 8px)', pl: 10 }}
+            >
+              {/* SideBar */}
+              <Grid item xs={6}>
+                <FormControl component="fieldset">
+                  <Typography variant="subtitle1">Jornada</Typography>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={jornadaOptions.jornada_diurna}
+                          onChange={jornadaHandleCheckboxChange}
+                          name="jornada_diurna"
+                        />
+                      }
+                      label="Diurna"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={jornadaOptions.jornada_vespertina}
+                          onChange={jornadaHandleCheckboxChange}
+                          name="jornada_vespertina"
+                        />
+                      }
+                      label="Vespertina"
+                    />{' '}
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={jornadaOptions.jornada_aDistancia}
+                          onChange={jornadaHandleCheckboxChange}
+                          name="jornada_aDistancia"
+                        />
+                      }
+                      label="A Distancia"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={jornadaOptions.jornada_otra}
+                          onChange={jornadaHandleCheckboxChange}
+                          name="jornada_otra"
+                        />
+                      }
+                      label="Otra"
+                    />
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Divider
+              component="div"
+              variant="fullWidth"
+              role="presentation"
+              style={{ marginInline: '10px', border: '0.5px solid #808080' }}
+            />
+            <Grid
+              container
+              spacing={0}
+              sx={{ width: 'calc(100% - 8px)', pl: 10 }}
+            >
+              {/* SideBar */}
+              <Grid item xs={6}>
+                <FormControl component="fieldset">
+                  <Typography variant="subtitle1">Modalidad</Typography>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={modalidadOptions.modalidad_presencial}
+                          onChange={modalidadHandleCheckboxChange}
+                          name="modalidad_presencial"
+                        />
+                      }
+                      label="Presencial"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={modalidadOptions.modalidad_online}
+                          onChange={modalidadHandleCheckboxChange}
+                          name="modalidad_online"
+                        />
+                      }
+                      label="Online"
+                    />{' '}
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={modalidadOptions.modalidad_hibrida}
+                          onChange={modalidadHandleCheckboxChange}
+                          name="modalidad_hibrida"
+                        />
+                      }
+                      label="Hibrida"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={modalidadOptions.modalidad_otra}
+                          onChange={modalidadHandleCheckboxChange}
+                          name="modalidad_otra"
+                        />
+                      }
+                      label="Otra"
+                    />
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/* Jornada y Modalidad */}
+        </Box>
+        {/* Sección: Duración */}
+        <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+          >
+            Duración
+          </Typography>
+          <hr />
+
+          {/* Fechas de inicio y término */}
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            localeText={
+              esES.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}
+            >
+              <DatePicker
+                format="DD-MM-YYYY"
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+                label="Fecha Inicio"
+                defaultValue={dayjs()}
+                value={duracionFechaInicio}
+                onChange={(newValue) => {
+                  setduracionFechaInicio(newValue);
+                }}
+              />
+              <DatePicker
+                format="DD-MM-YYYY"
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+                label="Fecha Termino"
+                value={duracionFechaTermino}
+                onChange={(newValue) => {
+                  // Marcar el selector de fecha como tocado
+                  setTouchedDatePicker(true);
+                  // Validar que la nueva fecha no sea menor que la Fecha de Inicio
+                  if (
+                    newValue.isAfter(duracionFechaInicio) ||
+                    newValue.isSame(duracionFechaInicio)
+                  ) {
+                    setduracionFechaTermino(newValue);
+                    setErrorMensaje(''); // Limpiar el mensaje de error si la fecha es válida
+                  } else {
+                    // Configurar el mensaje de error
+                    setErrorMensaje(
+                      'La fecha de finalización no puede ser menor que la fecha de inicio.'
+                    );
+                  }
+                }}
+              />
+
+              {touchedDatePicker && errorMensaje && (
+                <div
+                  style={{ color: 'red', fontSize: 'small', marginTop: '4px' }}
+                >
+                  {errorMensaje}
+                </div>
+              )}
+            </Box>
+          </LocalizationProvider>
+
+          {/* Duración del programa y Número de versión */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              id="regcur_durprog"
+              label="Duración del programa (horas) *"
               variant="outlined"
-              sx={{ mr: 2 }}
-              value={emplazamiento}
-              onChange={handleEmplazamientoChange}
+              type="number" // Establece el tipo de entrada como número
+              InputProps={{
+                inputProps: {
+                  min: 1, // Establece un valor mínimo, si es necesario
+                },
+              }}
+              value={duracionPrograma}
+              onChange={handleDuracionProgramaChange}
+            />
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              fullWidth
+              id="regcur_verprog"
+              label="Número de versión del programa *"
+              variant="outlined"
+              value={numeroPrograma}
+              onChange={handleNumeroProgramaChange}
+            />
+          </Box>
+        </Box>
+
+        {/*Sección Fecha Convocatoria*/}
+        <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+          >
+            Fecha Convocatoria
+          </Typography>
+          <hr />
+
+          {/* Fechas de inicio y término */}
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            localeText={
+              esES.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}
             >
-              {sedes.map((sede) => (
-                <MenuItem key={sede.id} value={sede.id}>
-                  {sede.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              <DatePicker
+                format="DD-MM-YYYY"
+                label="Fecha de Inicio"
+                defaultValue={dayjs()}
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+                value={convocatoriaFechaInicio}
+                onChange={(newValue) => {
+                  setconvocatoriaFInicio(newValue);
+                }}
+              />
+              <DatePicker
+                format="DD-MM-YYYY"
+                sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+                label="Fecha de Finalización"
+                value={convocatoriaFTermino}
+                onChange={(newValue) => {
+                  // Marcar el selector de fecha como tocado
+                  setTouchedDatePicker(true);
+                  // Validar que la nueva fecha no sea menor que la Fecha de Inicio
+                  if (
+                    newValue.isAfter(convocatoriaFechaInicio) ||
+                    newValue.isSame(convocatoriaFechaInicio)
+                  ) {
+                    setconvocatoriaFTermino(newValue);
+                    setErrorMensaje(''); // Limpiar el mensaje de error si la fecha es válida
+                  } else {
+                    // Configurar el mensaje de error
+                    setErrorMensaje(
+                      'La fecha de finalización no puede ser menor que la fecha de inicio.'
+                    );
+                  }
+                }}
+              />
+
+              {touchedDatePicker && errorMensaje && (
+                <div
+                  style={{ color: 'red', fontSize: 'small', marginTop: '4px' }}
+                >
+                  {errorMensaje}
+                </div>
+              )}
+            </Box>
+          </LocalizationProvider>
         </Box>
 
+        {/* Botón para guardar sin enviar */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          <Grid
-            container
-            spacing={0}
-            sx={{ width: 'calc(100% - 8px)', pl: 10 }}
-          >
-            {/* SideBar */}
-            <Grid item xs={6}>
-              <FormControl component="fieldset">
-                <Typography variant="subtitle1">Jornada</Typography>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={jornadaOptions.jornada_diurna}
-                        onChange={jornadaHandleCheckboxChange}
-                        name="jornada_diurna"
-                      />
-                    }
-                    label="Diurna"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={jornadaOptions.jornada_vespertina}
-                        onChange={jornadaHandleCheckboxChange}
-                        name="jornada_vespertina"
-                      />
-                    }
-                    label="Vespertina"
-                  />{' '}
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={jornadaOptions.jornada_aDistancia}
-                        onChange={jornadaHandleCheckboxChange}
-                        name="jornada_aDistancia"
-                      />
-                    }
-                    label="A Distancia"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={jornadaOptions.jornada_otra}
-                        onChange={jornadaHandleCheckboxChange}
-                        name="jornada_otra"
-                      />
-                    }
-                    label="Otra"
-                  />
-                </FormGroup>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Divider
-            component="div"
-            variant="fullWidth"
-            role="presentation"
-            style={{ marginInline: '10px', border: '0.5px solid #808080' }}
-          />
-          <Grid
-            container
-            spacing={0}
-            sx={{ width: 'calc(100% - 8px)', pl: 10 }}
-          >
-            {/* SideBar */}
-            <Grid item xs={6}>
-              <FormControl component="fieldset">
-                <Typography variant="subtitle1">Modalidad</Typography>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={modalidadOptions.modalidad_presencial}
-                        onChange={modalidadHandleCheckboxChange}
-                        name="modalidad_presencial"
-                      />
-                    }
-                    label="Presencial"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={modalidadOptions.modalidad_online}
-                        onChange={modalidadHandleCheckboxChange}
-                        name="modalidad_online"
-                      />
-                    }
-                    label="Online"
-                  />{' '}
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={modalidadOptions.modalidad_hibrida}
-                        onChange={modalidadHandleCheckboxChange}
-                        name="modalidad_hibrida"
-                      />
-                    }
-                    label="Hibrida"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={modalidadOptions.modalidad_otra}
-                        onChange={modalidadHandleCheckboxChange}
-                        name="modalidad_otra"
-                      />
-                    }
-                    label="Otra"
-                  />
-                </FormGroup>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Box>
-
-        {/* Jornada y Modalidad */}
-      </Box>
-      {/* Sección: Duración */}
-      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
-        <Typography
-          variant="h6"
-          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-        >
-          Duración
-        </Typography>
-        <hr />
-
-        {/* Fechas de inicio y término */}
-        <LocalizationProvider
-          dateAdapter={AdapterDayjs}
-          localeText={
-            esES.components.MuiLocalizationProvider.defaultProps.localeText
-          }
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <DatePicker
-              format="DD-MM-YYYY"
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              label="Fecha Inicio"
-              defaultValue={dayjs()}
-              value={duracionFechaInicio}
-              onChange={(newValue) => {
-                setduracionFechaInicio(newValue);
-              }}
-            />
-            <DatePicker
-              format="DD-MM-YYYY"
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              label="Fecha Termino"
-              value={duracionFechaTermino}
-              onChange={(newValue) => {
-                // Marcar el selector de fecha como tocado
-                setTouchedDatePicker(true);
-                // Validar que la nueva fecha no sea menor que la Fecha de Inicio
-                if (
-                  newValue.isAfter(duracionFechaInicio) ||
-                  newValue.isSame(duracionFechaInicio)
-                ) {
-                  setduracionFechaTermino(newValue);
-                  setErrorMensaje(''); // Limpiar el mensaje de error si la fecha es válida
-                } else {
-                  // Configurar el mensaje de error
-                  setErrorMensaje(
-                    'La fecha de finalización no puede ser menor que la fecha de inicio.'
-                  );
-                }
-              }}
-            />
-
-            {touchedDatePicker && errorMensaje && (
-              <div
-                style={{ color: 'red', fontSize: 'small', marginTop: '4px' }}
-              >
-                {errorMensaje}
-              </div>
-            )}
-          </Box>
-        </LocalizationProvider>
-
-        {/* Duración del programa y Número de versión */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            id="regcur_durprog"
-            label="Duración del programa (horas) *"
+          <Button
             variant="outlined"
-            type="number" // Establece el tipo de entrada como número
-            InputProps={{
-              inputProps: {
-                min: 1, // Establece un valor mínimo, si es necesario
-              },
-            }}
-            value={duracionPrograma}
-            onChange={handleDuracionProgramaChange}
-          />
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            fullWidth
-            id="regcur_verprog"
-            label="Número de versión del programa *"
-            variant="outlined"
-            value={numeroPrograma}
-            onChange={handleNumeroProgramaChange}
-          />
+            color="primary"
+            className="float-left"
+            onClick={handleGuardarClick}
+          >
+            Guardar sin enviar
+          </Button>
         </Box>
-      </Box>
-
-      {/*Sección Fecha Convocatoria*/}
-      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
-        <Typography
-          variant="h6"
-          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-        >
-          Fecha Convocatoria
-        </Typography>
-        <hr />
-
-        {/* Fechas de inicio y término */}
-        <LocalizationProvider
-          dateAdapter={AdapterDayjs}
-          localeText={
-            esES.components.MuiLocalizationProvider.defaultProps.localeText
-          }
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <DatePicker
-              format="DD-MM-YYYY"
-              label="Fecha de Inicio"
-              defaultValue={dayjs()}
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              value={convocatoriaFechaInicio}
-              onChange={(newValue) => {
-                setconvocatoriaFInicio(newValue);
-              }}
-            />
-            <DatePicker
-              format="DD-MM-YYYY"
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              label="Fecha de Finalización"
-              value={convocatoriaFTermino}
-              onChange={(newValue) => {
-                // Marcar el selector de fecha como tocado
-                setTouchedDatePicker(true);
-                // Validar que la nueva fecha no sea menor que la Fecha de Inicio
-                if (
-                  newValue.isAfter(convocatoriaFechaInicio) ||
-                  newValue.isSame(convocatoriaFechaInicio)
-                ) {
-                  setconvocatoriaFTermino(newValue);
-                  setErrorMensaje(''); // Limpiar el mensaje de error si la fecha es válida
-                } else {
-                  // Configurar el mensaje de error
-                  setErrorMensaje(
-                    'La fecha de finalización no puede ser menor que la fecha de inicio.'
-                  );
-                }
-              }}
-            />
-
-            {touchedDatePicker && errorMensaje && (
-              <div
-                style={{ color: 'red', fontSize: 'small', marginTop: '4px' }}
-              >
-                {errorMensaje}
-              </div>
-            )}
-          </Box>
-        </LocalizationProvider>
-      </Box>
-
-      {/* Botón para guardar sin enviar */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button
-          variant="outlined"
-          color="primary"
-          className="float-left"
-          onClick={handleGuardarClick}
-        >
-          Guardar sin enviar
-        </Button>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
 
