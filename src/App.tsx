@@ -102,6 +102,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* TODO: Necesito hacer que login entre sin el header, sidebar y footer -
+      REACT no permite dos "Routes" en el mismo return ( 
+        <Routes>
+        <Route path="/login" element={<LoginScreen />} />
+      </Routes> */}
+
       <Box sx={{ flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', height: '90vh' }}>
           <CssBaseline />
@@ -170,7 +176,6 @@ function App() {
 
           <Container maxWidth="lg" sx={{ mt: 10, mb: 4, ml: 20 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12}>
                 <Routes>
                   <Route path="/index" element={<Dashboard />} />
@@ -185,12 +190,8 @@ function App() {
                     path="/direst"
                     element={<UsoInternoDireccionEstudios />}
                   />
-                  <Route path="/login" element={<LoginScreen />} />
                 </Routes>
               </Grid>
-              {/* Recent Deposits */}
-
-              {/* Recent Orders */}
             </Grid>
             <Footer />
           </Container>

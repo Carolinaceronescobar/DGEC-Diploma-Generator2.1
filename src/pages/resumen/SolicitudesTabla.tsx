@@ -1,6 +1,6 @@
 // SolicitudesTabla.tsx
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -43,6 +43,27 @@ const paginationComponentOptions = {
 
 const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
   const navigate = useNavigate();
+  const [programas, setProgramas] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        'http://127.0.0.1:8000/api/solicitudes-tabla/'
+      ); // Reemplaza 'tu_puerto' con el puerto real de tu servidor backend
+      if (!response.ok) {
+        throw new Error('Error al obtener tablas');
+      }
+      const data = await response.json();
+      console.log('Datos de las tablas:', data);
+      setProgramas(data);
+    } catch (error) {
+      console.error('Error al obtener tablas:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleDgecAprovedUpdate = (event: React.ChangeEvent) => {
     console.log(
@@ -58,7 +79,7 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
     programs[programIndex].isDgecAproved =
       !programs[programIndex].isDgecAproved;
 
-    console.log(programs[programIndex].isDgecAproved);
+    console.log('acaaaaaaaassss ');
 
     // TODO: Obtner el program del listado a partir del itemId
     // TODO: Update del programa en la BBDD. Llama al API
