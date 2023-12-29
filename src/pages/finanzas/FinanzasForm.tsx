@@ -54,19 +54,19 @@ const FinanzasForm: React.FC = () => {
     fin_modpagomedios: [] as string[], // Medios de pago seleccionados
 
     // Campos adicionales para descuentos específicos
-    exAlumnosUSM: false,
-    exAlumnosUSMText: '',
-    mujeres: false,
-    mujeresText: '',
-    funcionariosUSM: false,
-    funcionariosUSMText: '',
-    funcionariosServiciosPublicos: false,
-    funcionariosServiciosPublicosText: '',
-    matriculaAnticipada: false,
-    matriculaAnticipadaText: '',
-    otros: false,
-    otrosText: '',
-    otrosDesc: '',
+    dcto_exAlumnosUSM: false,
+    dcto_exAlumnosUSMText: '',
+    dcto_mujeres: false,
+    dcto_mujeresText: '',
+    dcto_funcionariosUSM: false,
+    dcto_funcionariosUSMText: '',
+    dcto_funcionariosServiciosPublicos: false,
+    dcto_funcionariosServiciosPublicosText: '',
+    dcto_matriculaAnticipada: false,
+    dcto_matriculaAnticipadaText: '',
+    dcto_otros: false,
+    dcto_otrosText: '',
+    dcto_otrosDesc: '',
   });
 
   // Manejador para cambios en los campos de entrada
@@ -158,18 +158,19 @@ const FinanzasForm: React.FC = () => {
     try {
       let formularioObjeto = {
         arancel: arancel,
-        modalidad_pago: modalidadPago,
+        modalidad_pago: modalidadPago.join(","),
         ...formData,
       };
+      console.log('formulario')
       save_form(formularioObjeto);
       // Realiza una solicitud POST a un endpoint de tu servidor con los datos del formulario.
 
       // Verifica si la solicitud fue exitosa y muestra mensajes en la consola.
-      if (response.ok) {
-        console.log('Formulario guardado exitosamente');
-      } else {
-        console.error('Error al guardar el formulario');
-      }
+      // if (response.ok) {
+      //   console.log('Formulario guardado exitosamente');
+      // } else {
+      //   console.error('Error al guardar el formulario');
+      // }
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
     }
@@ -186,11 +187,12 @@ const FinanzasForm: React.FC = () => {
   ];
   const [modalidadPago, setModalidadPago] = useState([]);
 
-  const selectModalidadPagohandleChange = (event) => {
+  const selectModalidadPagohandleChange = (event:any) => {
+    console.log('modalidad_pao')
     setModalidadPago(event.target.value);
   };
   const [arancel, setHandleArancelChange] = useState(''); // Estado local para el nombre del programa
-  const handlestaffArancelChange = (event) => {
+  const handlestaffArancelChange = (event:any) => {
     setHandleArancelChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
@@ -208,7 +210,7 @@ const FinanzasForm: React.FC = () => {
     });
   };
 
-  const handleSetOtros = (value) => {
+  const handleSetOtros = (value:any) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       otros: value,
@@ -261,10 +263,38 @@ const FinanzasForm: React.FC = () => {
       const objetoDesdeSesion = get_object_localstore();
       if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
         let documentoForm = objetoDesdeSesion;
+        console.log('documentoForm')
+        console.log(documentoForm)
         if (documentoForm ){
-          console.log(documentoForm)
           setHandleArancelChange(documentoForm?.arancel??"");
           requisitosPostulanteHandleCheckboxOnChange(documentoForm)
+          let modalidad = documentoForm?.modalidad_pago.split(',');
+          setModalidadPago(modalidad);
+          formData.dcto_exAlumnosUSM= documentoForm?.dcto_exAlumnosUSM
+          formData.dcto_exAlumnosUSMText  = documentoForm?.dcto_exAlumnosUSMText  
+          formData.dcto_mujeres= documentoForm?.dcto_mujeres
+          formData.dcto_mujeresText  = documentoForm?.dcto_mujeresText  
+          formData.dcto_funcionariosUSM= documentoForm?.dcto_funcionariosUSM
+          formData.dcto_funcionariosUSMText  = documentoForm?.dcto_funcionariosUSMText  
+          formData.dcto_funcionariosServiciosPublicos= documentoForm?.dcto_funcionariosServiciosPublicos
+          formData.dcto_funcionariosServiciosPublicosText  = documentoForm?.dcto_funcionariosServiciosPublicosText  
+          formData.dcto_matriculaAnticipada= documentoForm?.dcto_matriculaAnticipada
+          formData.dcto_matriculaAnticipadaText  = documentoForm?.dcto_matriculaAnticipadaText  
+          formData.dcto_otros= documentoForm?.dcto_otros
+          formData.dcto_otrosDesc = documentoForm?.dcto_otrosDesc 
+          formData.dcto_otrosText  = documentoForm?.dcto_otrosText 
+
+
+          
+          // let formularioObjeto = {
+          //   arancel: arancel,
+          //   modalidad_pago: modalidadPago.join(","),
+          //   ...formData,
+          // };
+          // console.log('formulario')
+          // save_form(formularioObjeto);
+
+
         }
       }
     };
@@ -343,9 +373,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.exAlumnosUSM}
+                    checked={formData.dcto_exAlumnosUSM}
                     onChange={handleCheckboxChange}
-                    name="exAlumnosUSM"
+                    name="dcto_exAlumnosUSM"
                   />
                 }
                 label="Ex alumnos USM"
@@ -353,15 +383,15 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.exAlumnosUSM ? (
+            {formData.dcto_exAlumnosUSM ? (
               <TextField
                 type="number"
                 className="form-control"
-                name="exAlumnosUSMText"
+                name="dcto_exAlumnosUSMText"
                 id="exAlumnosUSM"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.exAlumnosUSMText  }
+                value={formData.dcto_exAlumnosUSMText  }
                 onChange={handleFormChange}
               />
             ) : (
@@ -375,9 +405,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.mujeres}
+                    checked={formData.dcto_mujeres}
                     onChange={handleCheckboxChange}
-                    name="mujeres"
+                    name="dcto_mujeres"
                   />
                 }
                 label="Mujeres"
@@ -385,15 +415,15 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.mujeres ? (
+            {formData.dcto_mujeres ? (
               <TextField
                 type="number"
                 className="form-control"
-                name="mujeresText"
+                name="dcto_mujeresText"
                 id="mujeres"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.mujeresText  }
+                value={formData.dcto_mujeresText  }
                 onChange={handleFormChange}
               />
             ) : (
@@ -408,9 +438,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.funcionariosUSM}
+                    checked={formData.dcto_funcionariosUSM}
                     onChange={handleCheckboxChange}
-                    name="funcionariosUSM"
+                    name="dcto_funcionariosUSM"
                   />
                 }
                 label="Funcionarios USM"
@@ -418,15 +448,15 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.funcionariosUSM ? (
+            {formData.dcto_funcionariosUSM ? (
               <TextField
                 type="number"
                 className="form-control"
-                name="funcionariosUSMText"
+                name="dcto_funcionariosUSMText"
                 id="funcionariosUSM"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.funcionariosUSMText  }
+                value={formData.dcto_funcionariosUSMText  }
                 onChange={handleFormChange}
               />
             ) : (
@@ -442,9 +472,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.funcionariosServiciosPublicos}
+                    checked={formData.dcto_funcionariosServiciosPublicos}
                     onChange={handleCheckboxChange}
-                    name="funcionariosServiciosPublicos"
+                    name="dcto_funcionariosServiciosPublicos"
                   />
                 }
                 label="Funcionarios Servicios Publicos"
@@ -452,15 +482,15 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.funcionariosServiciosPublicos ? (
+            {formData.dcto_funcionariosServiciosPublicos ? (
               <TextField
                 type="number"
                 className="form-control"
-                name="funcionariosServiciosPublicosText"
+                name="dcto_funcionariosServiciosPublicosText"
                 id="funcionariosServiciosPublicos"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.funcionariosServiciosPublicosText  }
+                value={formData.dcto_funcionariosServiciosPublicosText  }
                 onChange={handleFormChange}
               />
             ) : (
@@ -476,9 +506,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.matriculaAnticipada}
+                    checked={formData.dcto_matriculaAnticipada}
                     onChange={handleCheckboxChange}
-                    name="matriculaAnticipada"
+                    name="dcto_matriculaAnticipada"
                   />
                 }
                 label="Matricula anticipada"
@@ -486,16 +516,16 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px', maxHeight: '5px' }}>
-            {formData.matriculaAnticipada ? (
+            {formData.dcto_matriculaAnticipada ? (
               <TextField
                 style={{ maxHeight: '5px' }}
                 type="number"
                 className="form-control"
-                name="matriculaAnticipadaText"
+                name="dcto_matriculaAnticipadaText"
                 id="matriculaAnticipada"
                 label="Porcentaje"
                 InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.matriculaAnticipadaText  }
+                value={formData.dcto_matriculaAnticipadaText  }
                 onChange={handleFormChange}
               />
             ) : (
@@ -510,9 +540,9 @@ const FinanzasForm: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={formData.otros}
+                    checked={formData.dcto_otros}
                     onChange={handleCheckboxChange}
-                    name="otros"
+                    name="dcto_otros"
                   />
                 }
                 label="Otro"
@@ -520,16 +550,16 @@ const FinanzasForm: React.FC = () => {
             </div>
           </Grid>
           <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.otros && (
+            {formData.dcto_otros && (
               <Grid container spacing={2}>
                 <Grid item md={6}>
                   <TextField
                     type="text"
                     className="form-control"
-                    name="otrosDesc"
+                    name="dcto_otrosDesc"
                     id="otrosText"
                     label="Otro descuento"
-                    value={formData.otrosDesc  }
+                    value={formData.dcto_otrosDesc  }
                     onChange={handleFormChange}
                   />
                 </Grid>
@@ -537,11 +567,11 @@ const FinanzasForm: React.FC = () => {
                   <TextField
                     type="number"
                     className="form-control"
-                    name="otrosText"
+                    name="dcto_otrosText"
                     id="otrosPorcentaje"
                     label="Porcentaje"
                     InputProps={{ inputProps: { min: 0, max: 100 } }}
-                    value={formData.otrosText  }
+                    value={formData.dcto_otrosText  }
                     onChange={handleFormChange}
                   />
                 </Grid>
@@ -582,22 +612,7 @@ const FinanzasForm: React.FC = () => {
       /> */}
 
       {/* Resumen de Respuestas */}
-      <Paper elevation={3} style={{ padding: '20px', margin: '20px 0' }}>
-        <Typography variant="h6" gutterBottom>
-          Resumen de Respuestas
-        </Typography>
-
-        {/* Aquí puedes agregar más elementos Typography o cualquier otro componente
-        para mostrar un resumen de las respuestas dadas en el formulario */}
-        <Typography>
-          Ex alumnos USM: {formData.exAlumnosUSM ? 'Sí' : 'No'}
-          {formData.exAlumnosUSM &&
-            `, Porcentaje: ${formData.exAlumnosUSMText}%`}
-        </Typography>
-
-        {/* Repite el patrón para otros campos del formulario */}
-        {/* ... */}
-      </Paper>
+    
 
       {/* Botón adicional para guardar sin enviar */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>

@@ -119,6 +119,7 @@ const RegistroCurricularForm: React.FC = () => {
       //Leo la "variable local" formulario (se modifica al momento de dar "Guardar sin enviar") -> 3ra Linea hacia abajo
       //ASigno el valor de la "variable local" a documentoForm-> 4ra linea hacia abajo
       //Leo documentoForm y asigno valor a la variable "programa_value"-> 4 linea hacia abajo
+      console.log('cargarProgramas')
       const objetoDesdeSesion = get_object_localstore();
       if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
         documentoForm = objetoDesdeSesion;
@@ -129,6 +130,7 @@ const RegistroCurricularForm: React.FC = () => {
         handleDepartamentoOnChange(documentoForm?.departamento_int);
         handleEmplazamientoOnChange(documentoForm?.emplazamiento_int);
         jornadaHandleCheckboxOnChange(documentoForm);
+
         modalidadHandleCheckboxOnChange(documentoForm);
         if (documentoForm.duracion_fecha_inicio)
           setduracionFechaInicio(dayjs(documentoForm.duracion_fecha_inicio, 'DD-MM-YYYY'));
@@ -406,32 +408,12 @@ const RegistroCurricularForm: React.FC = () => {
     });
   };
 
-  const modalidadHandleCheckboxOnChange = (event: any) => {
-    console.log("modalidadHandleCheckboxOnChange");
-    modalidadHandleCheckboxChange({
-      target: {
-        name: "modalidad_presencial",
-        checked: documentoForm?.modalidad_presencial ?? false,
-      },
-    });
-    modalidadHandleCheckboxChange({
-      target: {
-        name: "modalidad_online",
-        checked: documentoForm?.modalidad_online ?? false,
-      },
-    });
-    modalidadHandleCheckboxChange({
-      target: {
-        name: "modalidad_hibrida",
-        checked: documentoForm?.modalidad_hibrida ?? false,
-      },
-    });
-    modalidadHandleCheckboxChange({
-      target: {
-        name: "modalidad_otra",
-        checked: documentoForm?.modalidad_otra ?? false,
-      },
-    });
+  const modalidadHandleCheckboxOnChange = (documentoForm: any) => {
+    console.log('modalidadHandleCheckboxOnChange')
+    modalidadOptions.modalidad_presencial = documentoForm?.modalidad_presencial;
+    modalidadOptions.modalidad_online = documentoForm?.modalidad_online;
+    modalidadOptions.modalidad_hibrida = documentoForm?.modalidad_hibrida;
+    modalidadOptions.modalidad_otra = documentoForm?.modalidad_otra;
   };
 
   const [jornadaOptions, setSelectedJornadaOptions] = useState({
@@ -442,6 +424,8 @@ const RegistroCurricularForm: React.FC = () => {
   });
 
   const jornadaHandleCheckboxChange = (event: any) => {
+    console.log(`jornadaHandleCheckboxChange -> [${event.target.name}] : ${ event.target.checked}`)
+    console.log(`${jornadaOptions.jornada_diurna} ${jornadaOptions.jornada_vespertina} ${jornadaOptions.jornada_aDistancia} ${jornadaOptions.jornada_otra}`)
     setSelectedJornadaOptions({
       ...jornadaOptions,
       [event.target.name]: event.target.checked,
@@ -449,30 +433,38 @@ const RegistroCurricularForm: React.FC = () => {
   };
 
   const jornadaHandleCheckboxOnChange = (event: any) => {
-    jornadaHandleCheckboxChange({
-      target: {
-        name: "jornada_diurna",
-        checked: documentoForm?.jornada_diurna ?? false,
-      },
-    });
-    jornadaHandleCheckboxChange({
-      target: {
-        name: "jornada_vespertina",
-        checked: documentoForm?.jornada_vespertina ?? false,
-      },
-    });
-    jornadaHandleCheckboxChange({
-      target: {
-        name: "jornada_aDistancia",
-        checked: documentoForm?.jornada_aDistancia ?? false,
-      },
-    });
-    jornadaHandleCheckboxChange({
-      target: {
-        name: "jornada_otra",
-        checked: documentoForm?.jornada_otra ?? false,
-      },
-    });
+    jornadaOptions.jornada_vespertina=documentoForm.jornada_vespertina;
+    jornadaOptions.jornada_diurna=documentoForm.jornada_diurna;
+    jornadaOptions.jornada_aDistancia=documentoForm.jornada_aDistancia;
+    jornadaOptions.jornada_otra=documentoForm.jornada_otra;
+
+    // jornadaHandleCheckboxChange({
+    //   target: {
+    //     name: "jornada_diurna",
+    //     checked: documentoForm?.jornada_diurna ?? false,
+    //   },
+    // });
+    // console.log(`documentoForm?.jornada_aDistancia ${documentoForm?.jornada_aDistancia}`);
+    // jornadaHandleCheckboxChange({
+    //   target: {
+    //     name: "jornada_aDistancia",
+    //     checked: documentoForm?.jornada_aDistancia ?? false,
+    //   },
+    // });
+    // console.log(`documentoForm?.jornada_otra ${documentoForm?.jornada_otra}`);
+    // jornadaHandleCheckboxChange({
+    //   target: {
+    //     name: "jornada_otra",
+    //     checked: documentoForm?.jornada_otra ?? false,
+    //   },
+    // });
+    // console.log(`documentoForm?.jornada_vespertina ${documentoForm?.jornada_vespertina}`);
+    // jornadaHandleCheckboxChange({
+    //   target: {
+    //     name: "jornada_vespertina",
+    //     checked: documentoForm?.jornada_vespertina ?? false,
+    //   },
+    // });
   };
 
   const [startDate, setStartDate] = useState(dayjs(fechaActual));
