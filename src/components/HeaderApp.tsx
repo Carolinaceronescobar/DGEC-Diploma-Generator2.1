@@ -13,6 +13,7 @@ import {
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
+import { color } from '@mui/system';
 
 export const HeaderApp = ({
   onToggleSidebar,
