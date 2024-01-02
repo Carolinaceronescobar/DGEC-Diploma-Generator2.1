@@ -220,3 +220,4 @@ const UsoInternoDireccionEstudios: React.FC<
 };
 
 export default UsoInternoDireccionEstudios;
+
