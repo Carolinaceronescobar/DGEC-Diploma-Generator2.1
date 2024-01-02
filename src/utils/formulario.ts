@@ -83,3 +83,8 @@ export function get_object_localstore(): any {
 function set_object_localstore(objeto: any) {
   localStorage.setItem('formulario', JSON.stringify(objeto));
 }
+
+export function delete_object_localstore() {
+  localStorage.removeItem("formulario");
+
+}
