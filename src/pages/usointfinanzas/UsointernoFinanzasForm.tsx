@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from "@mui/material";
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+} from '@mui/material';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions<FinanzaOptionType>();
 
@@ -21,14 +21,13 @@ const UsoInternoFinanzas = ({
   const [value, setValue] = React.useState<FinanzaOptionType | null>(null);
 
   return (
-    <Box>
+    <Box sx={{ ml: 10 }}>
       <Typography
         variant="h6"
-        sx={{ marginTop: 2, marginBottom: 2, fontWeight: "bold" }}
+        sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
       >
         Uso interno Finanzas
       </Typography>
-      <hr />
 
       <Typography variant="subtitle1" gutterBottom>
         Interno - Código de Organización (Banner)
@@ -37,7 +36,7 @@ const UsoInternoFinanzas = ({
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
-          if (typeof newValue === "string") {
+          if (typeof newValue === 'string') {
             setValue({
               finanzaCode: newValue,
             });
@@ -58,7 +57,7 @@ const UsoInternoFinanzas = ({
           const isExisting = options.some(
             (option) => inputValue === option.finanzaCode
           );
-          if (inputValue !== "" && !isExisting) {
+          if (inputValue !== '' && !isExisting) {
             filtered.push({
               finanzaCode: inputValue,
             });
@@ -73,7 +72,7 @@ const UsoInternoFinanzas = ({
         options={topFinanzas}
         getOptionLabel={(option) => {
           // Value selected with enter, right from the input
-          if (typeof option === "string") {
+          if (typeof option === 'string') {
             return option;
           }
           // Add "xxx" option created dynamically
@@ -95,7 +94,6 @@ const UsoInternoFinanzas = ({
           />
         )}
       />
-      <br />
 
       <Typography variant="subtitle1" gutterBottom>
         Interno - Código de Detalle (Banner)
@@ -104,7 +102,7 @@ const UsoInternoFinanzas = ({
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
-          if (typeof newValue === "string") {
+          if (typeof newValue === 'string') {
             setValue({
               finanzaCode: newValue,
             });
@@ -125,7 +123,7 @@ const UsoInternoFinanzas = ({
           const isExisting = options.some(
             (option) => inputValue === option.finanzaCode
           );
-          if (inputValue !== "" && !isExisting) {
+          if (inputValue !== '' && !isExisting) {
             filtered.push({
               finanzaCode: inputValue,
             });
@@ -140,7 +138,7 @@ const UsoInternoFinanzas = ({
         options={topFinanzas}
         getOptionLabel={(option) => {
           // Value selected with enter, right from the input
-          if (typeof option === "string") {
+          if (typeof option === 'string') {
             return option;
           }
           // Add "xxx" option created dynamically
@@ -163,7 +161,7 @@ const UsoInternoFinanzas = ({
       <FormControl component="fieldset">
         <Typography
           variant="body1"
-          sx={{ marginTop: 2, marginBottom: 2, fontWeight: "bold" }}
+          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
         >
           INTERNO - Distribución Presupuestaria del Código de Detalle
         </Typography>
@@ -173,7 +171,7 @@ const UsoInternoFinanzas = ({
         </RadioGroup>
       </FormControl>
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
         <Button variant="outlined" onClick={onGuardar} disabled={readOnly}>
           Guardar
         </Button>
@@ -193,8 +191,8 @@ interface FinanzaOptionType {
 }
 
 const topFinanzas: readonly FinanzaOptionType[] = [
-  { finanzaCode: "finanza123" },
-  { finanzaCode: "finanza4000" },
-  { finanzaCode: "finanza3456" },
-  { finanzaCode: "finanza3454" },
+  { finanzaCode: 'finanza123' },
+  { finanzaCode: 'finanza4000' },
+  { finanzaCode: 'finanza3456' },
+  { finanzaCode: 'finanza3454' },
 ];

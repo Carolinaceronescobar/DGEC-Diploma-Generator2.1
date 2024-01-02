@@ -24,7 +24,7 @@ import {
   TableCell,
   TableBody,
 } from '@mui/material';
-import { save_form,get_object_localstore } from '../../utils/formulario';
+import { save_form, get_object_localstore } from '../../utils/formulario';
 
 // let documentoForm = {
 //   id: null,
@@ -47,7 +47,7 @@ import { save_form,get_object_localstore } from '../../utils/formulario';
 //   handleAdd: false,
 //   staffProfesores: String,
 // };
-let documentoForm :any;
+let documentoForm: any;
 
 // Definición del componente funcional AdmisionForm
 const AdmisionForm: React.FC = () => {
@@ -71,31 +71,41 @@ const AdmisionForm: React.FC = () => {
   const [FotoAdjunta, setFotoAdjunta] = useState<File | null>(null);
 
   const [descripcionPrograma, setdescripcionPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleDescripcionProgramaChange = (event:any) => {
+  const handleDescripcionProgramaChange = (event: any) => {
     setdescripcionPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
+  const [FotoBannerAdjunta, setFotoBannerAdjunta] = useState<File | null>(null);
+
+  // Función para manejar cambios en la selección de la foto adjunta
+  const handleFotoBannerAdjuntaChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files && event.target.files[0];
+    // setFotoBannerAdjunta(file);
+  };
+
   const [objetivoPrograma, setobjetivoPrograma] = useState(''); // Estado local para el nombre del programa
-  const handleObjetivoProgramaChange = (event:any) => {
+  const handleObjetivoProgramaChange = (event: any) => {
     setobjetivoPrograma(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [reseniaPrograma, setReseniaProgramaChange] = useState(''); // Estado local para el nombre del programa
-  const handleReseniaProgramaChange = (event:any) => {
+  const handleReseniaProgramaChange = (event: any) => {
     setReseniaProgramaChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [enlaceLinkedin, setEnlaceLinkedinChange] = useState(''); // Estado local para el nombre del programa
-  const handleEnlaceLinkedinChange = (event:any) => {
+  const handleEnlaceLinkedinChange = (event: any) => {
     setEnlaceLinkedinChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
   const [reseniaProgramados, setReseniaProgramadosChange] = useState(''); // Estado local para el nombre del programa
-  const handleReseniaProgramadosChange = (event:any) => {
+  const handleReseniaProgramadosChange = (event: any) => {
     setReseniaProgramadosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [enlaceLinkedindos, setEnlaceLinkedindosChange] = useState(''); // Estado local para el nombre del programa
-  const handleEnlaceLinkedindosChange = (event:any) => {
+  const handleEnlaceLinkedindosChange = (event: any) => {
     setEnlaceLinkedindosChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
   // Función para manejar cambios en la selección de la foto adjunta
@@ -105,7 +115,7 @@ const AdmisionForm: React.FC = () => {
     const file = event.target.files && event.target.files[0];
     // setFotoAdjuntados(file);
   };
-  
+
   const [requisitosPostulante, setSelectedJornadaOptions] = useState({
     cedula: false,
     licenciaMedia: false,
@@ -113,7 +123,7 @@ const AdmisionForm: React.FC = () => {
     otra: false,
   });
 
-  const requisitosPostulanteHandleCheckboxChange = (event:any) => {
+  const requisitosPostulanteHandleCheckboxChange = (event: any) => {
     setSelectedJornadaOptions({
       ...requisitosPostulante,
       [event.target.name]: event.target.checked,
@@ -123,47 +133,44 @@ const AdmisionForm: React.FC = () => {
   const requisitosPostulanteHandleCheckboxOnChange = (event: any) => {
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "cedula",
+        name: 'cedula',
         checked: documentoForm?.cedula ?? false,
       },
     });
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "licenciaMedia",
+        name: 'licenciaMedia',
         checked: documentoForm?.licenciaMedia ?? false,
       },
     });
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "curriculum",
+        name: 'curriculum',
         checked: documentoForm?.curriculum ?? false,
       },
     });
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "otra",
+        name: 'otra',
         checked: documentoForm?.otra ?? false,
       },
     });
-    
   };
-
-
 
   const [numeroEstudianteMaximo, setNumeroEstudianteMaximoChange] =
     useState(''); // Estado local para el nombre del programa
-  const handleNumeroEstudianteMaximoChange = (event:any) => {
+  const handleNumeroEstudianteMaximoChange = (event: any) => {
     setNumeroEstudianteMaximoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [numeroEstudianteMinimo, setNumeroEstudianteMinimoChange] =
     useState(''); // Estado local para el nombre del programa
-  const handleNumeroEstudianteMinimoChange = (event:any) => {
+  const handleNumeroEstudianteMinimoChange = (event: any) => {
     setNumeroEstudianteMinimoChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
   const [staffProfesores, sethandlestaffProfesoresChange] = useState(''); // Estado local para el nombre del programa
-  const handlestaffProfesoresChange = (event:any) => {
+  const handlestaffProfesoresChange = (event: any) => {
     sethandlestaffProfesoresChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
@@ -220,13 +227,12 @@ const AdmisionForm: React.FC = () => {
     let formularioObjeto = {
       programa_descripcion: descripcionPrograma,
       programa_objetivo: objetivoPrograma,
-      
+
       programa_resenia: reseniaPrograma,
       linkedin: enlaceLinkedin,
       programa_resenia_dos: reseniaProgramados,
       linkedin_dos: enlaceLinkedindos,
 
-      
       ...requisitosPostulante,
       cupo_maximo: numeroEstudianteMaximo,
       cupo_minimo: numeroEstudianteMinimo,
@@ -245,13 +251,13 @@ const AdmisionForm: React.FC = () => {
     setHours('');
   };
 
-  const handleEdit = (index:number) => {
+  const handleEdit = (index: number) => {
     agregarNuevoValor(tableData[index].module);
     setHours(tableData[index].hour);
     handleDelete(index);
     // Aquí puedes implementar la lógica para editar la fila seleccionada
   };
-  const handleDelete = (index:number) => {
+  const handleDelete = (index: number) => {
     // tableData[index].module);
     tableData.splice(index, 1);
     setTableData([...tableData]);
@@ -263,27 +269,27 @@ const AdmisionForm: React.FC = () => {
 
   // Lista Modulo Select
   const [optionsModule, setOptions] = useState([
-    'Opción 1',
-    'Opción 2',
-    'Opción 3',
+    'Curso 1',
+    'Curso 2',
+    'Curso 3',
   ]);
   const [inputModuleValue, setinputModuleValue] = useState('');
   const [inputAutocomplete, setinputAutocompleteModuleValue] = useState('');
 
-  const handleInputModuleChange = (event:any, newinputModuleValue:any) => {
+  const handleInputModuleChange = (event: any, newinputModuleValue: any) => {
     setinputModuleValue(newinputModuleValue);
   };
-  const handleInputAutoCompleteChange = (event:any) => {
+  const handleInputAutoCompleteChange = (event: any) => {
     const newValue = event.target.value;
     setinputAutocompleteModuleValue(newValue);
   };
-  function agregarNuevoValor(valor:any) {
+  function agregarNuevoValor(valor: any) {
     if (!optionsModule.includes(valor)) {
       setOptions([...optionsModule, valor]);
     }
     setinputModuleValue(valor);
   }
-  const handleKeyPress = (event:any) => {
+  const handleKeyPress = (event: any) => {
     if (
       event.key === 'Enter' &&
       inputAutocomplete.trim() !== '' &&
@@ -292,7 +298,6 @@ const AdmisionForm: React.FC = () => {
       agregarNuevoValor(inputAutocomplete);
     }
   };
-
 
   useEffect(() => {
     // Realizar la solicitud al backend para obtener los datos de los departamentos
@@ -305,24 +310,25 @@ const AdmisionForm: React.FC = () => {
         documentoForm = objetoDesdeSesion;
         console.log(documentoForm);
 
-        setdescripcionPrograma(documentoForm?.programa_descripcion??"");
-        setobjetivoPrograma(documentoForm?.programa_objetivo??"");
-        setReseniaProgramaChange(documentoForm?.programa_resenia??"");
-        setEnlaceLinkedinChange(documentoForm?.linkedin??"");
-        setReseniaProgramadosChange(documentoForm?.programa_resenia_dos??"");
-        setEnlaceLinkedindosChange(documentoForm?.linkedin_dos??"");
-        console.log(documentoForm?.profesores)
-        console.log(documentoForm?.profesores)
-        if(documentoForm?.programa_resenia_dos || documentoForm?.linkedin_dos){
-          setShowAdditionalFields(true)
+        setdescripcionPrograma(documentoForm?.programa_descripcion ?? '');
+        setobjetivoPrograma(documentoForm?.programa_objetivo ?? '');
+        setReseniaProgramaChange(documentoForm?.programa_resenia ?? '');
+        setEnlaceLinkedinChange(documentoForm?.linkedin ?? '');
+        setReseniaProgramadosChange(documentoForm?.programa_resenia_dos ?? '');
+        setEnlaceLinkedindosChange(documentoForm?.linkedin_dos ?? '');
+        console.log(documentoForm?.profesores);
+        console.log(documentoForm?.profesores);
+        if (
+          documentoForm?.programa_resenia_dos ||
+          documentoForm?.linkedin_dos
+        ) {
+          setShowAdditionalFields(true);
         }
 
-
-        setNumeroEstudianteMaximoChange(documentoForm?.cupo_maximo??"");
-        setNumeroEstudianteMinimoChange(documentoForm?.cupo_minimo??"");
-        sethandlestaffProfesoresChange(documentoForm?.profesores??"");
-        requisitosPostulanteHandleCheckboxOnChange(documentoForm)
-
+        setNumeroEstudianteMaximoChange(documentoForm?.cupo_maximo ?? '');
+        setNumeroEstudianteMinimoChange(documentoForm?.cupo_minimo ?? '');
+        sethandlestaffProfesoresChange(documentoForm?.profesores ?? '');
+        requisitosPostulanteHandleCheckboxOnChange(documentoForm);
       }
     };
     cargarProgramas();
@@ -373,6 +379,20 @@ const AdmisionForm: React.FC = () => {
           </FormGroup>
         </div>
       </Box>
+
+      {/*Sección: Adjuntar Foto*/}
+      <Input
+        type="file"
+        id="FotoBannerAdjunta"
+        onChange={handleFotoBannerAdjuntaChange}
+        style={{ display: 'none' }}
+      />
+
+      <label htmlFor="FotoBannerAdjunta">
+        <Button variant="outlined" component="span" sx={{ marginTop: 2 }}>
+          Adjuntar Banner
+        </Button>
+      </label>
 
       {/* Sección: Objetivo del Programa */}
       <Box>
@@ -435,7 +455,7 @@ const AdmisionForm: React.FC = () => {
       </Box>
 
       <Box>
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" spacing={2} alignItems="center">
           {/*Sección: Adjuntar Foto*/}
           <Input
             type="file"
@@ -510,7 +530,7 @@ const AdmisionForm: React.FC = () => {
 
             {/*Sección: Adjuntar Foto*/}
             <Box>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={2} alignItems="center">
                 <Input
                   type="file"
                   id="FotoAdjunta"
@@ -533,7 +553,6 @@ const AdmisionForm: React.FC = () => {
             <Box>
               <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
                 <TextField
-                  sx={{ marginTop: 2, justifyContent: 'right' }}
                   fullWidth
                   label="Enlace de LinkedIn"
                   name="linkedin"
@@ -614,26 +633,26 @@ const AdmisionForm: React.FC = () => {
         </Typography>
         <hr />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            {/* Campos de texto para los cupos */}
-            <TextField
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              label="Número de cupos máximo (vacantes)"
-              name="vacprog"
-              id="adm_vacprog"
-              variant="outlined"
-              value={numeroEstudianteMaximo}
-              onChange={handleNumeroEstudianteMaximoChange}
-            />
+          {/* Campos de texto para los cupos */}
+          <TextField
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+            label="Número de cupos máximo (vacantes)"
+            name="vacprog"
+            id="adm_vacprog"
+            variant="outlined"
+            value={numeroEstudianteMaximo}
+            onChange={handleNumeroEstudianteMaximoChange}
+          />
 
-            <TextField
-              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-              label="Número de estudiantes matriculados mínimos para impartir el programa"
-              name="matrminprog"
-              id="adm_matrminprog"
-              variant="outlined"
-              value={numeroEstudianteMinimo}
-              onChange={handleNumeroEstudianteMinimoChange}
-            />
+          <TextField
+            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+            label="Número de estudiantes matriculados mínimos para impartir el programa"
+            name="matrminprog"
+            id="adm_matrminprog"
+            variant="outlined"
+            value={numeroEstudianteMinimo}
+            onChange={handleNumeroEstudianteMinimoChange}
+          />
         </Box>
       </Box>
 
@@ -673,11 +692,7 @@ const AdmisionForm: React.FC = () => {
                   label="Horas"
                 />
               </Grid>
-              <Typography>
-                {' '}
-                Al ingresar nuevo módulo, aprete "enter" y continúe completando
-                con horas del módulo{' '}
-              </Typography>
+
               <Grid item xs={3}>
                 <Button
                   variant="outlined"
