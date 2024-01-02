@@ -15,7 +15,7 @@ interface ProgramItemProps {
     programa_mumero: string;
     programaSeleccionado: string;
     duracion_fecha_inicio: string;
-    departamento: string;
+    Departamento: string;
     sede: string;
     isDgecAproved: boolean;
     isDirestAproved: boolean;

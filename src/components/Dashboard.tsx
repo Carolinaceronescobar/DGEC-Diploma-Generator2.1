@@ -8,8 +8,7 @@ import { Box } from '@mui/material';
 import SolicitudesTabla from '../pages/resumen/SolicitudesTabla';
 import { Solicitud } from '../pages/resumen/SolicitudesTabla.tsx';
 
-import {delete_object_localstore} from '../utils/formulario.ts';
-
+import { delete_object_localstore } from '../utils/formulario.ts';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 import { get_form } from '../utils/formulario.ts';

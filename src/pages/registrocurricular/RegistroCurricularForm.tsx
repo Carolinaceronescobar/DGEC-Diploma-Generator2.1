@@ -82,8 +82,8 @@ const RegistroCurricularForm: React.FC = () => {
   const [selectedDepartamento, setSelectedDepartamento] = useState<
     number | string
   >('');
-  const [departamentoDireccionEstudios, setDepartamentoDireccionEstudios] =
-    useState([]);
+  // const [departamentoDireccionEstudios, setDepartamentoDireccionEstudios] =
+  //   useState([]);
 
   function departamentoDump() {
     axios
@@ -109,7 +109,7 @@ const RegistroCurricularForm: React.FC = () => {
       .then((response) => response.json())
       .then((data) => {
         setDepartamentoDGEC(data);
-        setDepartamentoDireccionEstudios(data);
+        // setDepartamentoDirecc(data);
       })
       .catch((error) =>
         console.error('Error al obtener departamentos:', error)

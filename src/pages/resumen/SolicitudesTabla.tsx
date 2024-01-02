@@ -104,7 +104,12 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
-              <TableRow>
+              <TableRow
+                sx={{
+                  backgroundColor: 'lightgrey',
+                  fontWeight: 'bold',
+                }}
+              >
                 <TableCell>Cod. SIGA</TableCell>
                 <TableCell>Nombre</TableCell>
                 <TableCell>Fecha</TableCell>
