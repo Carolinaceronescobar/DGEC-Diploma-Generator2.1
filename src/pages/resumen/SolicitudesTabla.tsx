@@ -29,6 +29,8 @@ type Solicitud = {
   campus: string;
   aprobacion: boolean;
   isDgecAprobed: boolean;
+  isDirestAprobed: boolean;
+  isFinanzaAprobed: boolean;
 };
 
 type SolicitudesTablaProps = {
@@ -51,6 +53,7 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
   const navigate = useNavigate();
   const [programas, setProgramas] = useState<Solicitud[]>([]);
 
+  //Llamado a la API
   const fetchData = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/formulario/'); // Reemplaza 'tu_puerto' con el puerto real de tu servidor backend
@@ -70,7 +73,6 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
   }, []);
 
   //Aprobación de DGEC
-
   const handleDgecAprovedUpdate = (programId: number) => {
     setProgramas((prevPrograms) =>
       prevPrograms.map((program) =>
@@ -79,9 +81,40 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
           : program
       )
     );
+  };
 
-    console.log('Actualización de aprobación DGEC');
+  //Aprobacion Direccion de Estudios
+  const handleDirestAprovedUpdate = (programId: number) => {
+    setProgramas((prevPrograms) =>
+      prevPrograms.map((program) =>
+        program.id === programId
+          ? { ...program, isDirestAprobed: !program.isDirestAprobed }
+          : program
+      )
+    );
+    console.log('Actualización de aprobación Direst');
     // TODO: Realizar la actualización en la base de datos usando API
+  };
+
+  //Aprobacion Finanzas
+  const handleFinanzaAprovedUpdate = (programId: number) => {
+    setProgramas((prevPrograms) =>
+      prevPrograms.map((program) =>
+        program.id === programId
+          ? { ...program, isFinanzaAprobed: !program.isFinanzaAprobed }
+          : program
+      )
+    );
+  };
+
+  // Elimina la fila correspondiente del array de programas
+  const handleEliminarClick = (programId: number) => {
+    // Actualiza el estado o realiza cualquier acción necesaria
+    setProgramas((prevPrograms) =>
+      prevPrograms.filter((program) => program.id !== programId)
+    );
+    // Puedes tener un estado local o utilizar algún otro método
+    // para gestionar los datos de la tabla.
   };
 
   // Llamado editado de validaciones
@@ -123,11 +156,19 @@ const SolicitudesTabla: React.FC<SolicitudesTablaProps> = ({ solicitudes }) => {
             <TableBody>
               {programas.map((program, index) => (
                 <ProgramItem
-                  key={index}
+                  key={program.id}
                   program={program}
                   onDgecAprovedUpdate={() =>
                     handleDgecAprovedUpdate(program.id)
                   }
+                  onDirestAprovedUpdate={() =>
+                    handleDirestAprovedUpdate(program.id)
+                  }
+                  onFinanzaAprovedUpdate={() =>
+                    handleFinanzaAprovedUpdate(program.id)
+                  }
+                  onVerRespuestaClick={() => program.id}
+                  onEliminarClick={() => handleEliminarClick(program.id)}
                 />
               ))}
             </TableBody>

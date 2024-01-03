@@ -1,13 +1,14 @@
+import React from 'react';
 import {
   Box,
   Button,
   Checkbox,
   FormControlLabel,
-  Link,
   TableCell,
   TableRow,
 } from '@mui/material';
-import { useState } from 'react';
+//import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProgramItemProps {
   program: {
@@ -22,18 +23,26 @@ interface ProgramItemProps {
     isFinanceAproved: boolean;
   };
   onDgecAprovedUpdate: () => void;
+  onDirestAprovedUpdate: () => void;
+  onFinanzaAprovedUpdate: () => void;
   onVerRespuestaClick: () => void;
+  onEliminarClick: () => void;
 }
 
 export const ProgramItem: React.FC<ProgramItemProps> = ({
   program,
   onDgecAprovedUpdate,
+  onDirestAprovedUpdate,
+  onFinanzaAprovedUpdate,
   onVerRespuestaClick,
+  onEliminarClick,
 }) => {
   const handleAprovedUpdate = (aproveType: string) => {
     // TODO: Llama al API para actualizar el estado de aprobación
     // TODO: Actualiza el estado local si la llamada al API es exitosa
     onDgecAprovedUpdate();
+    onDirestAprovedUpdate();
+    onFinanzaAprovedUpdate();
   };
 
   // export const ProgramItem: React.FC<ProgramItemProps> = ({
@@ -159,18 +168,21 @@ export const ProgramItem: React.FC<ProgramItemProps> = ({
               Ver Respuesta
             </Button>
 
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                backgroundColor: '#004B85',
-                fontSize: '10px',
-                padding: '5px 10px',
-                mb: '5px',
-              }}
-            >
-              Editar
-            </Button>
+            {/* <Link to={`/formulario/${id}`}> */}
+            <Link to="formulario">
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  backgroundColor: '#004B85',
+                  fontSize: '10px',
+                  padding: '5px 10px',
+                  mb: '5px',
+                }}
+              >
+                Editar
+              </Button>
+            </Link>
 
             <Button
               variant="contained"
@@ -181,6 +193,7 @@ export const ProgramItem: React.FC<ProgramItemProps> = ({
                 padding: '5px 10px',
                 mb: '5px',
               }}
+              onClick={onEliminarClick}
             >
               Eliminar
             </Button>

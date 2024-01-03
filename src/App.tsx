@@ -114,7 +114,7 @@ function App() {
 
           <HeaderApp onToggleSidebar={toggleDrawer} />
 
-          <Drawer variant="permanent" open={open}>
+          {/* <Drawer variant="permanent" open={open}>
             <Toolbar
               sx={{
                 display: 'flex',
@@ -170,7 +170,7 @@ function App() {
                 </ListItemButton>
               </List>
             </nav>
-          </Drawer>
+          </Drawer> */}
 
           <Toolbar />
 
@@ -178,7 +178,7 @@ function App() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Routes>
-                  <Route path="/index" element={<Dashboard />} />
+                  <Route path="/" element={<Dashboard />} />
                   <Route path="/formulario" element={<ProgramRequestForm />} />
                   <Route
                     path="/formulario/:id"

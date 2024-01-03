@@ -11,7 +11,12 @@ import {
   FormControlLabel,
   Stack,
   Grid,
+  AccordionSummary,
+  Accordion,
+  AccordionDetails,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import Box from '@mui/system/Box';
 import Input from '@mui/material/Input';
 import Container from '@mui/material/Container';
@@ -25,6 +30,9 @@ import {
   TableBody,
 } from '@mui/material';
 import { save_form, get_object_localstore } from '../../utils/formulario';
+import UsoInternoDireccionEstudios from '../usointdireccionestudios/UsoInternoDireccionEstudios';
+import { GridColDef } from '@mui/x-data-grid';
+import { borderColor } from '@mui/system';
 
 // let documentoForm = {
 //   id: null,
@@ -334,456 +342,545 @@ const AdmisionForm: React.FC = () => {
     cargarProgramas();
   }, []);
 
+  //Funcion para Editar Columnas
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'SIGA', width: 90 },
+    {
+      field: 'sct',
+      headerName: 'Créditos SCT',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'nivel_plan',
+      headerName: 'NIVEL PLAN',
+      width: 150,
+      editable: true,
+    },
+  ];
+
+  const rows = [
+    { id: 1, siga: 1, sct: 'SCT125', nivel_plan: '001' },
+    { id: 2, siga: 2, sct: 'SCT123', nivel_plan: '005' },
+  ];
+
   // Renderización del componente
   return (
-    <Container>
-      <Box>
-        {/* Sección: Información General del Programa */}
-        <Typography
-          variant="h6"
-          align="center"
-          mt={2}
-          mb={1}
-          sx={{ marginTop: 5, marginBottom: 2, fontWeight: 'bold' }}
-        >
-          Información General del Programa
-        </Typography>
-      </Box>
-
-      <Box>
-        {/* Sección: Descripción del Programa */}
-        <div>
+    <>
+      <Container>
+        <Box>
+          {/* Sección: Información General del Programa */}
           <Typography
             variant="h6"
-            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+            align="center"
+            mt={2}
+            mb={1}
+            sx={{ marginTop: 5, marginBottom: 2, fontWeight: 'bold' }}
           >
-            Información
+            Información General del Programa
           </Typography>
-        </div>
-        <hr />
+        </Box>
 
-        <div>
-          {/* Campo de texto para la descripción del programa */}
-          <FormGroup>
-            <TextField
-              fullWidth
-              label="Descripción del programa"
-              name="descprog"
-              id="adm_descprog"
-              multiline
-              rows={2}
-              variant="outlined"
-              value={descripcionPrograma}
-              onChange={handleDescripcionProgramaChange}
-            />
-          </FormGroup>
-        </div>
-      </Box>
-
-      {/*Sección: Adjuntar Foto*/}
-      <Input
-        type="file"
-        id="FotoBannerAdjunta"
-        onChange={handleFotoBannerAdjuntaChange}
-        style={{ display: 'none' }}
-      />
-
-      <label htmlFor="FotoBannerAdjunta">
-        <Button variant="outlined" component="span" sx={{ marginTop: 2 }}>
-          Adjuntar Banner
-        </Button>
-      </label>
-
-      {/* Sección: Objetivo del Programa */}
-      <Box>
-        <div>
-          <Typography
-            variant="h6"
-            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-          >
-            Objetivo del Programa
-          </Typography>
+        <Box>
+          {/* Sección: Descripción del Programa */}
+          <div>
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+            >
+              Información
+            </Typography>
+          </div>
           <hr />
 
           <div>
-            {/* Campo de texto para Objetivo del programa */}
+            {/* Campo de texto para la descripción del programa */}
             <FormGroup>
               <TextField
                 fullWidth
-                label="Objetivo del programa"
+                label="Descripción del programa"
                 name="descprog"
                 id="adm_descprog"
                 multiline
                 rows={2}
                 variant="outlined"
-                value={objetivoPrograma}
-                onChange={handleObjetivoProgramaChange}
+                value={descripcionPrograma}
+                onChange={handleDescripcionProgramaChange}
               />
             </FormGroup>
           </div>
-        </div>
-      </Box>
+        </Box>
 
-      {/* Sección: Reseña del Director */}
-      <Box>
-        <div>
-          <Typography
-            variant="h6"
-            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-          >
-            Reseña del Director
-          </Typography>
-          <hr />
+        {/*Sección: Adjuntar Foto*/}
+        <Input
+          type="file"
+          id="FotoBannerAdjunta"
+          onChange={handleFotoBannerAdjuntaChange}
+          style={{ display: 'none' }}
+        />
 
-          <div>
-            {/* Campo de texto para la reseña del Director */}
-            <FormGroup>
-              <TextField
-                fullWidth
-                label="Reseña del Director"
-                name="descprog"
-                id="adm_descprog"
-                multiline
-                rows={2}
-                variant="outlined"
-                value={reseniaPrograma}
-                onChange={handleReseniaProgramaChange}
-              />
-            </FormGroup>
-          </div>
-        </div>
-      </Box>
-
-      <Box>
-        <Stack direction="row" spacing={2} alignItems="center">
-          {/*Sección: Adjuntar Foto*/}
-          <Input
-            type="file"
-            id="FotoAdjunta"
-            onChange={handleFotoAdjuntaChange}
-            style={{ display: 'none' }}
-          />
-          <label htmlFor="FotoAdjunta">
-            <Button variant="outlined" component="span" sx={{ marginTop: 2 }}>
-              Adjuntar Foto
-            </Button>
-          </label>
-
-          {/* Campo de entrada de texto para el enlace de LinkedIn */}
-          <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
-            <TextField
-              sx={{ marginTop: 2, justifyContent: 'right' }}
-              fullWidth
-              label="Enlace de LinkedIn"
-              name="linkedin"
-              id="adm_linkedin"
-              variant="outlined"
-              value={enlaceLinkedin}
-              onChange={handleEnlaceLinkedinChange}
-            />
-          </FormGroup>
-        </Stack>
-      </Box>
-
-      {/* Sección para mostrar/ocultar campos adicionales */}
-      <Box>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleToggleAdditionalFields}
-          sx={{ marginTop: 2 }}
-        >
-          {showAdditionalFields
-            ? 'Ocultar Reseña'
-            : 'Añadir otra Reseña Director'}
-        </Button>
-        {/* Campos adicionales */}
-        {showAdditionalFields && (
-          <React.Fragment>
-            <Box>
-              <div>
-                <Typography
-                  variant="h6"
-                  sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-                >
-                  Reseña del Director
-                </Typography>
-                <hr />
-                <div>
-                  {/* Campo de texto para la reseña del Director */}
-                  <FormGroup>
-                    <TextField
-                      fullWidth
-                      label="Reseña del Director"
-                      name="descprog"
-                      id="adm_descprog"
-                      multiline
-                      rows={2}
-                      variant="outlined"
-                      value={reseniaProgramados}
-                      onChange={handleReseniaProgramadosChange}
-                    />
-                  </FormGroup>
-                </div>
-              </div>
-            </Box>
-
-            {/*Sección: Adjuntar Foto*/}
-            <Box>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Input
-                  type="file"
-                  id="FotoAdjunta"
-                  onChange={handleFotoAdjuntadosChange}
-                  style={{ display: 'none' }}
-                />
-                <label htmlFor="FotoAdjunta">
-                  <Button
-                    variant="outlined"
-                    component="span"
-                    sx={{ marginTop: 2 }}
-                  >
-                    Adjuntar Foto
-                  </Button>
-                </label>
-              </Stack>
-            </Box>
-
-            {/* Sección: Enlace de LinkedIn */}
-            <Box>
-              <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
-                <TextField
-                  fullWidth
-                  label="Enlace de LinkedIn"
-                  name="linkedin"
-                  id="adm_linkedin"
-                  variant="outlined"
-                  value={enlaceLinkedindos}
-                  onChange={handleEnlaceLinkedindosChange}
-                />
-              </FormGroup>
-            </Box>
-          </React.Fragment>
-        )}
-      </Box>
-
-      {/* Sección: Requisitos para el postulante*/}
-      <FormGroup sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}>
-        <label htmlFor="adm_reqprog" className="form-label">
-          Requisitos para el postulante o documentación solicitada
+        <label htmlFor="FotoBannerAdjunta">
+          <Button variant="outlined" component="span" sx={{ marginTop: 2 }}>
+            Adjuntar Banner
+          </Button>
         </label>
 
-        <FormControl>
-          <FormGroup>
-            {/* Campos de checkbox para los requisitos */}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={requisitosPostulante.cedula}
-                  onChange={requisitosPostulanteHandleCheckboxChange}
-                  name="cedula"
-                />
-              }
-              label="Cédula de Identidad (o DNI o Pasaporte)"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={requisitosPostulante.licenciaMedia}
-                  onChange={requisitosPostulanteHandleCheckboxChange}
-                  name="licenciaMedia"
-                />
-              }
-              label="Licencia de Educación Media"
-            />
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={requisitosPostulante.curriculum}
-                  onChange={requisitosPostulanteHandleCheckboxChange}
-                  name="curriculum"
-                />
-              }
-              label="Curriculum Vitae (CV)"
-            />
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={requisitosPostulante.otra}
-                  onChange={requisitosPostulanteHandleCheckboxChange}
-                  name="otra"
-                />
-              }
-              label="Otro"
-            />
-          </FormGroup>
-        </FormControl>
-      </FormGroup>
-
-      {/* Sección: Cupos */}
-      <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
-        <Typography
-          variant="h5"
-          className="titulo"
-          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-        >
-          Cupos
-        </Typography>
-        <hr />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          {/* Campos de texto para los cupos */}
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            label="Número de cupos máximo (vacantes)"
-            name="vacprog"
-            id="adm_vacprog"
-            variant="outlined"
-            value={numeroEstudianteMaximo}
-            onChange={handleNumeroEstudianteMaximoChange}
-          />
-
-          <TextField
-            sx={{ width: 'calc(100% - 8px)', mr: 2 }}
-            label="Número de estudiantes matriculados mínimos para impartir el programa"
-            name="matrminprog"
-            id="adm_matrminprog"
-            variant="outlined"
-            value={numeroEstudianteMinimo}
-            onChange={handleNumeroEstudianteMinimoChange}
-          />
-        </Box>
-      </Box>
-
-      {/* Sección: Módulos del Programa */}
-      <Box>
-        <div>
-          <Typography
-            variant="h6"
-            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-          >
-            {' '}
-            Liste Módulos del Programa
-          </Typography>
-          <hr />
+        {/* Sección: Objetivo del Programa */}
+        <Box>
           <div>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Autocomplete
-                  value={inputModuleValue}
-                  options={optionsModule}
-                  onChange={handleInputModuleChange}
-                  onKeyDown={handleKeyPress}
-                  renderInput={(params) => (
-                    <TextField
-                      onChange={handleInputAutoCompleteChange}
-                      {...params}
-                      label="Módulo"
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={3}>
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+            >
+              Objetivo del Programa
+            </Typography>
+            <hr />
+
+            <div>
+              {/* Campo de texto para Objetivo del programa */}
+              <FormGroup>
                 <TextField
-                  type="number"
-                  value={hours}
-                  onChange={(e) => setHours(e.target.value)}
-                  label="Horas"
-                />
-              </Grid>
-
-              <Grid item xs={3}>
-                <Button
+                  fullWidth
+                  label="Objetivo del programa"
+                  name="descprog"
+                  id="adm_descprog"
+                  multiline
+                  rows={2}
                   variant="outlined"
-                  color="secondary"
-                  className="float-left"
-                  onClick={handleAdd}
-                  sx={{ marginTop: 2 }}
-                >
-                  Agregar
-                </Button>
-              </Grid>
-            </Grid>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Módulo</TableCell>
-                    <TableCell>Hora</TableCell>
-                    <TableCell>Editar</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tableData.map((data, index) => (
-                    <TableRow>
-                      <TableCell>{data?.module}</TableCell>
-                      <TableCell>{data?.hour}</TableCell>
-                      <TableCell>
-                        <button onClick={() => handleEdit(index)}>
-                          Editar
-                        </button>
-                        <button onClick={() => handleDelete(index)}>
-                          Eliminar
-                        </button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  value={objetivoPrograma}
+                  onChange={handleObjetivoProgramaChange}
+                />
+              </FormGroup>
+            </div>
           </div>
-        </div>
-      </Box>
+        </Box>
 
-      {/* Sección: Staff de Profesores */}
-      <Box>
-        <div>
-          <Typography
-            variant="h6"
-            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
-          >
-            Liste el Staff de Profesores
-          </Typography>
-          <hr />
-
+        {/* Sección: Reseña del Director */}
+        <Box>
           <div>
-            {/* Campo de texto para Staff de Profesores */}
-            <FormGroup>
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+            >
+              Reseña del Director
+            </Typography>
+            <hr />
+
+            <div>
+              {/* Campo de texto para la reseña del Director */}
+              <FormGroup>
+                <TextField
+                  fullWidth
+                  label="Reseña del Director"
+                  name="descprog"
+                  id="adm_descprog"
+                  multiline
+                  rows={2}
+                  variant="outlined"
+                  value={reseniaPrograma}
+                  onChange={handleReseniaProgramaChange}
+                />
+              </FormGroup>
+            </div>
+          </div>
+        </Box>
+
+        <Box>
+          <Stack direction="row" spacing={2} alignItems="center">
+            {/*Sección: Adjuntar Foto*/}
+            <Input
+              type="file"
+              id="FotoAdjunta"
+              onChange={handleFotoAdjuntaChange}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="FotoAdjunta">
+              <Button variant="outlined" component="span" sx={{ marginTop: 2 }}>
+                Adjuntar Foto
+              </Button>
+            </label>
+
+            {/* Campo de entrada de texto para el enlace de LinkedIn */}
+            <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
               <TextField
+                sx={{ marginTop: 2, justifyContent: 'right' }}
                 fullWidth
-                label="Staff de Profesores"
-                name="descprog"
-                id="adm_descprog"
-                multiline
-                rows={2}
+                label="Enlace de LinkedIn"
+                name="linkedin"
+                id="adm_linkedin"
                 variant="outlined"
-                value={staffProfesores}
-                onChange={handlestaffProfesoresChange}
+                value={enlaceLinkedin}
+                onChange={handleEnlaceLinkedinChange}
               />
             </FormGroup>
-          </div>
-        </div>
-      </Box>
+          </Stack>
+        </Box>
 
-      {/* Sección: Botón de Guardar */}
-      <Box>
-        <div className="row">
-          <div className="col-6">
-            {/* Botón para guardar el formulario */}
-            <Button
+        {/* Sección para mostrar/ocultar campos adicionales */}
+        <Box>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleToggleAdditionalFields}
+            sx={{ marginTop: 2 }}
+          >
+            {showAdditionalFields
+              ? 'Ocultar Reseña'
+              : 'Añadir otra Reseña Director'}
+          </Button>
+          {/* Campos adicionales */}
+          {showAdditionalFields && (
+            <React.Fragment>
+              <Box>
+                <div>
+                  <Typography
+                    variant="h6"
+                    sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+                  >
+                    Reseña del Director
+                  </Typography>
+                  <hr />
+                  <div>
+                    {/* Campo de texto para la reseña del Director */}
+                    <FormGroup>
+                      <TextField
+                        fullWidth
+                        label="Reseña del Director"
+                        name="descprog"
+                        id="adm_descprog"
+                        multiline
+                        rows={2}
+                        variant="outlined"
+                        value={reseniaProgramados}
+                        onChange={handleReseniaProgramadosChange}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+              </Box>
+
+              {/*Sección: Adjuntar Foto*/}
+              <Box>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Input
+                    type="file"
+                    id="FotoAdjunta"
+                    onChange={handleFotoAdjuntadosChange}
+                    style={{ display: 'none' }}
+                  />
+                  <label htmlFor="FotoAdjunta">
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      sx={{ marginTop: 2 }}
+                    >
+                      Adjuntar Foto
+                    </Button>
+                  </label>
+                </Stack>
+              </Box>
+
+              {/* Sección: Enlace de LinkedIn */}
+              <Box>
+                <FormGroup sx={{ mt: 2, marginBottom: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Enlace de LinkedIn"
+                    name="linkedin"
+                    id="adm_linkedin"
+                    variant="outlined"
+                    value={enlaceLinkedindos}
+                    onChange={handleEnlaceLinkedindosChange}
+                  />
+                </FormGroup>
+              </Box>
+            </React.Fragment>
+          )}
+        </Box>
+
+        {/* Sección: Requisitos para el postulante*/}
+        <FormGroup sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}>
+          <label htmlFor="adm_reqprog" className="form-label">
+            Requisitos para el postulante o documentación solicitada
+          </label>
+
+          <FormControl>
+            <FormGroup>
+              {/* Campos de checkbox para los requisitos */}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={requisitosPostulante.cedula}
+                    onChange={requisitosPostulanteHandleCheckboxChange}
+                    name="cedula"
+                  />
+                }
+                label="Cédula de Identidad (o DNI o Pasaporte)"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={requisitosPostulante.licenciaMedia}
+                    onChange={requisitosPostulanteHandleCheckboxChange}
+                    name="licenciaMedia"
+                  />
+                }
+                label="Licencia de Educación Media"
+              />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={requisitosPostulante.curriculum}
+                    onChange={requisitosPostulanteHandleCheckboxChange}
+                    name="curriculum"
+                  />
+                }
+                label="Curriculum Vitae (CV)"
+              />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={requisitosPostulante.otra}
+                    onChange={requisitosPostulanteHandleCheckboxChange}
+                    name="otra"
+                  />
+                }
+                label="Otro"
+              />
+            </FormGroup>
+          </FormControl>
+        </FormGroup>
+
+        {/* Sección: Cupos */}
+        <Box sx={{ width: 'calc(100% - 8px)', mr: 2 }}>
+          <Typography
+            variant="h5"
+            className="titulo"
+            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+          >
+            Cupos
+          </Typography>
+          <hr />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            {/* Campos de texto para los cupos */}
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Número de cupos máximo (vacantes)"
+              name="vacprog"
+              id="adm_vacprog"
               variant="outlined"
-              color="secondary"
-              className="float-left"
-              onClick={handleGuardarClick}
-              sx={{ marginTop: 2 }}
+              value={numeroEstudianteMaximo}
+              onChange={handleNumeroEstudianteMaximoChange}
+            />
+
+            <TextField
+              sx={{ width: 'calc(100% - 8px)', mr: 2 }}
+              label="Número de estudiantes matriculados mínimos para impartir el programa"
+              name="matrminprog"
+              id="adm_matrminprog"
+              variant="outlined"
+              value={numeroEstudianteMinimo}
+              onChange={handleNumeroEstudianteMinimoChange}
+            />
+          </Box>
+        </Box>
+
+        {/* Sección: Módulos del Programa */}
+        <Box>
+          <div>
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
             >
-              Guardar sin enviar
-            </Button>
+              {' '}
+              Liste Módulos del Programa
+            </Typography>
+            <hr />
+            <div>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Autocomplete
+                    value={inputModuleValue}
+                    options={optionsModule}
+                    onChange={handleInputModuleChange}
+                    onKeyDown={handleKeyPress}
+                    renderInput={(params) => (
+                      <TextField
+                        onChange={handleInputAutoCompleteChange}
+                        {...params}
+                        label="Módulo"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    type="number"
+                    value={hours}
+                    onChange={(e) => setHours(e.target.value)}
+                    label="Horas"
+                  />
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    className="float-left"
+                    onClick={handleAdd}
+                    sx={{ marginTop: 2 }}
+                  >
+                    Agregar
+                  </Button>
+                </Grid>
+              </Grid>
+
+              <TableContainer sx={{ mb: 2 }}>
+                <Table sx={{ mb: 2 }}>
+                  <TableHead>
+                    <TableRow
+                      sx={{
+                        backgroundColor: 'lightgrey',
+                        fontWeight: 'bold',
+                        marginTop: 8,
+                      }}
+                    >
+                      <TableCell>Módulo</TableCell>
+                      <TableCell>Hora</TableCell>
+                      <TableCell>SCT</TableCell>
+                      <TableCell>Nivel Plan</TableCell>
+                      <TableCell>Acciones</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {tableData.map((data, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{data?.module}</TableCell>
+                        <TableCell>{data?.hour}</TableCell>
+                        <TableCell
+                          sx={{
+                            borderColor: 'black',
+                            border: '1px solid black',
+                          }}
+                          contentEditable={true}
+                          suppressContentEditableWarning={true}
+                        >
+                          {rows.sct}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            borderColor: 'black',
+                            border: '1px solid black',
+                          }}
+                          contentEditable={true}
+                          suppressContentEditableWarning={true}
+                          label="Codigo Nivel Plan"
+                        >
+                          {rows.nivel_plan}
+                        </TableCell>
+                        <TableCell>
+                          <button
+                            style={{ margin: 2 }}
+                            onClick={() => handleGuardarClick(index)}
+                          >
+                            Guardar
+                          </button>
+                          <button
+                            style={{ margin: 2 }}
+                            onClick={() => handleEdit(index)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            style={{ margin: 2 }}
+                            onClick={() => handleDelete(index)}
+                          >
+                            Eliminar
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
           </div>
-        </div>
-      </Box>
-    </Container>
+        </Box>
+
+        {/* Sección: Staff de Profesores */}
+        <Box>
+          <div>
+            <Typography
+              variant="h6"
+              sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+            >
+              Liste el Staff de Profesores
+            </Typography>
+            <hr />
+
+            <div>
+              {/* Campo de texto para Staff de Profesores */}
+              <FormGroup>
+                <TextField
+                  fullWidth
+                  label="Staff de Profesores"
+                  name="descprog"
+                  id="adm_descprog"
+                  multiline
+                  rows={2}
+                  variant="outlined"
+                  value={staffProfesores}
+                  onChange={handlestaffProfesoresChange}
+                />
+              </FormGroup>
+            </div>
+          </div>
+        </Box>
+
+        {/* Sección: Botón de Guardar */}
+        <Box>
+          <div className="row">
+            <div className="col-6">
+              {/* Botón para guardar el formulario */}
+              <Button
+                variant="outlined"
+                color="secondary"
+                className="float-left"
+                onClick={handleGuardarClick}
+                sx={{ marginTop: 2, mb: 4 }}
+              >
+                Guardar sin enviar
+              </Button>
+            </div>
+          </div>
+        </Box>
+      </Container>
+
+      <Accordion
+        sx={{
+          mb: 4, // Añade espacio en la parte inferior del Accordion
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{
+            backgroundColor: 'lightgray', // Color de fondo gris para el acordeón
+            '& .MuiTypography-root': {
+              color: 'gray', // Color gris para el texto
+            },
+          }}
+        >
+          <Typography> Uso Interno Dirección de Estudios</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <UsoInternoDireccionEstudios />
+        </AccordionDetails>
+      </Accordion>
+    </>
   );
 };
 

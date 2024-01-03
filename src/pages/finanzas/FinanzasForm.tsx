@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -13,9 +13,15 @@ import {
   InputLabel,
   Select,
   Paper,
+  AccordionSummary,
+  AccordionDetails,
+  Accordion,
 } from '@mui/material';
 import UsoInternoFinanzas from '../usointfinanzas/UsoInternoFinanzasForm';
-import { save_form,get_object_localstore } from '../../utils/formulario';
+import { save_form, get_object_localstore } from '../../utils/formulario';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 // Definir un tipo para las claves posibles en fin_valordescprog
 type ValordescprogKey =
   | 'fin_valordescprog_asd'
@@ -158,10 +164,10 @@ const FinanzasForm: React.FC = () => {
     try {
       let formularioObjeto = {
         arancel: arancel,
-        modalidad_pago: modalidadPago.join(","),
+        modalidad_pago: modalidadPago.join(','),
         ...formData,
       };
-      console.log('formulario')
+      console.log('formulario');
       save_form(formularioObjeto);
       // Realiza una solicitud POST a un endpoint de tu servidor con los datos del formulario.
 
@@ -187,39 +193,39 @@ const FinanzasForm: React.FC = () => {
   ];
   const [modalidadPago, setModalidadPago] = useState([]);
 
-  const selectModalidadPagohandleChange = (event:any) => {
-    console.log('modalidad_pao')
+  const selectModalidadPagohandleChange = (event: any) => {
+    console.log('modalidad_pao');
     setModalidadPago(event.target.value);
   };
   const [arancel, setHandleArancelChange] = useState(''); // Estado local para el nombre del programa
-  const handlestaffArancelChange = (event:any) => {
+  const handlestaffArancelChange = (event: any) => {
     setHandleArancelChange(event.target.value); // Actualizar el estado con el valor del nombre del programa
   };
 
-  const requisitosPostulanteHandleCheckboxChange = (event:any) => {
+  const requisitosPostulanteHandleCheckboxChange = (event: any) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.checked,
     });
   };
 
-  const requisitosPostulanteHandleCheckboxChangeText = (event:any) => {
+  const requisitosPostulanteHandleCheckboxChangeText = (event: any) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSetOtros = (value:any) => {
+  const handleSetOtros = (value: any) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       otros: value,
     }));
   };
 
-  const requisitosPostulanteHandleCheckboxOnChange = (documentoForm:any) => {
-    console.log(documentoForm?.mujeres)
-    console.log('documentoForm?.mujeres')
+  const requisitosPostulanteHandleCheckboxOnChange = (documentoForm: any) => {
+    console.log(documentoForm?.mujeres);
+    console.log('documentoForm?.mujeres');
 
     handleSetOtros(true);
 
@@ -231,31 +237,25 @@ const FinanzasForm: React.FC = () => {
     // });
     requisitosPostulanteHandleCheckboxChangeText({
       target: {
-        name: "mujeresText",
+        name: 'mujeresText',
         checked: documentoForm?.mujeresText ?? 0,
       },
     });
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "funcionariosUSM",
+        name: 'funcionariosUSM',
         checked: documentoForm?.funcionariosUSM ?? false,
       },
     });
     requisitosPostulanteHandleCheckboxChange({
       target: {
-        name: "funcionariosUSMText",
+        name: 'funcionariosUSMText',
         checked: documentoForm?.funcionariosUSMText ?? 0,
       },
     });
-    
   };
 
-
-
-
-
   useEffect(() => {
-  
     const cargarProgramas = async () => {
       //Leo la "variable local" formulario (se modifica al momento de dar "Guardar sin enviar") -> 3ra Linea hacia abajo
       //ASigno el valor de la "variable local" a documentoForm-> 4ra linea hacia abajo
@@ -263,29 +263,32 @@ const FinanzasForm: React.FC = () => {
       const objetoDesdeSesion = get_object_localstore();
       if (objetoDesdeSesion && objetoDesdeSesion?.id !== null) {
         let documentoForm = objetoDesdeSesion;
-        console.log('documentoForm')
-        console.log(documentoForm)
-        if (documentoForm ){
-          setHandleArancelChange(documentoForm?.arancel??"");
-          requisitosPostulanteHandleCheckboxOnChange(documentoForm)
+        console.log('documentoForm');
+        console.log(documentoForm);
+        if (documentoForm) {
+          setHandleArancelChange(documentoForm?.arancel ?? '');
+          requisitosPostulanteHandleCheckboxOnChange(documentoForm);
           let modalidad = documentoForm?.modalidad_pago.split(',');
           setModalidadPago(modalidad);
-          formData.dcto_exAlumnosUSM= documentoForm?.dcto_exAlumnosUSM
-          formData.dcto_exAlumnosUSMText  = documentoForm?.dcto_exAlumnosUSMText  
-          formData.dcto_mujeres= documentoForm?.dcto_mujeres
-          formData.dcto_mujeresText  = documentoForm?.dcto_mujeresText  
-          formData.dcto_funcionariosUSM= documentoForm?.dcto_funcionariosUSM
-          formData.dcto_funcionariosUSMText  = documentoForm?.dcto_funcionariosUSMText  
-          formData.dcto_funcionariosServiciosPublicos= documentoForm?.dcto_funcionariosServiciosPublicos
-          formData.dcto_funcionariosServiciosPublicosText  = documentoForm?.dcto_funcionariosServiciosPublicosText  
-          formData.dcto_matriculaAnticipada= documentoForm?.dcto_matriculaAnticipada
-          formData.dcto_matriculaAnticipadaText  = documentoForm?.dcto_matriculaAnticipadaText  
-          formData.dcto_otros= documentoForm?.dcto_otros
-          formData.dcto_otrosDesc = documentoForm?.dcto_otrosDesc 
-          formData.dcto_otrosText  = documentoForm?.dcto_otrosText 
+          formData.dcto_exAlumnosUSM = documentoForm?.dcto_exAlumnosUSM;
+          formData.dcto_exAlumnosUSMText = documentoForm?.dcto_exAlumnosUSMText;
+          formData.dcto_mujeres = documentoForm?.dcto_mujeres;
+          formData.dcto_mujeresText = documentoForm?.dcto_mujeresText;
+          formData.dcto_funcionariosUSM = documentoForm?.dcto_funcionariosUSM;
+          formData.dcto_funcionariosUSMText =
+            documentoForm?.dcto_funcionariosUSMText;
+          formData.dcto_funcionariosServiciosPublicos =
+            documentoForm?.dcto_funcionariosServiciosPublicos;
+          formData.dcto_funcionariosServiciosPublicosText =
+            documentoForm?.dcto_funcionariosServiciosPublicosText;
+          formData.dcto_matriculaAnticipada =
+            documentoForm?.dcto_matriculaAnticipada;
+          formData.dcto_matriculaAnticipadaText =
+            documentoForm?.dcto_matriculaAnticipadaText;
+          formData.dcto_otros = documentoForm?.dcto_otros;
+          formData.dcto_otrosDesc = documentoForm?.dcto_otrosDesc;
+          formData.dcto_otrosText = documentoForm?.dcto_otrosText;
 
-
-          
           // let formularioObjeto = {
           //   arancel: arancel,
           //   modalidad_pago: modalidadPago.join(","),
@@ -293,8 +296,6 @@ const FinanzasForm: React.FC = () => {
           // };
           // console.log('formulario')
           // save_form(formularioObjeto);
-
-
         }
       }
     };
@@ -303,289 +304,292 @@ const FinanzasForm: React.FC = () => {
 
   // Renderizado del componente
   return (
-    <Container>
-      <Typography
-        variant="h5"
-        className="display-4 text-center mt-4 mb-5"
-        sx={{ marginTop: 5, marginBottom: 2, fontWeight: 'bold' }}
-      >
-        Información relevante para Finanzas
-      </Typography>
-
-      <Box>
+    <>
+      <Container>
         <Typography
-          variant="h6"
-          sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+          variant="h5"
+          className="display-4 text-center mt-4 mb-5"
+          sx={{ marginTop: 5, marginBottom: 2, fontWeight: 'bold' }}
         >
-          {' '}
-          Valorización
+          Información relevante para Finanzas
         </Typography>
-      </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={5}>
-          <TextField
-            fullWidth
-            id="regcur_durprog"
-            label="Valor de Arancel del programa *"
-            variant="outlined"
-            value={arancel}
-            onChange={handlestaffArancelChange}
-          />
-        </Grid>
-        <Grid item xs={5}>
-          <FormControl>
-            <InputLabel id="modalidad-pago-label">Modalidad de Pago</InputLabel>
-            <Select
-              labelId="modalidad-pago-label"
-              id="regcur_sedeprog"
-              label="Modalidad de Pago"
-              sx={{ width: 300 }}
-              multiple
-              value={modalidadPago}
-              onChange={selectModalidadPagohandleChange}
-            >
-              {/* Opciones de modalidad de pago */}
-              {opciones_pago.map((opcion) => (
-                <MenuItem key={opcion} value={opcion}>
-                  {opcion}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
 
-      {/* Nuevo bloque de campos */}
-      <div
-        className="form-group  col-md-6"
-        style={{ margin: '25px 0', fontWeight: 'bold' }}
-      >
-        <label htmlFor="fin_valordescprog" className="form-label">
-          Descuentos que ofrece el programa (tipo y porcentaje asociado)
-        </label>
-
-        <div className="form-row"></div>
-        {/* Checkbox y campo de texto para Ex alumnos USM */}
+        <Box>
+          <Typography
+            variant="h6"
+            sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}
+          >
+            {' '}
+            Valorización
+          </Typography>
+        </Box>
         <Grid container spacing={2}>
-          {/* primera row */}
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_exAlumnosUSM}
-                    onChange={handleCheckboxChange}
-                    name="dcto_exAlumnosUSM"
-                  />
-                }
-                label="Ex alumnos USM"
-              />
-            </div>
+          <Grid item xs={5}>
+            <TextField
+              fullWidth
+              id="regcur_durprog"
+              label="Valor de Arancel del programa *"
+              variant="outlined"
+              value={arancel}
+              onChange={handlestaffArancelChange}
+            />
           </Grid>
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.dcto_exAlumnosUSM ? (
-              <TextField
-                type="number"
-                className="form-control"
-                name="dcto_exAlumnosUSMText"
-                id="exAlumnosUSM"
-                label="Porcentaje"
-                InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.dcto_exAlumnosUSMText  }
-                onChange={handleFormChange}
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
+          <Grid item xs={5}>
+            <FormControl>
+              <InputLabel id="modalidad-pago-label">
+                Modalidad de Pago
+              </InputLabel>
+              <Select
+                labelId="modalidad-pago-label"
+                id="regcur_sedeprog"
+                label="Modalidad de Pago"
+                sx={{ width: 300 }}
+                multiple
+                value={modalidadPago}
+                onChange={selectModalidadPagohandleChange}
+              >
+                {/* Opciones de modalidad de pago */}
+                {opciones_pago.map((opcion) => (
+                  <MenuItem key={opcion} value={opcion}>
+                    {opcion}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
-          {/* sgundo row */}
-          <Grid item md={6} style={{ paddingTop: '10px' }}>
-            {/* Checkbox y campo de texto para Mujeres */}
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_mujeres}
-                    onChange={handleCheckboxChange}
-                    name="dcto_mujeres"
-                  />
-                }
-                label="Mujeres"
-              />
-            </div>
-          </Grid>
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.dcto_mujeres ? (
-              <TextField
-                type="number"
-                className="form-control"
-                name="dcto_mujeresText"
-                id="mujeres"
-                label="Porcentaje"
-                InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.dcto_mujeresText  }
-                onChange={handleFormChange}
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
-          </Grid>
-
-          {/* Tercer row */}
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {/* Checkbox y campo de texto para Funcionarios USM */}
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_funcionariosUSM}
-                    onChange={handleCheckboxChange}
-                    name="dcto_funcionariosUSM"
-                  />
-                }
-                label="Funcionarios USM"
-              />
-            </div>
-          </Grid>
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.dcto_funcionariosUSM ? (
-              <TextField
-                type="number"
-                className="form-control"
-                name="dcto_funcionariosUSMText"
-                id="funcionariosUSM"
-                label="Porcentaje"
-                InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.dcto_funcionariosUSMText  }
-                onChange={handleFormChange}
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
-          </Grid>
-
-          {/* cuarto row */}
-
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {/* Checkbox y campo de texto para Funcionarios de servicios públicos */}
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_funcionariosServiciosPublicos}
-                    onChange={handleCheckboxChange}
-                    name="dcto_funcionariosServiciosPublicos"
-                  />
-                }
-                label="Funcionarios Servicios Publicos"
-              />
-            </div>
-          </Grid>
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.dcto_funcionariosServiciosPublicos ? (
-              <TextField
-                type="number"
-                className="form-control"
-                name="dcto_funcionariosServiciosPublicosText"
-                id="funcionariosServiciosPublicos"
-                label="Porcentaje"
-                InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.dcto_funcionariosServiciosPublicosText  }
-                onChange={handleFormChange}
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
-          </Grid>
-
-          {/* quinto row */}
-
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {/* Checkbox y campo de texto para Matrícula anticipada */}
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_matriculaAnticipada}
-                    onChange={handleCheckboxChange}
-                    name="dcto_matriculaAnticipada"
-                  />
-                }
-                label="Matricula anticipada"
-              />
-            </div>
-          </Grid>
-          <Grid item md={6} style={{ marginTop: '10px', maxHeight: '5px' }}>
-            {formData.dcto_matriculaAnticipada ? (
-              <TextField
-                style={{ maxHeight: '5px' }}
-                type="number"
-                className="form-control"
-                name="dcto_matriculaAnticipadaText"
-                id="matriculaAnticipada"
-                label="Porcentaje"
-                InputProps={{ inputProps: { min: 0, max: 100 } }}
-                value={formData.dcto_matriculaAnticipadaText  }
-                onChange={handleFormChange}
-              />
-            ) : (
-              <>&nbsp;</>
-            )}
-          </Grid>
-
-          {/* Sexto row */}
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {/* Checkbox y campo de texto para Otro */}
-            <div className="form-check col-md-4">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.dcto_otros}
-                    onChange={handleCheckboxChange}
-                    name="dcto_otros"
-                  />
-                }
-                label="Otro"
-              />
-            </div>
-          </Grid>
-          <Grid item md={6} style={{ marginTop: '10px' }}>
-            {formData.dcto_otros && (
-              <Grid container spacing={2}>
-                <Grid item md={6}>
-                  <TextField
-                    type="text"
-                    className="form-control"
-                    name="dcto_otrosDesc"
-                    id="otrosText"
-                    label="Otro descuento"
-                    value={formData.dcto_otrosDesc  }
-                    onChange={handleFormChange}
-                  />
-                </Grid>
-                <Grid item md={6}>
-                  <TextField
-                    type="number"
-                    className="form-control"
-                    name="dcto_otrosText"
-                    id="otrosPorcentaje"
-                    label="Porcentaje"
-                    InputProps={{ inputProps: { min: 0, max: 100 } }}
-                    value={formData.dcto_otrosText  }
-                    onChange={handleFormChange}
-                  />
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-
-          <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
-          <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
         </Grid>
-      </div>
 
-      {/* Botón para guardar sin enviar */}
-      {/* <div className="row mb-10">
+        {/* Nuevo bloque de campos */}
+        <div
+          className="form-group  col-md-6"
+          style={{ margin: '25px 0', fontWeight: 'bold' }}
+        >
+          <label htmlFor="fin_valordescprog" className="form-label">
+            Descuentos que ofrece el programa (tipo y porcentaje asociado)
+          </label>
+
+          <div className="form-row"></div>
+          {/* Checkbox y campo de texto para Ex alumnos USM */}
+          <Grid container spacing={2}>
+            {/* primera row */}
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_exAlumnosUSM}
+                      onChange={handleCheckboxChange}
+                      name="dcto_exAlumnosUSM"
+                    />
+                  }
+                  label="Ex alumnos USM"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {formData.dcto_exAlumnosUSM ? (
+                <TextField
+                  type="number"
+                  className="form-control"
+                  name="dcto_exAlumnosUSMText"
+                  id="exAlumnosUSM"
+                  label="Porcentaje"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  value={formData.dcto_exAlumnosUSMText}
+                  onChange={handleFormChange}
+                />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Grid>
+            {/* sgundo row */}
+            <Grid item md={6} style={{ paddingTop: '10px' }}>
+              {/* Checkbox y campo de texto para Mujeres */}
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_mujeres}
+                      onChange={handleCheckboxChange}
+                      name="dcto_mujeres"
+                    />
+                  }
+                  label="Mujeres"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {formData.dcto_mujeres ? (
+                <TextField
+                  type="number"
+                  className="form-control"
+                  name="dcto_mujeresText"
+                  id="mujeres"
+                  label="Porcentaje"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  value={formData.dcto_mujeresText}
+                  onChange={handleFormChange}
+                />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Grid>
+
+            {/* Tercer row */}
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {/* Checkbox y campo de texto para Funcionarios USM */}
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_funcionariosUSM}
+                      onChange={handleCheckboxChange}
+                      name="dcto_funcionariosUSM"
+                    />
+                  }
+                  label="Funcionarios USM"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {formData.dcto_funcionariosUSM ? (
+                <TextField
+                  type="number"
+                  className="form-control"
+                  name="dcto_funcionariosUSMText"
+                  id="funcionariosUSM"
+                  label="Porcentaje"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  value={formData.dcto_funcionariosUSMText}
+                  onChange={handleFormChange}
+                />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Grid>
+
+            {/* cuarto row */}
+
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {/* Checkbox y campo de texto para Funcionarios de servicios públicos */}
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_funcionariosServiciosPublicos}
+                      onChange={handleCheckboxChange}
+                      name="dcto_funcionariosServiciosPublicos"
+                    />
+                  }
+                  label="Funcionarios Servicios Publicos"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {formData.dcto_funcionariosServiciosPublicos ? (
+                <TextField
+                  type="number"
+                  className="form-control"
+                  name="dcto_funcionariosServiciosPublicosText"
+                  id="funcionariosServiciosPublicos"
+                  label="Porcentaje"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  value={formData.dcto_funcionariosServiciosPublicosText}
+                  onChange={handleFormChange}
+                />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Grid>
+
+            {/* quinto row */}
+
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {/* Checkbox y campo de texto para Matrícula anticipada */}
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_matriculaAnticipada}
+                      onChange={handleCheckboxChange}
+                      name="dcto_matriculaAnticipada"
+                    />
+                  }
+                  label="Matricula anticipada"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px', maxHeight: '5px' }}>
+              {formData.dcto_matriculaAnticipada ? (
+                <TextField
+                  style={{ maxHeight: '5px' }}
+                  type="number"
+                  className="form-control"
+                  name="dcto_matriculaAnticipadaText"
+                  id="matriculaAnticipada"
+                  label="Porcentaje"
+                  InputProps={{ inputProps: { min: 0, max: 100 } }}
+                  value={formData.dcto_matriculaAnticipadaText}
+                  onChange={handleFormChange}
+                />
+              ) : (
+                <>&nbsp;</>
+              )}
+            </Grid>
+
+            {/* Sexto row */}
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {/* Checkbox y campo de texto para Otro */}
+              <div className="form-check col-md-4">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.dcto_otros}
+                      onChange={handleCheckboxChange}
+                      name="dcto_otros"
+                    />
+                  }
+                  label="Otro"
+                />
+              </div>
+            </Grid>
+            <Grid item md={6} style={{ marginTop: '10px' }}>
+              {formData.dcto_otros && (
+                <Grid container spacing={2}>
+                  <Grid item md={6}>
+                    <TextField
+                      type="text"
+                      className="form-control"
+                      name="dcto_otrosDesc"
+                      id="otrosText"
+                      label="Otro descuento"
+                      value={formData.dcto_otrosDesc}
+                      onChange={handleFormChange}
+                    />
+                  </Grid>
+                  <Grid item md={6}>
+                    <TextField
+                      type="number"
+                      className="form-control"
+                      name="dcto_otrosText"
+                      id="otrosPorcentaje"
+                      label="Porcentaje"
+                      InputProps={{ inputProps: { min: 0, max: 100 } }}
+                      value={formData.dcto_otrosText}
+                      onChange={handleFormChange}
+                    />
+                  </Grid>
+                </Grid>
+              )}
+            </Grid>
+
+            <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
+            <Grid item md={6} style={{ marginTop: '2vh' }}></Grid>
+          </Grid>
+        </div>
+
+        {/* Botón para guardar sin enviar */}
+        {/* <div className="row mb-10">
         <div className="col-12">
           <Button
             variant="outlined"
@@ -597,13 +601,13 @@ const FinanzasForm: React.FC = () => {
           </Button>
         </div>
       </div> */}
-      {/* Campos adicionales fuera del bloque anterior */}
+        {/* Campos adicionales fuera del bloque anterior */}
 
-      {/* Uso interno Finanzas */}
-      {/* <Typography variant="h4" align="center" mt={4} mb={5}  >
+        {/* Uso interno Finanzas */}
+        {/* <Typography variant="h4" align="center" mt={4} mb={5}  >
         Uso Interno Finanzas
       </Typography> */}
-      {/* <UsoInternoFinanzas
+        {/* <UsoInternoFinanzas
         campos={formData}
         setCampos={setFormData}
         readOnly={!formularioPrincipalCompleto}
@@ -611,21 +615,44 @@ const FinanzasForm: React.FC = () => {
         onEnviar={handleEnviarFinanzas}
       /> */}
 
-      {/* Resumen de Respuestas */}
-    
+        {/* Resumen de Respuestas */}
 
-      {/* Botón adicional para guardar sin enviar */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          className="float-left"
-          onClick={handleGuardarClick}
+        {/* Botón adicional para guardar sin enviar */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            className="float-left"
+            onClick={handleGuardarClick}
+          >
+            Guardar sin enviar
+          </Button>
+        </Box>
+      </Container>
+
+      <Accordion
+        sx={{
+          mb: 4, // Añade espacio en la parte inferior del Accordion
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{
+            backgroundColor: 'lightgray', // Color de fondo gris para el acordeón
+            '& .MuiTypography-root': {
+              color: 'gray', // Color gris para el texto
+            },
+          }}
         >
-          Guardar sin enviar
-        </Button>
-      </Box>
-    </Container>
+          <Typography> Uso Interno Finanzas</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <UsoInternoFinanzas />
+        </AccordionDetails>
+      </Accordion>
+    </>
   );
 };
 

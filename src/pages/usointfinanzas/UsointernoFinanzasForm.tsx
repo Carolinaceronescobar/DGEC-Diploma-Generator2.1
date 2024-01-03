@@ -21,7 +21,7 @@ const UsoInternoFinanzas = ({
   const [value, setValue] = React.useState<FinanzaOptionType | null>(null);
 
   return (
-    <Box sx={{ ml: 10 }}>
+    <Box>
       <Typography
         variant="h6"
         sx={{ marginTop: 2, marginBottom: 2, fontWeight: 'bold' }}

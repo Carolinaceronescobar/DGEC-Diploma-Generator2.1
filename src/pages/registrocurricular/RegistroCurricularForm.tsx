@@ -14,8 +14,13 @@ import {
   FormControlLabel,
   Radio,
   Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import Box from '@mui/system/Box';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import UsoInternoDGEC from '../usointdgec/UsoInternoDGEC';
 import UsointernoDireccionEstudios from '../usointdireccionestudios/UsoInternoDireccionEstudios';
 import dayjs from 'dayjs';
@@ -27,6 +32,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { esES } from '@mui/x-date-pickers/locales';
 import { mainListRegistro } from './makeData';
+import { margin } from '@mui/system/spacing';
 
 /*
 //CARO
@@ -977,7 +983,7 @@ const RegistroCurricularForm: React.FC = () => {
         </Box>
 
         {/* Botón para guardar sin enviar */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
           <Button
             variant="outlined"
             color="primary"
@@ -988,6 +994,28 @@ const RegistroCurricularForm: React.FC = () => {
           </Button>
         </Box>
       </Container>
+      <Accordion
+        sx={{
+          mb: 4, // Añade espacio en la parte inferior del Accordion
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{
+            backgroundColor: 'lightgray', // Color de fondo gris para el acordeón
+            '& .MuiTypography-root': {
+              color: 'gray', // Color gris para el texto
+            },
+          }}
+        >
+          <Typography> Uso Interno DGEC</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <UsoInternoDGEC />
+        </AccordionDetails>
+      </Accordion>
     </>
   );
 };
